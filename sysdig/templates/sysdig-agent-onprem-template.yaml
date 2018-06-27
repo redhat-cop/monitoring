@@ -1,0 +1,214 @@
+apiVersion: v1
+kind: Template
+metadata:
+  name: sysdig-agent
+objects:
+- kind: ServiceAccount
+  apiVersion: v1
+  metadata:
+    name: sysdig
+- apiVersion: v1
+  kind: SecurityContextConstraints
+  metadata:
+    name: sysdig-scc
+  allowPrivilegedContainer: true
+  allowHostDirVolumePlugin: true
+  allowHostIPC: true
+  allowHostNetwork: true
+  allowHostPID: true
+  allowHostPorts: true
+  readOnlyRootFilesystem: false
+  fsGroup:
+    type: MustRunAs
+  groups:
+  - system:authenticated
+  - system:serviceaccount
+  runAsUser:
+    type: RunAsAny
+  seLinuxContext:
+    type: MustRunAs
+  supplementalGroups:
+    type: RunAsAny
+  users:
+  - system:serviceaccount:${NAMESPACE}:sysdig
+  volumes:
+  - configMap
+  - downwardAPI
+  - emptyDir
+  - persistentVolumeClaim
+  - secret
+- apiVersion: v1
+  kind: ClusterRole
+  metadata:
+    name: sysdig-role
+    labels:
+      template: sysdig-agent
+  rules:
+    - apiGroups:
+      - ""
+      resources:
+      - nodes
+      - namespaces
+      - pods
+      - replicationcrontrollers
+      - services
+      - events
+      verbs:
+      - get
+      - list
+      - watch
+    - nonResourceURLs:
+      - /healthz
+      - /healthz/*
+      verbs:
+        - get
+- apiVersion: v1
+  kind: ClusterRoleBinding
+  metadata:
+    name: sysdig-role-binding
+    namespace: ${NAMESPACE}
+  subjects:
+    - kind: ServiceAccount
+      name: sysdig
+      namespace: ${NAMESPACE}
+  roleRef:
+    kind: ClusterRole
+    name: sysdig-role
+- apiVersion: v1
+  kind: Secret
+  metadata:
+    name: sysdig-secret
+    labels:
+      app: sysdig-agent
+      template: sysdig-agent
+  type: Opaque
+  stringData:
+    access-key: ${SYSDIG_KEY}
+    tags: cluster:${CLUSTER_TAG}
+- apiVersion: extensions/v1beta1
+  kind: DaemonSet
+  metadata:
+    name: sysdig-agent
+    labels:
+      app: sysdig-agent
+      template: sysdig-agent
+  spec:
+    template:
+      metadata:
+        name: sysdig-agent
+        labels:
+          app: sysdig-agent
+      spec:
+        volumes:
+        - name: dshm
+          emptyDir:
+            medium: Memory
+        - name: docker-sock
+          hostPath:
+            path: /var/run/docker.sock
+        - name: dev-vol
+          hostPath:
+            path: /dev
+        - name: proc-vol
+          hostPath:
+            path: /proc
+        - name: boot-vol
+          hostPath:
+            path: /boot
+        - name: modules-vol
+          hostPath:
+            path: /lib/modules
+        - name: usr-vol
+          hostPath:
+            path: /usr
+        hostNetwork: true
+        hostPID: true
+        serviceAccount: sysdig
+        containers:
+        - name: sysdig-agent
+          image: sysdig/agent
+          imagePullPolicy: Always
+          resources:
+            requests:
+              cpu: 100m
+              memory: 512Mi
+            limits:
+              cpu: 500m
+              memory: 768Mi
+          securityContext:
+            privileged: true
+          env:
+          - name: ACCESS_KEY
+            valueFrom:
+              secretKeyRef:
+                name: sysdig-secret
+                key: access-key
+          - name: COLLECTOR_PORT
+            value: ${COLLECTOR_PORT}
+          - name: COLLECTOR
+            value: ${COLLECTOR_ADDRESS}
+          - name: SECURE
+            value: ${COLLECTOR_SECURE}
+          - name: CHECK_CERTIFICATE
+            value: ${CHECK_COLLECTOR_CERTIFICATE}
+          - name: TAGS
+            valueFrom:
+              secretKeyRef:
+                name: sysdig-secret
+                key: tags
+          volumeMounts:
+          - mountPath: /host/var/run/docker.sock
+            name: docker-sock
+            readOnly: false
+          - mountPath: /host/dev
+            name: dev-vol
+            readOnly: false
+          - mountPath: /host/proc
+            name: proc-vol
+            readOnly: true
+          - mountPath: /host/boot
+            name: boot-vol
+            readOnly: true
+          - mountPath: /host/lib/modules
+            name: modules-vol
+            readOnly: true
+          - mountPath: /host/usr
+            name: usr-vol
+            readOnly: true
+          - mountPath: /dev/shm
+            name: dshm
+parameters:
+- name: NAMESPACE
+  displayName: "Namespace where this is deployed"
+  description: "Namespace where this is deployed."
+  value: "sysdig-cloud"
+  required: true
+- name: SYSDIG_KEY
+  displayName: "Sysdig Cloud Key credentials"
+  description: "Sysdig Cloud Key credentials."
+  value: ""
+  required: true
+- name: CLUSTER_TAG
+  displayName: "Tags to identify the OpenShift Cluster on Sysdig Cloud console"
+  description: "Tags to identify the OpenShift Cluster on Sysdig Cloud console."
+  value: "my-ocp-cluster"
+  required: true
+- name: COLLECTOR_PORT
+  displayName: "Sysdig On Prem Collector Port"
+  description: "Sysdig On Prem Collector Port."
+  value: "6443"
+  required: true
+- name: COLLECTOR_ADDRESS
+  displayName: "Sysdig On Prem Collector hostname/IP"
+  description: "Sysdig On Prem Collector hostname/IP."
+  required: true
+- name: COLLECTOR_SECURE
+  displayName: "Connect to Sysdig On Prem Collector using SSL"
+  description: "Connect to Sysdig On Prem Collector using SSL."
+  value: "true"
+  required: true
+- name: CHECK_COLLECTOR_CERTIFICATE
+  displayName: "Check Collector certificate when using SSL"
+  description: "Check Collector certificate when using SSL."
+  value: "false"
+  required: true

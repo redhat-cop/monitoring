@@ -1,0 +1,6 @@
+NAMESPACE=monitoring
+GRAFANA_DATA_VOL_SIZE=20Gi
+HAPROXY_STATS_PASSWORD=65IQD9X1IF
+USER=prometheus
+GRAFANA_PASSWORD=secret
+RC_WEBHOOK='https://chat.consulting.redhat.com/hooks/uStnHttRrgMHxvjbQ/7Gbcf4XivnRd5idW4TFGTwC4z7j8fZGQ9ewtQjwaohMQSozm'
