@@ -1,0 +1,6 @@
+*.retry
+*.swp
+galaxy/
+*.pyc
+/.project
+.vscode
