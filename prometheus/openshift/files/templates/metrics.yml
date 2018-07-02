@@ -11321,5 +11321,4 @@ parameters:
 - name: RC_WEBHOOK
   displayName: 'RocketChat WebHook'
   description: 'RocketChat WebHook for AlertManager Integration'
-  value: 'https://chat.consulting.redhat.com/hooks/uStnHttRrgMHxvjbQ/7Gbcf4XivnRd5idW4TFGTwC4z7j8fZGQ9ewtQjwaohMQSozm'
   required: false

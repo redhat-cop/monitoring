@@ -13,8 +13,8 @@ The following prerequisites must be met prior to beginning to deploy GitLab CE
 
 ### Environment Setup
 
-1. Clone this repository: `git clone https://gitlab.consulting.redhat.com/mentenza/monitoring-initiative.git`
-2. `cd monitoring-initiative/prometheus/full-stack`
+1. Clone this repository: `git clone https://github.com/redhat-cop/monitoring.git`
+2. `cd monitoring/prometheus/openshift`
 3. Run `ansible-galaxy install -r requirements.yml --roles-path=galaxy`
 4. Login to OpenShift: `oc login -u <username> https://master.example.com:8443`
 5. Modify parameters in `files/params/prometheus-stack-params` according to your requirements
