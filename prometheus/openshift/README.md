@@ -17,7 +17,7 @@ The following prerequisites must be met prior to beginning to deploy GitLab CE
 2. `cd monitoring/prometheus/openshift`
 3. Run `ansible-galaxy install -r requirements.yml --roles-path=galaxy`
 4. Login to OpenShift: `oc login -u <username> https://master.example.com:8443`
-5. Modify parameters in `files/params/prometheus-stack-params` according to your requirements
+5. Modify parameters in `files/params/metrics-params` according to your requirements
 
 :heavy_exclamation_mark: This stack will create objects that require `cluster-admin` privileges. Ensure you are logged into the Cluster (step 4) with an user with those privileges
 
