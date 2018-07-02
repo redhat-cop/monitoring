@@ -1,0 +1,5 @@
+# This file isn't really needed, but since the openshift-applier requirements
+# a params file to successfully run, the file is here. GitHub issue has been
+# opened to address this: https://github.com/redhat-cop/openshift-applier/issues/30
+
+NAMESPACE=dynatrace
