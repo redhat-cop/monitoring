@@ -5,4 +5,4 @@ openshift_cluster_content:
   - name: prometheus-stack
     namespace: monitoring
     template: "{{ inventory_dir }}/../files/templates/metrics.yml"
-    params: "{{ inventory_dir }}/../files/params/prometheus-stack-params"
+    params: "{{ inventory_dir }}/../files/params/metrics-params"
