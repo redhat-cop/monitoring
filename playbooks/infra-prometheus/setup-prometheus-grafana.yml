@@ -1,0 +1,23 @@
+---
+- name: Install Docker
+  hosts: prometheus
+  become: True
+  roles:
+    - config-docker
+
+- name: Setup node exporters
+  hosts: prometheus_node
+  become: True
+  vars:
+    provision_state: "started"
+  roles:
+    - ../../prometheus/generic/setup-node-exporter
+
+- name: Setup prometheus
+  hosts: prometheus_master
+  become: True
+  vars:
+    provision_state: "started"
+  roles:
+    - ../../prometheus/generic/setup-prometheus
+    - ../../grafana/generic/setup-grafana

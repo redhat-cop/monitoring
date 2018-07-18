@@ -1,38 +1,57 @@
-Role Name
+setup-node-exporter
 =========
 
-A brief description of the role goes here.
+This role will instantiate a grafana container on targeted hosts.
 
 Requirements
 ------------
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+Docker must be available and running on the targeted hosts.
 
 Role Variables
 --------------
+Default values of variables:
+```
+---
+grafana_image: 'grafana/grafana'
+grafana_image_version: 'latest'
+grafana_port: '3000'
+grafana_password: 'super_secure_password'
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+prometheus_port: '9090'
+
+provision_state: "started"
+
+```
+`grafana_image` - The node exporter image to deploy.
+`grafana_image_version` - The image tag to deploy.
+`grafana_port` - The port to expose on the target hosts.
+`grafana_password` - The admin password to set for Grafana.
+`prometheus_port` - The target port on the prometheus host to pull data.
+`provision_state` - Options: [absent, killed, present, reloaded, restarted, **started** (default), stopped]
+
 
 Dependencies
 ------------
-
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+```
+python >= 2.6
+docker-py >= 0.3.0
+The docker server >= 0.10.0
+```
 
 Example Playbook
 ----------------
-
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
-
-    - hosts: servers
-      roles:
-         - { role: username.rolename, x: 42 }
+```
+- name: Setup grafana
+  hosts: grafana
+  become: True
+  vars:
+    provision_state: "started"
+  roles:
+    - grafana/generic/setup-grafana
+```
 
 License
 -------
 
 BSD
-
-Author Information
-------------------
-
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).

@@ -1,0 +1,11 @@
+[prometheus_master]
+
+[prometheus_node]
+
+[osp_instances:children]
+prometheus_master
+prometheus_node
+
+[prometheus]
+prometheus_master
+prometheus_node
