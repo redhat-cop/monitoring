@@ -3,7 +3,7 @@
   hosts: prometheus
   become: True
   roles:
-    - config-docker
+    - infra-ansible/roles/config-docker
 
 - name: Setup node exporters
   hosts: prometheus_node

@@ -6,6 +6,6 @@
 prometheus_master
 prometheus_node
 
-[prometheus]
+[prometheus:children]
 prometheus_master
 prometheus_node

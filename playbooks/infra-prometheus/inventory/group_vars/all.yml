@@ -1,0 +1,3 @@
+---
+docker_install: True
+docker_username: centos
