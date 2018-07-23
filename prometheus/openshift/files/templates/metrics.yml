@@ -1149,23 +1149,23 @@ objects:
         rules:
         - alert: node_down
           expr: up{job="kubernetes-nodes"} == 0
-          for: 1m
+          for: 5m
           annotations:
-            description: Node has been unreachable for more than 1 minute.
+            description: Node has been unreachable for more than 5 minutes.
             severity: crtitical
             summary: Node is down
         - alert: cpu_usage
-          expr: 100 - (node_cpu{mode="idle", instance=~".+"})/10000 < 20 
-          for: 1m
+          expr: 100 - (avg by (instance) (irate(node_cpu{mode="idle"}[10m])) * 100) > 80 
+          for: 10m
           annotations:
-            description: Node CPU usage has been beyond 80% for more than 1 minute.
+            description: Node CPU usage has been beyond 80% for more than 10 minutes.
             severity: critical
             summary: High CPU usage
         - alert: memory_usage
           expr: ((node_memory_MemTotal - node_memory_MemFree - node_memory_Cached - node_memory_Buffers - node_memory_Slab) / node_memory_MemTotal) * 100 > 80 
-          for: 1m
+          for: 10m
           annotations:
-            description: Node Memory usage has been beyond 80% for more than 1 minute.
+            description: Node Memory usage has been beyond 80% for more than 10 minutes.
             severity: critical
             summary: High Memory usage
     prometheus.yml: >
