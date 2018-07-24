@@ -7,7 +7,7 @@
     owner: centos
     group: centos
   vars:
-    target_nodes: "{{ groups['prom_node'] }}"
+    target_nodes: "{{ groups['prometheus_node'] }}"
 
 - name: Run Prometheus Docker container
   docker_container:
