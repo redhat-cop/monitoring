@@ -4,3 +4,4 @@ galaxy/
 *.pyc
 /.project
 .vscode
+.DS_Store
