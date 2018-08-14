@@ -9,27 +9,22 @@ objects:
 - kind: "OneAgent"
   apiVersion: "dynatrace.com/v1alpha1"
   metadata:
-    name: "oneagent-operator"
+    name: "oneagent"
     namespace: "${NAMESPACE}"
-    labels:
-      dynatrace: operator
-      operator: oneagent
   spec:
     apiUrl: "${API_URL}"
-    apiToken: "${API_TOKEN}"
-    paasToken: "${PAAS_TOKEN}"
+    skipCertCheck: false
+    tokens: ""
+    nodeSelector: {}
+    tolerations: []
+    image: ""
+    args:
+    - APP_LOG_CONTENT_ACCESS=1
+    env: []
 parameters:
 - name: API_URL
   displayName: API URL for Dynatrace Tenant
   description: API URL for Dynatrace Tenant
-  required: true
-- name: API_TOKEN
-  displayName: API Token
-  description: API Token for Dynatrace OneAgent
-  required: true
-- name: PAAS_TOKEN
-  displayName: PaaS Token
-  description: PaaS Token for Dynatrace OneAgent
   required: true
 - name: NAMESPACE
   displayName: Deployment Namespace

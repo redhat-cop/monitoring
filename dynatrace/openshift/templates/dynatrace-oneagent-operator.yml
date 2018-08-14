@@ -16,11 +16,12 @@ objects:
       operator: oneagent
   spec:
     replicas: 1
+    revisionHistoryLimit: 1
     selector:
       matchLabels:
         name: dynatrace-oneagent-operator
-        dynatrace: operator
-        operator: oneagent
+    strategy:
+      type: Recreate
     template:
       metadata:
         labels:
@@ -30,7 +31,7 @@ objects:
       spec:
         containers:
           - name: dynatrace-oneagent-operator
-            image: quay.io/dynatrace/dynatrace-oneagent-operator:latest
+            image: quay.io/dynatrace/dynatrace-oneagent-operator:snapshot
             command:
             - dynatrace-oneagent-operator
             imagePullPolicy: Always
@@ -39,6 +40,14 @@ objects:
               valueFrom:
                 fieldRef:
                   fieldPath: metadata.namespace
+            resources:
+              requests:
+                cpu: 10m
+                memory: 64Mi
+              limits:
+                cpu: 100m
+                memory: 256Mi
+        serviceAccountName: dynatrace-oneagent-operator
 parameters:
 - name: NAMESPACE
   displayName: Deployment Namespace
