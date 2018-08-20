@@ -11,7 +11,7 @@ objects:
   apiVersion: rbac.authorization.k8s.io/v1beta1
   metadata:
     name: dynatrace-oneagent-operator
-    namespace: dynatrace
+    namespace: "${NAMESPACE}"
     labels:
       dynatrace: operator
       operator: oneagent
@@ -63,7 +63,7 @@ objects:
   apiVersion: rbac.authorization.k8s.io/v1beta1
   metadata:
     name: dynatrace-oneagent-operator
-    namespace: dynatrace
+    namespace: "${NAMESPACE}"
     labels:
       dynatrace: operator
       operator: oneagent
