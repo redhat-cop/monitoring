@@ -7,6 +7,7 @@ The following prerequisites must be met prior to deployment of the Dynatrace Sta
 * [Openshift Applier](https://github.com/redhat-cop/openshift-applier/) to deploy the content to the OpenShift Container Platform.
 * [ansible installed](http://docs.ansible.com/ansible/latest/intro_installation.html)
  * Alternatively follow the instructions to use the [openshift-applier container image](https://github.com/redhat-cop/openshift-applier#openshift-applier-container-image) which includes all the required tools and versions.
+* Access to Dynatrace Monitoring solution and API + PaaS tokens created. Please see [this link](https://www.dynatrace.com/support/help/get-started/introduction/why-do-i-need-an-access-token-and-an-environment-id/#access-tokens) for more information about the tokens, and how to generate these. 
 
 ### Environment Setup
 
@@ -17,19 +18,12 @@ The following prerequisites must be met prior to deployment of the Dynatrace Sta
 5. Modify parameters in `params/dynatrace-custom-resource.params` to set the following config option:
  * Dynatrace SaaS URL
 5. Modify parameters in `params/dynatrace-secret.params` to set the following config options:
- * Dynatrace API Token (in base64 encoding - see below)
- * Dynatrace PaaS Token (in base64 encoding - see below)
+ * Dynatrace API Token
+ * Dynatrace PaaS Token
 
 
 :heavy_exclamation_mark: This stack will create objects that require `cluster-admin` privileges. Ensure you are logged into the Cluster (step 4) with an user with those privileges.
 
-#### Tokens in base64 encoding
-
-Using templates to create OpenShift secrets means that the values needs to be in `base64` encoding. See the Environment Setup section above which values needs to be base64 encoded. To create a base64 value, the following command can be used (where 'token' is the actual token value to be encoded):
-
-```
-> echo -n 'token' | base64
-```
 
 ### Deploy the Dynatrace Stack
 

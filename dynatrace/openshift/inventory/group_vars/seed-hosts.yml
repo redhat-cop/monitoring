@@ -5,7 +5,7 @@ openshift_cluster_content:
   content:
   - template: "{{ inventory_dir }}/../templates/dynatrace-namespace.yml"
     params: "{{ inventory_dir }}/../params/dynatrace-namespace.params"
-    template_action: create
+    action: create
 - object: policies
   content:
   - template: "{{ inventory_dir }}/../templates/dynatrace-serviceaccounts.yml"
