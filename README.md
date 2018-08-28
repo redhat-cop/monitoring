@@ -7,5 +7,6 @@ Infrastructure and Application monitoring to support an OpenShift and containeri
 
 * [Prometheus](prometheus)
 * [Sysdig](sysdig)
+* [Dynatrace](dynatrace)
 
 More to come! 
