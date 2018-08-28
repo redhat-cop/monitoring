@@ -1,0 +1,56 @@
+---
+kind: Template
+apiVersion: v1
+metadata:
+  name: dynatrace-oneagent-operator-template
+  annotations:
+    description: Template for the Dynatrace OneAgent Operator.
+objects:
+- kind: Deployment
+  apiVersion: apps/v1
+  metadata:
+    name: dynatrace-oneagent-operator
+    namespace: ${NAMESPACE}
+    labels:
+      dynatrace: operator
+      operator: oneagent
+  spec:
+    replicas: 1
+    revisionHistoryLimit: 1
+    selector:
+      matchLabels:
+        name: dynatrace-oneagent-operator
+    strategy:
+      type: Recreate
+    template:
+      metadata:
+        labels:
+          name: dynatrace-oneagent-operator
+          dynatrace: operator
+          operator: oneagent
+      spec:
+        containers:
+          - name: dynatrace-oneagent-operator
+            image: quay.io/dynatrace/dynatrace-oneagent-operator:snapshot
+            command:
+            - dynatrace-oneagent-operator
+            imagePullPolicy: Always
+            env:
+            - name: MY_POD_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            resources:
+              requests:
+                cpu: 10m
+                memory: 64Mi
+              limits:
+                cpu: 100m
+                memory: 256Mi
+        serviceAccountName: dynatrace-oneagent-operator
+parameters:
+- name: NAMESPACE
+  displayName: Deployment Namespace
+  description: Namespace (or project) used for deployment
+  required: true
+  value: dynatrace

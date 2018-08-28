@@ -1,0 +1,47 @@
+---
+kind: Template
+apiVersion: v1
+metadata:
+  name: dynatrace-scc-template
+  annotations:
+    description: Dynatrace template for the custom SCC used to run Dynatrace monitoring.
+objects:
+- kind: SecurityContextConstraints
+  apiVersion: v1
+  metadata:
+    annotations:
+      kubernetes.io/description: 'dynatrace-oneagent-privileged allows access to all privileged and host features and the ability to run as any user, any group, any fsGroup, and with any SELinux context. This is a copy of privileged scc.'
+    name: dynatrace-oneagent-privileged
+  allowHostDirVolumePlugin: true
+  allowHostIPC: true
+  allowHostNetwork: true
+  allowHostPID: true
+  allowHostPorts: true
+  allowPrivilegedContainer: true
+  allowedCapabilities:
+  - '*'
+  allowedFlexVolumes: null
+  defaultAddCapabilities: null
+  fsGroup:
+    type: RunAsAny
+  priority: null
+  readOnlyRootFilesystem: false
+  requiredDropCapabilities: null
+  runAsUser:
+    type: RunAsAny
+  seLinuxContext:
+    type: RunAsAny
+  seccompProfiles:
+  - '*'
+  supplementalGroups:
+    type: RunAsAny
+  users:
+  - system:serviceaccount:${NAMESPACE}:dynatrace-oneagent
+  volumes:
+  - '*'
+parameters:
+- name: NAMESPACE
+  displayName: Deployment Namespace
+  description: Namespace (or project) used for deployment
+  required: true
+  value: dynatrace
