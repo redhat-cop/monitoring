@@ -1,0 +1,30 @@
+---
+
+openshift_cluster_content:
+- object: namespace
+  content:
+  - template: "{{ inventory_dir }}/../templates/dynatrace-namespace.yml"
+    params: "{{ inventory_dir }}/../params/dynatrace-namespace.params"
+    action: create
+- object: policies
+  content:
+  - template: "{{ inventory_dir }}/../templates/dynatrace-serviceaccounts.yml"
+    params: "{{ inventory_dir }}/../params/dynatrace-namespace.params"
+  - template: "{{ inventory_dir }}/../templates/dynatrace-rbac.yml"
+    params: "{{ inventory_dir }}/../params/dynatrace-namespace.params"
+  - template: "{{ inventory_dir }}/../templates/dynatrace-scc.yml"
+    params: "{{ inventory_dir }}/../params/dynatrace-namespace.params"
+- object: dynatrace-oneagent
+  content:
+  - name: "Custom Resource Definitions"
+    template: "{{ inventory_dir }}/../templates/dynatrace-custom-resource-definition.yml"
+    params: "{{ inventory_dir }}/../params/dynatrace-namespace.params"
+  - name: "OneAgent Operator"
+    template: "{{ inventory_dir }}/../templates/dynatrace-oneagent-operator.yml"
+    params: "{{ inventory_dir }}/../params/dynatrace-namespace.params"
+  - name: "OneAgent Resource"
+    template: "{{ inventory_dir }}/../templates/dynatrace-custom-resource.yml"
+    params: "{{ inventory_dir }}/../params/dynatrace-custom-resource.params"
+  - name: "Credential Secret"
+    template: "{{ inventory_dir }}/../templates/dynatrace-secret.yml"
+    params: "{{ inventory_dir }}/../params/dynatrace-secret.params"

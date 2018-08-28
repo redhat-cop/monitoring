@@ -1,0 +1,27 @@
+---
+kind: Template
+apiVersion: v1
+metadata:
+  name: dynatrace-namespace-template
+  annotations:
+    description: Dynatrace template the namespace/project
+objects:
+- kind: "Namespace"
+  apiVersion: v1
+  metadata:
+    annotations:
+      openshift.io/node-selector: ""
+      openshift.io/description: "Dynatrace Full-Stack Monitoring"
+      openshift.io/display-name: "Dynatrace Full-Stack Monitoring"
+    name: "${NAMESPACE}"
+    labels:
+      dynatrace: ""
+  spec:
+    finalizers:
+    - kubernetes
+parameters:
+- name: NAMESPACE
+  displayName: Deployment Namespace
+  description: Namespace (or project) used for deployment
+  required: true
+  value: dynatrace

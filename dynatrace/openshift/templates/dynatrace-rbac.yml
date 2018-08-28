@@ -1,0 +1,82 @@
+---
+kind: Template
+apiVersion: v1
+metadata:
+  name: dynatrace-rbac-template
+  annotations:
+    description: 'Dynatrace template for the custom project specific
+      RBAC used to run Dynatrace monitoring.'
+objects:
+- kind: Role
+  apiVersion: rbac.authorization.k8s.io/v1beta1
+  metadata:
+    name: dynatrace-oneagent-operator
+    namespace: "${NAMESPACE}"
+    labels:
+      dynatrace: operator
+      operator: oneagent
+  rules:
+  - apiGroups:
+    - dynatrace.com
+    resources:
+    - oneagents
+    verbs:
+    - get
+    - list
+    - watch
+    - update
+  - apiGroups:
+    - apps
+    resources:
+    - daemonsets
+    verbs:
+    - get
+    - list
+    - watch
+    - create
+    - update
+    - delete
+  - apiGroups:
+    - "" # "" indicates the core API group
+    resources:
+    - pods
+    verbs:
+    - get
+    - list
+    - watch
+    - delete
+  - apiGroups:
+    - "" # "" indicates the core API group
+    resources:
+    - secrets
+    verbs:
+    - get
+    - list
+    - watch
+  - apiGroups:
+    - dynatrace.com
+    resources:
+    - oneagents/finalizers
+    verbs:
+    - update
+- kind: RoleBinding
+  apiVersion: rbac.authorization.k8s.io/v1beta1
+  metadata:
+    name: dynatrace-oneagent-operator
+    namespace: "${NAMESPACE}"
+    labels:
+      dynatrace: operator
+      operator: oneagent
+  subjects:
+  - kind: ServiceAccount
+    name: dynatrace-oneagent-operator
+  roleRef:
+    kind: Role
+    name: dynatrace-oneagent-operator
+    apiGroup: rbac.authorization.k8s.io
+parameters:
+- name: NAMESPACE
+  displayName: Deployment Namespace
+  description: Namespace (or project) used for deployment
+  required: true
+  value: dynatrace

@@ -1,0 +1,33 @@
+---
+kind: Template
+apiVersion: v1
+metadata:
+  name: dynatrace-credentials-template
+  annotations:
+    description: Credentials template for dynatrace oneagent operator deployment
+objects:
+- kind: "OneAgent"
+  apiVersion: "dynatrace.com/v1alpha1"
+  metadata:
+    name: "oneagent"
+    namespace: "${NAMESPACE}"
+  spec:
+    apiUrl: "${API_URL}"
+    skipCertCheck: false
+    tokens: ""
+    nodeSelector: {}
+    tolerations: []
+    image: ""
+    args:
+    - APP_LOG_CONTENT_ACCESS=1
+    env: []
+parameters:
+- name: API_URL
+  displayName: API URL for Dynatrace Tenant
+  description: API URL for Dynatrace Tenant
+  required: true
+- name: NAMESPACE
+  displayName: Deployment Namespace
+  description: Namespace (or project) used for deployment
+  required: true
+  value: dynatrace
