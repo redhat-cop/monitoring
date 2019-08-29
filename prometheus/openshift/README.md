@@ -2,7 +2,7 @@
 
 The following prerequisites must be met prior to beginning to deploy Prometheus Stack
 
-* 1 [Persistent Volume](https://docs.openshift.com/container-platform/latest/architecture/additional_concepts/storage.html) or a cluster that supports [dynamic provisioning with a default StorageClass](https://docs.openshift.com/container-platform/latest/install_config/storage_examples/storage_classes_dynamic_provisioning.html)
+* 1 [Persistent Volume](https://docs.openshift.com/container-platform/3.11/architecture/additional_concepts/storage.html) or a cluster that supports [dynamic provisioning with a default StorageClass](https://docs.openshift.com/container-platform/3.11/install_config/storage_examples/storage_classes_dynamic_provisioning.html)
 * OpenShift Command Line Tool
 * [Openshift Applier](https://github.com/redhat-cop/openshift-applier/) to deploy Prometheus Stack. As a result you'll need to have [ansible installed](http://docs.ansible.com/ansible/latest/intro_installation.html) or follow instructions to use the [openshift-applier container image](https://github.com/redhat-cop/openshift-applier#openshift-applier-container-image) which includes all the required tools and versions.
 * The following Incoming traffic must be enabled for the Cluster Nodes on the underlaying Firewall
