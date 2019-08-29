@@ -2,8 +2,8 @@
 
 In order to automate the agent deployment and configuration 2 templates are provided. Sysdig gives the possibility of deploying the Sysdig Cloud component on-premise, in case you want to avoid your monitoring agents traffic leave your Data Centre or to accomplish security teams restrictions:
 
-  - [Cloud Template](../templates/sysdig-agent-template.yaml)
-  - [On Prem Template](../templates/sysdig-agent-onprem-template.yaml)
+  - [Cloud Template](templates/sysdig-agent-template.yaml)
+  - [On Prem Template](templates/sysdig-agent-onprem-template.yaml)
 
 Follow the steps below in order to deploy the desired agent.
 
