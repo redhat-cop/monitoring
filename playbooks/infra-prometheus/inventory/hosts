@@ -9,3 +9,6 @@ prometheus_node
 [prometheus:children]
 prometheus_master
 prometheus_node
+
+[osp-provisioner]
+localhost

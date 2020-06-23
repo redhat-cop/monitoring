@@ -1,3 +1,55 @@
 ---
 docker_install: True
 docker_username: centos
+hosting_infrastructure: openstack
+ansible_user: centos
+
+
+osp_routers:
+  - name: "prometheus-router"
+    external_gateway: "external"
+    subnet: "prometheus-subnet"
+
+osp_security_groups:
+  - name: "ssh-sec-group"
+    description: "My SSH Sec Group"
+    rules:
+      - protocol: tcp
+        port_range_min: 22
+        port_range_max: 22
+        direction: ingress
+        remote_ip_prefix: 0.0.0.0/0
+  - name: "icmp-sec-group"
+    description: "ICMP Security Group"
+    rules:
+      - protocol: icmp
+        direction: ingress
+        remote_ip_prefix: 0.0.0.0/0
+  - name: "prometheus-sec-group"
+    description: "Prometheus Security Group"
+    rules:
+      - protocol: tcp
+        port_range_min: 9090
+        port_range_max: 9090
+        direction: ingress
+        remote_ip_prefix: 0.0.0.0/0
+      - protocol: tcp
+        port_range_min: 3000
+        port_range_max: 3000
+        direction: ingress
+        remote_ip_prefix: 0.0.0.0/0
+
+
+
+osp_instances:
+  - name: "prometheus-instance"
+    meta:
+      group: prometheus_master
+    image: "CentOS-7-x86_64"
+    key_name: "tkummer-os-key"
+    flavor: "m1.medium"
+    network: "dns-network"
+    security_groups:
+      - ssh-sec-group
+      - icmp-sec-group
+      - prometheus-sec-group
