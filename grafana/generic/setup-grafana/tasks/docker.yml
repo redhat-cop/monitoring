@@ -1,4 +1,9 @@
 ---
+
+- name: copy dashboards
+  copy:
+    src: dashboard.json
+    dest: /home/centos/dashboards/
 - name: Run the datasources.yml template
   template:
     src: datasources.yml.j2
@@ -23,6 +28,9 @@
     - "{{ grafana_port }}:3000"
     volumes:
     - /home/centos/datasources.yml:/etc/grafana/provisioning/datasources/datasources.yml:Z
+    - /home/centos/dashboard.yml:/etc/grafana/provisioning/dashboards/dashboards.yml:Z
+    - /home/centos/dashboards/:/etc/grafana/provisioning/dashboards/:Z
     env:
       GF_SECURITY_ADMIN_PASSWORD: "{{ grafana_password }}"
     state: "{{ provision_state }}"
+    restart: yes
