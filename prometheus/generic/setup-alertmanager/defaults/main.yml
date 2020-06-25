@@ -1,0 +1,6 @@
+---
+alertmanager_image: 'prom/alertmanager'
+alertmanager_image_version: 'latest'
+alertmanager_port: '9093'
+
+provision_state: "started"

@@ -3,7 +3,7 @@ docker_install: True
 docker_username: centos
 hosting_infrastructure: openstack
 ansible_user: centos
-
+dashboard_dir: /opt/app-root/dashboards_auto/
 
 osp_routers:
   - name: "prometheus-router"
@@ -38,6 +38,11 @@ osp_security_groups:
         port_range_max: 3000
         direction: ingress
         remote_ip_prefix: 0.0.0.0/0
+      - protocol: tcp
+        port_range_min: 9100
+        port_range_max: 9100
+        direction: ingress
+        remote_ip_prefix: 0.0.0.0/0
 
 
 
@@ -45,6 +50,18 @@ osp_instances:
   - name: "prometheus-instance"
     meta:
       group: prometheus_master
+    image: "CentOS-7-x86_64"
+    key_name: "tkummer-os-key"
+    flavor: "m1.medium"
+    network: "dns-network"
+    security_groups:
+      - ssh-sec-group
+      - icmp-sec-group
+      - prometheus-sec-group
+
+  - name: "prometheus-node"
+    meta:
+      group: prometheus_node
     image: "CentOS-7-x86_64"
     key_name: "tkummer-os-key"
     flavor: "m1.medium"
