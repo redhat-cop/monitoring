@@ -1,0 +1,16 @@
+global:
+  resolve_timeout: 5m
+  smtp_smarthost: "{{ ansible_host }}:25"
+  smtp_from: 'alertmanager@example.org'
+  smtp_require_tls: false
+
+route:
+  group_by: ['alertname']
+  group_wait: 10s
+  group_interval: 10s
+  repeat_interval: 1h
+  receiver: 'mail'
+receivers:
+- name: 'mail'
+  email_configs:
+   - to: tkummer@redhat.com

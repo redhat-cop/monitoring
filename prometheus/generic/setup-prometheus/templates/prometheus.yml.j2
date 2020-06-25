@@ -8,6 +8,16 @@ global:
 
 # A scrape configuration containing exactly one endpoint to scrape:
 # Here it's Prometheus itself.
+alerting:
+ alertmanagers:
+   - static_configs:
+     - targets:
+       # Alertmanager's default port is 9093
+       - "{{ ansible_host }}:9093"
+
+rule_files:
+  - "first_rules.yml"
+
 scrape_configs:
   # The job name is added as a label `job=<job_name>` to any timeseries scraped from this config.
   - job_name: 'prometheus'
