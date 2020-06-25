@@ -4,3 +4,4 @@ docker_username: centos
 hosting_infrastructure: openstack
 ansible_user: centos
 dashboard_dir: /opt/app-root/dashboards_auto/
+notification_recipients: somebody@example.com
