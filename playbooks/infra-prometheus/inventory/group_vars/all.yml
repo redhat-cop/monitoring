@@ -3,5 +3,5 @@ docker_install: True
 docker_username: centos
 hosting_infrastructure: openstack
 ansible_user: centos
-dashboard_dir: /opt/app-root/dashboards_auto/
+dashboard_dir: /home/user/dashbooard dir
 notification_recipients: somebody@example.com

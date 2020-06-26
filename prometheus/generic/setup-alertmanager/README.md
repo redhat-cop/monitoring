@@ -1,7 +1,7 @@
-setup-node-exporter
+setup-alertmanager
 =========
 
-This role will instantiate a prometheus container on targeted hosts.
+This role will instantiate a alertmanager container on targeted hosts. The notifications are sent to SMTP port (25) on the host server.
 
 Requirements
 ------------
@@ -12,15 +12,16 @@ Role Variables
 --------------
 Default values of variables:
 ```
-prometheus_image: 'prom/prometheus'
-prometheus_image_version: 'latest'
-prometheus_port: '9090'
+alertmanager_image: 'prom/alertmanager'
+alertmanager_image_version: 'latest'
+alertmanager_port: '9093'
 
 provision_state: "started"
+
 ```
-`prometheus_image` - The node exporter image to deploy.
-`prometheus_image_version` - The image tag to deploy.
-`prometheus_port` - The port to expose on the target hosts.
+`alertmanager_image` - The alertmanager image to deploy.
+`alertmanager_image_version` - The image tag to deploy.
+`alertmanager_port` - The port to expose on the target hosts.
 `provision_state` - Options: [absent, killed, present, reloaded, restarted, **started** (default), stopped]
 
 
@@ -35,13 +36,13 @@ The docker server >= 0.10.0
 Example Playbook
 ----------------
 ```
-- name: Setup prometheus
+- name: Setup alertmanager
   hosts: prometheus_master
   become: True
   vars:
     provision_state: "started"
   roles:
-    - prometheus/generic/setup-prometheus
+    - prometheus/generic/setup-alertmanager
 ```
 
 License
