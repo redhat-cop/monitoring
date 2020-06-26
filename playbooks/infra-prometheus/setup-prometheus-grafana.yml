@@ -16,7 +16,7 @@
   roles:
     - ../../prometheus/generic/setup-node-exporter
   tags:
-    - 'allways'
+    - 'always'
 
 - name: Setup prometheus and alertmanager
   hosts: prometheus_master
@@ -28,4 +28,4 @@
     - ../../grafana/generic/setup-grafana
     - ../../prometheus/generic/setup-alertmanager
   tags:
-    - 'allways'
+    - 'always'
