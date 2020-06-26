@@ -1,7 +1,7 @@
 setup-node-exporter
 =========
 
-This role will instantiate a grafana container on targeted hosts.
+This role will instantiate a grafana container on targeted hosts. It also seeds the host with dashboards
 
 Requirements
 ------------
@@ -47,6 +47,7 @@ Example Playbook
   become: True
   vars:
     provision_state: "started"
+    dashboard_dir: "/home/user/dashboards"
   roles:
     - grafana/generic/setup-grafana
 ```

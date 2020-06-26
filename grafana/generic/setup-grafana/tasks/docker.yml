@@ -2,7 +2,7 @@
 
 - name: copy dashboards
   copy:
-    src: ../files/dashboards/
+    src: "{{ dashboard_dir }}"
     dest: /home/centos/dashboards/
 
 - name: Run the datasources.yml template
@@ -14,8 +14,8 @@
     group: centos
 
 - name: Run the dashboard.yml template
-  template:
-    src: dashboard.yml.j2
+  copy:
+    src: dashboards.yml
     dest: /home/centos/dashboards/dashboards.yml
     mode: 0755
     owner: centos
