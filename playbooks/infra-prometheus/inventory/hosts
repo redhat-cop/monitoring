@@ -10,5 +10,3 @@ prometheus_node
 prometheus_master
 prometheus_node
 
-[osp-provisioner]
-localhost
