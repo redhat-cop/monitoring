@@ -4,7 +4,7 @@ global:
   # Attach these labels to any time series or alerts when communicating with
   # external systems (federation, remote storage, Alertmanager).
   external_labels:
-    monitor: 'codelab-monitor'
+    monitor: 'codelab-monitor-{{hostvars[inventory_hostname].ansible_ssh_host}}'
 
 # A scrape configuration containing exactly one endpoint to scrape:
 # Here it's Prometheus itself.
@@ -19,6 +19,24 @@ rule_files:
   - "first_rules.yml"
 
 scrape_configs:
+{% if (groups['prometheus_master'] |length ) > 1 %}
+  - job_name: 'federate-sanity-check'
+    scrape_interval: 15s
+
+    honor_labels: true
+    metrics_path: '/federate'
+
+    params:
+      'match[]':
+        - '{job=~"prometheus"}'
+
+    static_configs:
+{% for host in groups['prometheus_master'] %}
+{% if hostvars[host].ansible_host != ansible_host %}
+      - targets: ['{{hostvars[host].ansible_host}}:9090']
+{% endif %}   
+{% endfor %}
+{% endif %}
   # The job name is added as a label `job=<job_name>` to any timeseries scraped from this config.
   - job_name: 'prometheus'
     scrape_interval: 5s
