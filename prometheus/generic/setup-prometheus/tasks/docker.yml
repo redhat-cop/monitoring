@@ -8,6 +8,7 @@
     group: centos
   vars:
     target_nodes: "{{ groups['prometheus_node'] }}"
+    target_haproxy: "{{ groups['prometheus_haproxy'] }}"
 
 - name: copy the first_rules.yml file
   copy:

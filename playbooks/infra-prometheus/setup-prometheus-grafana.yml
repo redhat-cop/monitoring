@@ -18,6 +18,16 @@
   tags:
     - 'always'
 
+- name: Setup haproxy exporters
+  hosts: prometheus_haproxy
+  become: True
+  vars:
+    provision_state: "started"
+  roles:
+    - ../../prometheus/generic/setup-haproxy-exporter
+  tags:
+    - 'always'
+
 - name: Setup prometheus and alertmanager
   hosts: prometheus_master
   become: True
