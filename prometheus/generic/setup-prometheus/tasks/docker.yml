@@ -1,9 +1,4 @@
 ---
-- debug:
-    var: target_nodes
-  vars:
-    target_nodes: "{{ groups['prometheus_node'] }}"
-
 - name: Run the prometheus.yml template
   template:
     src: prometheus.yml.j2
