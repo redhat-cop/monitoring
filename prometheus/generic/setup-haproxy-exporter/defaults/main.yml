@@ -1,0 +1,9 @@
+---
+haproxy_exporter_image: 'prom/haproxy-exporter'
+haproxy_exporter_image_version: 'latest'
+haproxy_exporter_port: '9101'
+
+provision_state: "started"
+stats_port: '8080'
+stats_user: admin
+stats_password: admin
