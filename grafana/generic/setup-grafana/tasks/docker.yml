@@ -33,4 +33,4 @@
     env:
       GF_SECURITY_ADMIN_PASSWORD: "{{ grafana_password }}"
     state: "{{ provision_state }}"
-    recreate: yes
+    restart: yes
