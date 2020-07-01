@@ -18,3 +18,4 @@
     volumes:
     - /home/centos/prometheus.yml:/etc/prometheus/prometheus.yml:Z
     state: "{{ provision_state }}"
+    restart: yes
