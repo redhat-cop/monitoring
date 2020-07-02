@@ -4,6 +4,9 @@
   become: True
   roles:
     - infra-ansible/roles/config-docker
+  tags:
+    - 'never'
+    - 'install'
 
 - name: Setup node exporters
   hosts: prometheus_node
