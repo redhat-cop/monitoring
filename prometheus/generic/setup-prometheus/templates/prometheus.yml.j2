@@ -23,3 +23,13 @@ scrape_configs:
                 host: '{{ host }}'
                 job: 'node'
       {% endfor %}
+  - job_name: 'bind_exporter'
+    scrape_interval: 5s
+    static_configs:
+      {% for host in bind_nodes %}
+      - targets: ['{{ hostvars[host].ansible_ssh_host }}:9119']
+              labels:
+                host: '{{ host }}'
+                job: 'node'
+      {% endfor %}
+

@@ -1,0 +1,12 @@
+---
+- name: Run the bind_exporter
+  docker_container:
+    name: bind_exporter
+    image: "{{ bind_exporter_image }}:{{ bind_exporter_image_version }}"
+    pid_mode: "host"
+    network_mode: "host"
+    state: "{{ provision_state }}"
+    published_ports:
+    - "{{ bind_exporter_port }}:9119"
+    restart: yes
+    command: "-bind.stats-url http://127.0.0.1:{{ bind_stats_port }}"
