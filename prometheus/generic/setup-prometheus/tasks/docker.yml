@@ -8,7 +8,6 @@
     group: centos
   vars:
     target_nodes: "{{ groups['prometheus_node'] }}"
-    target_haproxy: "{{ groups['prometheus_haproxy'] }}"
 
 - name: Run Prometheus Docker container
   docker_container:
@@ -19,4 +18,3 @@
     volumes:
     - /home/centos/prometheus.yml:/etc/prometheus/prometheus.yml:Z
     state: "{{ provision_state }}"
-    restart: yes
