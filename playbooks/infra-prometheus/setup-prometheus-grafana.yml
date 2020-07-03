@@ -13,16 +13,6 @@
   roles:
     - ../../prometheus/generic/setup-node-exporter
 
-- name: Setup haproxy exporters
-  hosts: prometheus_haproxy
-  become: True
-  vars:
-    provision_state: "started"
-  roles:
-    - ../../prometheus/generic/setup-haproxy-exporter
-  tags:
-    - 'always'
-
 - name: Setup prometheus
   hosts: prometheus_master
   become: True
