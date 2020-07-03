@@ -9,7 +9,7 @@
     - 'install'
 
 - name: Setup node exporters
-  hosts: prometheus_node
+  hosts: prometheus_target
   become: True
   vars:
     provision_state: "started"
@@ -18,8 +18,9 @@
   tags:
     - 'always'
 
+
 - name: Setup prometheus and alertmanager
-  hosts: prometheus_master
+  hosts: prometheus_scraper
   become: True
   vars:
     provision_state: "started"
