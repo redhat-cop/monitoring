@@ -6,8 +6,6 @@
     mode: 0755
     owner: centos
     group: centos
-  vars:
-    target_nodes: "{{ groups['prometheus_node'] }}"
 
 - name: copy the first_rules.yml file
   copy:
