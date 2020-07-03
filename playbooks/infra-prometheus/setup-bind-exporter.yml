@@ -9,7 +9,7 @@
     - 'install'
 
 - name: Setup bind exporters
-  hosts: prometheus_bind
+  hosts: prometheus_target_bind
   become: True
   vars:
     provision_state: "started"
