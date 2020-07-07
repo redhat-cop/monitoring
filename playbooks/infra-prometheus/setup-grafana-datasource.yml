@@ -1,0 +1,7 @@
+---
+- name: setup datasource
+  hosts: prometheus_scraper
+  become: True
+  roles:
+    - ../../grafana/generic/configure-grafana-datasource
+#  delegate_to: localhost
