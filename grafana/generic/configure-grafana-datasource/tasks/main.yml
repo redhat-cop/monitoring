@@ -1,0 +1,17 @@
+---
+- debug:
+    var: datasources
+
+- name: create datasource
+  uri:
+    url: "http://{{ ansible_host }}:{{ grafana_port }}/api/datasources"
+    method: POST
+    body: "{{ lookup ('template', 'datasource.json.j2') | to_json }}"
+    body_format: json
+    url_username: admin
+    url_password: "{{ grafana_password }}"
+    force_basic_auth: true
+    headers:
+      Accept: "application/json"
+      Content-type: "application/json"
+  loop: "{{ datasources }}"
