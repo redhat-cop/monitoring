@@ -1,0 +1,13 @@
+{
+  "name":"{{ item.name }}",
+  "type":"prometheus",
+  "url":"{{ item.datasource_url }}",
+  "access":"proxy",
+  "basicAuth":false,
+  "jsonData": {
+    "httpHeaderName1":"Authorization"
+  },
+  "securejsonData": {
+    "httpHeaderValue1":"Bearer {{ item.bearer_token }}"
+  }
+}
