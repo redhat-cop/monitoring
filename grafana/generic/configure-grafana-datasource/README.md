@@ -1,55 +1,58 @@
-setup-node-exporter
+setup-grafana-datasource
 =========
 
-This role will instantiate a grafana container on targeted hosts. It also seeds the host with dashboards
+This role will configures Openshift operated prometheus datasources. It iterates over "{{ datasources }}" list described in Example Inventory section.
 
 Requirements
 ------------
 
-Docker must be available and running on the targeted hosts.
+grafana has to be running on target host
 
 Role Variables
 --------------
 Default values of variables:
 ```
 ---
-grafana_image: 'grafana/grafana'
-grafana_image_version: 'latest'
 grafana_port: '3000'
 grafana_password: 'super_secure_password'
 
-prometheus_port: '9090'
+```
+`grafana_port:` - port on which grafana is listening
+`grafana_password:` - password for grafana admin user
 
-provision_state: "started"
+Example Inventory
+-----------------
+```
+---
+datasources:
+- name: "test_datasource"
+  datasource_url: "https://prometheus-k8s-openshift-monitoring.apps.openshift.test.com"
+  bearer_token:
 
 ```
-`grafana_image` - The node exporter image to deploy.
-`grafana_image_version` - The image tag to deploy.
-`grafana_port` - The port to expose on the target hosts.
-`grafana_password` - The admin password to set for Grafana.
-`prometheus_port` - The target port on the prometheus host to pull data.
-`provision_state` - Options: [absent, killed, present, reloaded, restarted, **started** (default), stopped]
+datasources:
+- name: - name of new datasource
+  datasource_url: - url on which the prometheus is listening
+  bearer_token: - authentication token for the Prometheus Oauth proxy
 
 
 Dependencies
 ------------
 ```
 python >= 2.6
-docker-py >= 0.3.0
-The docker server >= 0.10.0
 ```
 
 Example Playbook
 ----------------
 ```
-- name: Setup grafana
+- name: Setup grafana datasourdce
   hosts: grafana
   become: True
   vars:
-    provision_state: "started"
-    dashboard_dir: "/home/user/dashboards"
+    grafana_port: '3000'
+    grafana_password: 'custom_password'
   roles:
-    - grafana/generic/setup-grafana
+    - grafana/generic/configure-grafana-datasource
 ```
 
 License
