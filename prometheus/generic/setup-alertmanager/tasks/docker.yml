@@ -6,8 +6,6 @@
     mode: 0755
     owner: centos
     group: centos
-  vars:
-    target_nodes: "{{ groups['prometheus_node'] }}"
 
 - name: Run Alertmanager Docker container
   docker_container:
