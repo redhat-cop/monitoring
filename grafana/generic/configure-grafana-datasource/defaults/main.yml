@@ -1,3 +1,4 @@
 ---
 grafana_port: '3000'
 grafana_password: 'super_secure_password'
+grafana_user: 'admin'
