@@ -1,12 +1,14 @@
 setup-node-exporter
 =========
 
-This role will instantiate a bind-exporter container on targeted hosts. The statistics page has to be enabled and available locally on targeted hosts.
+This role will instantiate a bind-exporter container on targeted hosts. The statistics page has to be enabled and available locally on targeted hosts. 
 
 Requirements
 ------------
 
 Docker must be available and running on the targeted hosts.
+The statistics page has to be enabled and available locally on targeted hosts.
+The docs about stats page are available here: https://kb.isc.org/docs/aa-01123
 
 Role Variables
 --------------
@@ -44,6 +46,16 @@ Example Playbook
     provision_state: "started"
   roles:
     - prometheus/generic/setup-bind-exporter
+```
+
+How to enable stats page
+------------------------
+Below is configuration snippet from /etc/named.conf which enables statistics page on local port 8053
+
+```
+statistics-channels {
+  inet 127.0.0.1 port 8053 allow { 127.0.0.1; };
+};
 ```
 
 License

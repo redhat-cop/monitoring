@@ -15,3 +15,5 @@
     provision_state: "started"
   roles:
     - ../../prometheus/generic/setup-bind-exporter
+  tags:
+    - 'always'
