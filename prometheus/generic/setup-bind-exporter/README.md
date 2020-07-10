@@ -1,4 +1,4 @@
-setup-node-exporter
+setup-bind-exporter
 =========
 
 This role will instantiate a bind-exporter container on targeted hosts. The statistics page has to be enabled and available locally on targeted hosts. 
