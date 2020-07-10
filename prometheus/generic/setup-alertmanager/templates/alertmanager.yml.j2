@@ -5,7 +5,7 @@ global:
   smtp_auth_username: "{{ smtp_username }}"
   smtp_auth_identity: "{{ smtp_username }}"
   smtp_auth_password: "{{ smtp_password }}"
-  smtp_require_tls: false
+  smtp_require_tls: "{{ smtp_tls }}"
 
 route:
   group_by: ['alertname']
