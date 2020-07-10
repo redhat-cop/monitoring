@@ -4,4 +4,3 @@
   become: True
   roles:
     - ../../grafana/generic/configure-grafana-datasource
-#  delegate_to: localhost
