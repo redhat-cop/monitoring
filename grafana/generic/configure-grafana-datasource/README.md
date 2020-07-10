@@ -1,5 +1,5 @@
 setup-grafana-datasource
-=========
+========================
 
 This role will configures Openshift operated prometheus datasources. It iterates over "{{ datasources }}" list described in Example Inventory section.
 
@@ -15,10 +15,12 @@ Default values of variables:
 ---
 grafana_port: '3000'
 grafana_password: 'super_secure_password'
+grafana_user: 'admin' 
 
 ```
 `grafana_port:` - port on which grafana is listening
-`grafana_password:` - password for grafana admin user
+`grafana_password:` - password for grafana
+`grafana_user:` - user in grafana who can create datasource
 
 Example Inventory
 -----------------
@@ -46,11 +48,12 @@ Example Playbook
 ----------------
 ```
 - name: Setup grafana datasourdce
-  hosts: grafana
+  hosts: prometheus_scraper
   become: True
   vars:
     grafana_port: '3000'
     grafana_password: 'custom_password'
+    grafana_user: 'custom_user'
   roles:
     - grafana/generic/configure-grafana-datasource
 ```

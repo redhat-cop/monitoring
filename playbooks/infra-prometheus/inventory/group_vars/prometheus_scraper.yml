@@ -4,3 +4,10 @@ smtp_port: my_smtp_port
 from: my_smtp_from
 smtp_username: 'smtp_user'
 smtp_password: 'smtp_password'
+smtp_tls: 'false'
+
+
+datasources:
+- name: "openshift-1"
+  datasource_url: "https://prometheus-k8s-openshift-monitoring.apps.openshift-1.example.com"
+  bearer_token: "prometheus-k8s-secret-token"

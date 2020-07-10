@@ -1,7 +1,0 @@
-{
-  "name":"test_datasource",
-  "type":"graphite",
-  "url":"{{ datasource }}",
-  "access":"proxy",
-  "basicAuth":false
-}
