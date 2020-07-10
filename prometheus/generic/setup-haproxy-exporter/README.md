@@ -1,4 +1,4 @@
-setup-node-exporter
+setup-haproxy-exporter
 =========
 
 This role will instantiate a haproxy-exporter container on targeted hosts.
