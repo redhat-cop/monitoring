@@ -1,3 +1,6 @@
 ---
 docker_install: True
 docker_username: centos
+ansible_user: centos
+dashboard_dir: /home/user/dashbooards
+notification_recipients: somebody@example.com

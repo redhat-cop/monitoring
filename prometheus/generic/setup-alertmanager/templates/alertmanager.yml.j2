@@ -1,0 +1,19 @@
+global:
+  resolve_timeout: 5m
+  smtp_smarthost: "{{smtp_host}}:{{smtp_port}}"
+  smtp_from: "{{ from }}"
+  smtp_auth_username: "{{ smtp_username }}"
+  smtp_auth_identity: "{{ smtp_username }}"
+  smtp_auth_password: "{{ smtp_password }}"
+  smtp_require_tls: "{{ smtp_tls }}"
+
+route:
+  group_by: ['alertname']
+  group_wait: 10s
+  group_interval: 10s
+  repeat_interval: 1h
+  receiver: 'mail'
+receivers:
+- name: 'mail'
+  email_configs:
+   - to: "{{ notification_recipients }}"
