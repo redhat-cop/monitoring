@@ -26,11 +26,11 @@ provision_state: "started"
 Example Inventory
 -----------------
 
-Section below configures targets for the SSL exporter. {{ ssl_certs }} variable has to be defined for hostgroup prometheus_scraper or all, because the values are used in prometheus.yml.j2 template on the scrapers.
+Snippet below configures targets for the SSL exporter. It was taken from group_vars/prometheus_scraper.yml. {{ ssl_certs }} has to be defined for hostgroup prometheus_scraper or all, because the values are used in prometheus.yml.j2 template on the scraper nodes.
 
 ssl_certs:
-  - https://console-openshift-console.apps.openshift-1.example.com:443
-  - https://api.openshift-1.example.com:6443
+  - console-openshift-console.apps.openshift-1.example.com:443
+  - api.openshift-1.example.com:6443
 
 
 
