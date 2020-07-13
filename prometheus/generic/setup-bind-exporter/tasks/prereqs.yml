@@ -1,0 +1,27 @@
+---
+- name: Ensure epel-release is installed
+  yum:
+    name: "{{ item }}"
+    state: present
+  with_items:
+  - epel-release
+
+- name: Ensure python-pip is installed
+  yum:
+    name: "{{ item }}"
+    state: present
+  with_items:
+  - python-pip
+
+
+- name: Install required python libraries
+  pip:
+    name: "docker-py"
+    state: present
+
+- name: enable exporter port on firewall
+  firewalld:
+    port: "{{ bind_exporter_port }}/tcp"
+    permanent: yes
+    immediate: yes
+    state: enabled 

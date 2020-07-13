@@ -1,1 +1,2 @@
 - src: https://github.com/redhat-cop/infra-ansible
+  version: v1.0.16
