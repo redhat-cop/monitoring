@@ -23,6 +23,16 @@ provision_state: "started"
 `ssl_exporter_port` - The port to expose on the target hosts.
 `provision_state` - Options: [absent, killed, present, reloaded, restarted, **started** (default), stopped]
 
+Example Inventory
+-----------------
+
+Section below configures targets for the SSL exporter. {{ ssl_certs }} variable has to be defined for hostgroup prometheus_scraper or all, because the values are used in prometheus.yml.j2 template on the scrapers.
+
+ssl_certs:
+  - https://console-openshift-console.apps.openshift-1.example.com:443
+  - https://api.openshift-1.example.com:6443
+
+
 
 Dependencies
 ------------
