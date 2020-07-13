@@ -1,0 +1,6 @@
+---
+ssl_exporter_image: 'ribbybibby/ssl-exporter'
+ssl_exporter_image_version: 'latest'
+ssl_exporter_port: '9219'
+
+provision_state: "started"
