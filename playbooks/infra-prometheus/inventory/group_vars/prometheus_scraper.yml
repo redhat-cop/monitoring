@@ -8,7 +8,7 @@ smtp_tls: 'false'
 
 
 
-#Below is an example inventory for the setup-grafana-datasource.yml playbook
+#Below is an example inventory for the configure-grafana-datasource role
 #datasources:
 #- name: "openshift-1"
 #  datasource_url: "https://prometheus-k8s-openshift-monitoring.apps.openshift-1.example.com"
