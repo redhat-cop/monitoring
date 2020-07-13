@@ -77,3 +77,21 @@ scrape_configs:
 {% endfor %}
 {% endif %}
 
+{% if ssl_certs is defined %}
+  - job_name: 'ssl'
+    metrics_path: /probe
+    scrape_interval: 5s
+    static_configs:
+      - targets:
+{% for cert in ssl_certs %}
+          - {{ cert }}
+{% endfor %}
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: 127.0.0.1:{{ ssl_exporter_port }}
+{% endif %}
+
