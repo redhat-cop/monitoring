@@ -1,0 +1,9 @@
+---
+- name: Run the ssl_exporter
+  docker_container:
+    name: ssl_exporter
+    image: "{{ ssl_exporter_image }}:{{ ssl_exporter_image_version }}"
+    network_mode: "host"
+    state: "{{ provision_state }}"
+    published_ports:
+    - "{{ ssl_exporter_port }}:9219"
