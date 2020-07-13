@@ -1,0 +1,13 @@
+---
+alertmanager_image: 'prom/alertmanager'
+alertmanager_image_version: 'latest'
+alertmanager_port: '9093'
+
+provision_state: "started"
+
+smtp_host: my_smtp_host
+smtp_port: my_smtp_port
+from: my_smtp_from
+smtp_username: 'smtp_user'
+smtp_password: 'smtp_password'
+smtp_tls: 'false'

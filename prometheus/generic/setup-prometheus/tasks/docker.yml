@@ -6,8 +6,14 @@
     mode: 0755
     owner: centos
     group: centos
-  vars:
-    target_nodes: "{{ groups['prometheus_node'] }}"
+
+- name: copy the first_rules.yml file
+  copy:
+    src: first_rules.yml
+    dest: /home/centos/first_rules.yml
+    mode: 0755
+    owner: centos
+    group: centos
 
 - name: Run Prometheus Docker container
   docker_container:
@@ -17,4 +23,6 @@
     - "{{ prometheus_port }}:9090"
     volumes:
     - /home/centos/prometheus.yml:/etc/prometheus/prometheus.yml:Z
+    - /home/centos/first_rules.yml:/etc/prometheus/first_rules.yml:Z
     state: "{{ provision_state }}"
+    restart: yes

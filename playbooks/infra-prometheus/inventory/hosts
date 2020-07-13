@@ -1,11 +1,18 @@
-[prometheus_master]
+[prometheus_scraper]
 
-[prometheus_node]
+[prometheus_target]
+
+[prometheus_target_haproxy]
+
+[prometheus_target_bind]
+
 
 [osp_instances:children]
-prometheus_master
-prometheus_node
+prometheus_scraper
+prometheus_target
 
 [prometheus:children]
-prometheus_master
-prometheus_node
+prometheus_scraper
+prometheus_target
+prometheus_target_bind
+prometheus_target_haproxy

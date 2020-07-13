@@ -1,0 +1,6 @@
+---
+smtp_host: my_smtp_host
+smtp_port: my_smtp_port
+from: my_smtp_from
+smtp_username: 'smtp_user'
+smtp_password: 'smtp_password'

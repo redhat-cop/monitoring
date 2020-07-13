@@ -1,0 +1,19 @@
+---
+- name: Run the alertmanager.yml template
+  template:
+    src: alertmanager.yml.j2
+    dest: /home/centos/alertmanager.yml
+    mode: 0755
+    owner: centos
+    group: centos
+
+- name: Run Alertmanager Docker container
+  docker_container:
+    name: alertmanager
+    image: "{{ alertmanager_image }}:{{ alertmanager_image_version }}"
+    published_ports:
+    - "{{ alertmanager_port }}:9093"
+    volumes:
+    - /home/centos/alertmanager.yml:/etc/alertmanager/alertmanager.yml:Z
+    state: "{{ provision_state }}"
+    recreate: yes

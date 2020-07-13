@@ -8,6 +8,16 @@ global:
 
 # A scrape configuration containing exactly one endpoint to scrape:
 # Here it's Prometheus itself.
+alerting:
+ alertmanagers:
+   - static_configs:
+     - targets:
+       # Alertmanager's default port is 9093
+       - "{{ ansible_host }}:9093"
+
+rule_files:
+  - "first_rules.yml"
+
 scrape_configs:
   # The job name is added as a label `job=<job_name>` to any timeseries scraped from this config.
   - job_name: 'prometheus'
@@ -17,9 +27,53 @@ scrape_configs:
   - job_name: 'node_exporter'
     scrape_interval: 5s
     static_configs:
-      {% for host in target_nodes %}
-      - targets: ['{{ hostvars[host].ansible_ssh_host }}:9100']
-              labels:
-                host: '{{ host }}'
-                job: 'node'
-      {% endfor %}
+{% for host in groups['prometheus_target'] %}
+    - targets: ['{{ hostvars[host].ansible_ssh_host }}:9100']
+      labels:
+        host: '{{ host }}'
+        job: 'node'
+{% endfor %}
+
+
+{% if (groups['prometheus_scraper'] |length ) > 1 %}
+  - job_name: 'federate-sanity-check'
+    scrape_interval: 15s
+
+    metrics_path: '/federate'
+
+    params:
+      'match[]':
+        - '{job=~"prometheus"}'
+
+    static_configs:
+{% for host in groups['prometheus_scraper'] %}
+{% if hostvars[host].ansible_host != ansible_host %}
+      - targets: ['{{hostvars[host].ansible_host}}:9090']
+{% endif %}
+{% endfor %}
+{% endif %}
+
+{% if (groups['prometheus_target_haproxy'] | length ) > 0 %}
+  - job_name: 'haproxy_exporter'
+    scrape_interval: 5s
+    static_configs:
+{% for host in groups['prometheus_target_haproxy'] %}
+      - targets: ['{{ hostvars[host].ansible_ssh_host }}:{{ haproxy_exporter_port }}']
+        labels:
+          host: '{{ host }}'
+          job: 'haproxy'
+{% endfor %}
+{% endif %}
+
+{% if (groups['prometheus_target_bind'] | length ) > 0 %}
+  - job_name: 'bind_exporter'
+    scrape_interval: 5s
+    static_configs:
+{% for host in groups['prometheus_target_bind'] %}
+      - targets: ['{{ hostvars[host].ansible_ssh_host }}:{{ bind_exporter_port }}']
+        labels:
+          host: '{{ host }}'
+          job: 'haproxy'
+{% endfor %}
+{% endif %}
+
