@@ -15,14 +15,31 @@ Default values of variables:
 prometheus_image: 'prom/prometheus'
 prometheus_image_version: 'latest'
 prometheus_port: '9090'
+haproxy_exporter_port: '9101'
+bind_exporter_port: '9119'
+ssl_exporter_port: '9219'
 
 provision_state: "started"
 ```
 `prometheus_image` - The node exporter image to deploy.
 `prometheus_image_version` - The image tag to deploy.
 `prometheus_port` - The port to expose on the target hosts.
+`haproxy_exporter_port:` - default port on which ha_proxy exporter listens, used for prometheus.yml.j2 template
+`bind_exporter_port:` - default port on which bind exporter listens, used for prometheus.yml.j2 template
+`ssl_exporter_port:` - default port on which ssl exporter listens, used for prometheus.yml.j2 templat
+
 `provision_state` - Options: [absent, killed, present, reloaded, restarted, **started** (default), stopped]
 
+Example Inventory
+-----------------
+
+Snippet below configures targets for the SSL exporter. It was taken from group_vars/prometheus_scraper.yml. {{ ssl_certs }} has to be defined for hostgroup prometheus_scraper or all, because the values are used in prometheus.yml.j2 template on the scraper nodes.
+
+```
+ssl_certs:
+  - console-openshift-console.apps.openshift-1.example.com:443
+  - api.openshift-1.example.com:6443
+```
 
 Dependencies
 ------------
