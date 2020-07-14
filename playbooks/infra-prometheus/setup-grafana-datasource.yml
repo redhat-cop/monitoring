@@ -1,0 +1,10 @@
+---
+- name: setup datasource
+  hosts: prometheus_scraper
+  become: True
+  vars:
+    grafana_port: '3000'
+    grafana_password: 'custom_password'
+    grafana_user: 'custom_admin'
+  roles:
+    - ../../grafana/generic/configure-grafana-datasource
