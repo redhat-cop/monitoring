@@ -2,8 +2,10 @@
 prometheus_image: 'prom/prometheus'
 prometheus_image_version: 'latest'
 prometheus_port: '9090'
+alertmanager_port: '9093'
 haproxy_exporter_port: '9101'
 bind_exporter_port: '9119'
 ssl_exporter_port: '9219'
+
 
 provision_state: "started"
