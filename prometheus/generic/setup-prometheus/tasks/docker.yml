@@ -19,6 +19,7 @@
   docker_container:
     name: prometheus
     image: "{{ prometheus_image }}:{{ prometheus_image_version }}"
+    network_mode: host
     published_ports:
     - "{{ prometheus_port }}:9090"
     volumes:
