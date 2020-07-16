@@ -34,21 +34,35 @@ scrape_configs:
         job: 'node'
 {% endfor %}
 
-
 {% if (groups['prometheus_scraper'] |length ) > 1 %}
   - job_name: 'federate-sanity-check'
     scrape_interval: 15s
-
     metrics_path: '/federate'
-
     params:
       'match[]':
         - '{job=~"prometheus"}'
-
     static_configs:
 {% for host in groups['prometheus_scraper'] %}
 {% if hostvars[host].ansible_host != ansible_host %}
       - targets: ['{{hostvars[host].ansible_host}}:9090']
+{% endif %}
+{% endfor %}
+{% endif %}
+
+{% if datasources is defined %}
+  - job_name: 'federate-openshift-environment'
+    scrape_interval: 15s
+    metrics_path: '/metrics'
+    scheme: 'https'
+    params:
+      'match[]':
+        - '{job=~"prometheus"}'
+    static_configs:
+{% for ocp in datasources %}
+{% if ocp.datasource_url.startswith('https://') %}
+      - targets: ['{{ ocp.datasource_url[8:] }}']
+{% else %}
+      - targets: ['{{ ocp.datasource_url }}']
 {% endif %}
 {% endfor %}
 {% endif %}

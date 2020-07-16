@@ -1,0 +1,14 @@
+---
+- name: add datasource to grafana
+  hosts: prometheus_scraper
+  become: True
+  roles:
+    - ../../grafana/generic/configure-grafana-datasource
+
+- name: setup prometheus targets
+  hosts: prometheus_scraper
+  become: True
+  vars:
+    provision_state: started
+  roles:
+    - ../../prometheus/generic/setup-prometheus
