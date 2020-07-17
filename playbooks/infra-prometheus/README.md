@@ -12,13 +12,15 @@ Playbooks
 
 setup-grafana-datasource.yml - Configures grafana datasource, iterates over "{{ datasources }}".
 
-setup-ssl-exporter.yml - Deploys ssl exporter. This exporter runs locally on prometheus host.
+setup-ssl-exporter.yml - Deploys ssl exporter. This exporter runs locally on prometheus host.  
 
-setup-bind-exporter.yml - Deploys bind exporter. This exporter runs on name server (bind).
+setup-bind-exporter.yml - Deploys bind exporter. This exporter runs on name server (bind). 
 
 setup-haproxy-exporter.yml - Deploys haproxy exporter. This exporter runs on haproxy node.
 
-setup-prometheus-grafana.yml - Deploys and configures prometheus, alertmanager, grafana and also node-exporters.
+setup-prometheus-grafana.yml - Deploys and configures prometheus, alertmanager, grafana and also node-exporters. 
+
+add-ocp-cluster.yml - This playbooks combines configure-grafana-datasource and setup-prometheus roles to configure grafana and add new targets to the prometheus configuration.
 
 
 
