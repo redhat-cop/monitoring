@@ -10,7 +10,7 @@ $ ansible-galaxy install -r requirements.yml
 Playbooks
 =========
 
-setup-grafana-datasource.yml - Configures grafana datasource, iterates over "{{ datasources }}"
+setup-grafana-datasource.yml - Configures grafana datasource, iterates over "{{ datasources }}".
 
 setup-ssl-exporter.yml - Deploys ssl exporter. This exporter runs locally on prometheus host.
 
