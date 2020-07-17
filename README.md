@@ -24,6 +24,7 @@ Repository Content
 * setup-ssl-exporter
 * setup-prometheus-grafana
 * setup-haproxy-exporter
+* add-ocp-cluster
 
 ## Roles Prometheus
 * setup-alertmanager - deploys alertmanager in docker container
