@@ -44,12 +44,12 @@ Inventory Description
 
 `datasources:` -  inventory used for configuration of grafana datasources and prometheus-targets <br />
 `- name: "openshift-1"` - name of the prometheus datasource to be created <br />
-`  datasource_url: "https://prometheus-k8s-openshift-monitoring.apps.openshift-1.example.com"` - url of the prometheus <br />
-`  bearer_token: "prometheus-k8s-secret-token"` - authentication token for the prometheus <br />
+`    datasource_url: "https://prometheus-k8s-openshift-monitoring.apps.openshift-1.example.com"` - url of the prometheus <br />
+`    bearer_token: "prometheus-k8s-secret-token"` - authentication token for the prometheus <br />
 
 `ssl_certs:` - inventory used for configuration of ssl-exporter prometheus targets <br />
-  - prometheus-k8s-openshift-monitoring.apps.openshift-1.example.com:443 <br />
-  - api.openshift-1.example.com:443 <br />
+`    - prometheus-k8s-openshift-monitoring.apps.openshift-1.example.com:443` <br />
+`    - api.openshift-1.example.com:443` <br />
 
 ## example hosts.yml
 `[prometheus_scraper]` - target host for prometheus, alertmanager, grafana <br />
