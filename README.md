@@ -23,6 +23,7 @@ Repository Content
 * setup-grafana-datasource
 * setup-ssl-exporter
 * setup-prometheus-grafana
+* setup-haproxy-exporter
 
 ## Roles Prometheus
 * setup-alertmanager - deploys alertmanager in docker container
