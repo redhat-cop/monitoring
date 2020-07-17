@@ -10,10 +10,11 @@ $ ansible-galaxy install -r requirements.yml
 Playbooks
 =========
 
-setup-grafana-datasource.yml - sets up grafana datasource, iterates over "{{ datasources }}"
-setup-ssl-exporter.yml - deploys ssl exporter (this exporter is running locally on prometheus host)
-setup-bind-exporter.yml - deploys bind exporter
-setup-prometheus-grafana.yml - deploys and configures prometheus, alertmanager, grafana and also node-exporters.
+setup-grafana-datasource.yml - Configures grafana datasource, iterates over "{{ datasources }}"
+setup-ssl-exporter.yml - Deploys ssl exporter. This exporter runs locally on prometheus host.
+setup-bind-exporter.yml - Deploys bind exporter. This exporter runs on name server (bind).
+setup-haproxy-exporter.yml - Deploys haproxy exporter. This exporter runs on haproxy node.
+setup-prometheus-grafana.yml - Deploys and configures prometheus, alertmanager, grafana and also node-exporters.
 
 
 
