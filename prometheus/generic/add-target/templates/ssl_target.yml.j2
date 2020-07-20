@@ -1,0 +1,4 @@
+- targets:
+{% for cert in hostvars[item].ssl_certs %}
+  - {{ cert }}
+{% endfor %}

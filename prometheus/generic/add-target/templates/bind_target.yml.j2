@@ -1,0 +1,6 @@
+- targets:
+  - {{ hostvars[item].ansible_ssh_host }}:{{ bind_exporter_port }}
+  labels:
+    host: '{{ item }}'
+    job: 'bind'
+  

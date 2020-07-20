@@ -1,6 +1,0 @@
----
-- name: Setup node exporters
-  hosts: prometheus_scraper
-  become: True
-  roles:
-    - ../../prometheus/generic/add-ssl-target

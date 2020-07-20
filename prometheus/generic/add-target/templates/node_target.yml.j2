@@ -1,0 +1,6 @@
+- targets:
+  - {{ hostvars[item].ansible_ssh_host }}:9100
+  labels:
+    host: '{{ item }}'
+    job: 'node'
+  
