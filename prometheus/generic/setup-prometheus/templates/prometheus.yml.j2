@@ -81,11 +81,9 @@ scrape_configs:
   - job_name: 'ssl'
     metrics_path: /probe
     scrape_interval: 5s
-    static_configs:
-      - targets:
-{% for cert in ssl_certs %}
-          - {{ cert }}
-{% endfor %}
+    file_sd_configs:
+      - files:
+        - /etc/prometheus/targets/ssl_targets/*.yml
     relabel_configs:
       - source_labels: [__address__]
         target_label: __param_target
