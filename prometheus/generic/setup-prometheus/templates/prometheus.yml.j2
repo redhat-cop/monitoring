@@ -53,31 +53,18 @@ scrape_configs:
 {% endfor %}
 {% endif %}
 
-{% if (groups['prometheus_target_haproxy'] | length ) > 0 %}
   - job_name: 'haproxy_exporter'
     scrape_interval: 5s
-    static_configs:
-{% for host in groups['prometheus_target_haproxy'] %}
-      - targets: ['{{ hostvars[host].ansible_ssh_host }}:{{ haproxy_exporter_port }}']
-        labels:
-          host: '{{ host }}'
-          job: 'haproxy'
-{% endfor %}
-{% endif %}
+    file_sd_configs:
+      - files:
+        - /etc/prometheus/targets/haproxy_targets/*.yml
 
-{% if (groups['prometheus_target_bind'] | length ) > 0 %}
   - job_name: 'bind_exporter'
     scrape_interval: 5s
-    static_configs:
-{% for host in groups['prometheus_target_bind'] %}
-      - targets: ['{{ hostvars[host].ansible_ssh_host }}:{{ bind_exporter_port }}']
-        labels:
-          host: '{{ host }}'
-          job: 'haproxy'
-{% endfor %}
-{% endif %}
+    file_sd_configs:
+      - files:
+        - /etc/prometheus/targets/bind_targets/*.yml
 
-{% if ssl_certs is defined %}
   - job_name: 'ssl'
     metrics_path: /probe
     scrape_interval: 5s
@@ -91,5 +78,4 @@ scrape_configs:
         target_label: instance
       - target_label: __address__
         replacement: 127.0.0.1:{{ ssl_exporter_port }}
-{% endif %}
 
