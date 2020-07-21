@@ -1,5 +1,5 @@
 - targets:
-  - {{ hostvars[item].ansible_ssh_host }}:9100
+  - {{ hostvars[item].ansible_ssh_host }}:{{ node_exporter_port }}
   labels:
     host: '{{ item }}'
     job: 'node'
