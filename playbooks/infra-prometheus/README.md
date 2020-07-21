@@ -20,7 +20,7 @@ setup-haproxy-exporter.yml - Deploys haproxy exporter. This exporter runs on hap
 
 setup-prometheus-grafana.yml - Deploys and configures prometheus, alertmanager, grafana and also node-exporters. 
 
-add-ocp-cluster.yml - This playbooks combines configure-grafana-datasource and setup-prometheus roles to configure grafana and add new targets to the prometheus configuration.
+add-targets.yml - This playbook iterates over inventory groups and creates target definitions. 
 
 
 
@@ -43,31 +43,51 @@ Inventory Description
 `smtp_password: 'smtp_password'` - password to authenticate on smtp server <br />
 `smtp_tls: 'false'` - switch for enabling/disabling tls verification <br />
 
-
-`datasources:` -  inventory used for configuration of grafana datasources and prometheus-targets <br />
-`- name: "openshift-1"` - name of the prometheus datasource to be created <br />
-`  datasource_url: "https://prometheus-k8s-openshift-monitoring.apps.openshift-1.example.com"` - url of the prometheus <br />
-`  bearer_token: "prometheus-k8s-secret-token"` - authentication token for the prometheus <br />
-
-`ssl_certs:` - inventory used for configuration of ssl-exporter prometheus targets <br />
-`  - prometheus-k8s-openshift-monitoring.apps.openshift-1.example.com:443` <br />
-`  - api.openshift-1.example.com:443` <br />
-
 ## example hosts.yml
-`[prometheus_scraper]` - target host for prometheus, alertmanager, grafana <br />
+```
+[prometheus_scraper]
 
-`[prometheus_target]` - hosts on which node-exporter is deployed <br />
+[prometheus_target]
 
-`[prometheus_target_haproxy]` - hosts on which haproxy exporter is deployed <br />
+[prometheus_target_haproxy]
 
-`[prometheus_target_bind]` - hosts on which target bind exporter is deployed <br />
+[prometheus_target_bind]
 
-`[osp_instances:children]` <br />
-`prometheus_scraper` <br />
-`prometheus_target` <br />
+[ocp-clusters]
+openshift-1
 
-`[prometheus:children]` <br />
-`prometheus_scraper` <br />
-`prometheus_target` <br />
-`prometheus_target_bind` <br />
-`prometheus_target_haproxy` <br />
+[grafana_datasources:children]
+ocp-clusters
+
+[prometheus_target_ssl:children]
+ocp-clusters
+
+[prometheus_target_prometheus:children]
+ocp-clusters
+
+[osp_instances:children]
+prometheus_scraper
+prometheus_target
+prometheus_target_haproxy
+prometheus_target_bind
+
+
+[prometheus:children]
+prometheus_scraper
+prometheus_target
+prometheus_target_haproxy
+prometheus_target_bind
+
+[osp-provisioner]
+localhost
+```
+
+##example host file from ocp-ocp cluster group
+```
+datasource_url: "https://prometheus-k8s-openshift-monitoring.apps.openshift-1.example.com"
+bearer_token: "my-secret-bearer-token"
+
+ssl_certs:
+  - console-openshift-console.apps.openshift-1.example.com:443
+  - api.openshift-1.example.com:6443
+```
