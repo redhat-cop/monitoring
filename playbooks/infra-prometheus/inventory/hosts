@@ -6,13 +6,30 @@
 
 [prometheus_target_bind]
 
+[ocp-clusters]
+openshift-1
+
+[grafana_datasources:children]
+ocp-clusters
+
+[prometheus_target_ssl:children]
+ocp-clusters
+
+[prometheus_target_prometheus:children]
+ocp-clusters
 
 [osp_instances:children]
 prometheus_scraper
 prometheus_target
+prometheus_target_haproxy
+prometheus_target_bind
+
 
 [prometheus:children]
 prometheus_scraper
 prometheus_target
-prometheus_target_bind
 prometheus_target_haproxy
+prometheus_target_bind
+
+[osp-provisioner]
+localhost

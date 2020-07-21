@@ -1,0 +1,6 @@
+---
+- name: Setup setup targets
+  hosts: prometheus_scraper
+  become: True
+  roles:
+    - ../../prometheus/generic/add-target

@@ -1,0 +1,6 @@
+- targets:
+{% if hostvars[item].datasource_url.startswith('https://') %}
+  - {{ hostvars[item].datasource_url[8:] }}
+{% else %}
+  - {{ hostvars[item].datasource_url }}
+{% endif %}

@@ -11,4 +11,8 @@
     headers:
       Accept: "application/json"
       Content-type: "application/json"
-  loop: "{{ datasources }}"
+  loop: "{{ groups['grafana_datasources'] }}"
+  register: result
+  failed_when:
+    - '"already exists" not in result.json.message'
+    - result.status != 200

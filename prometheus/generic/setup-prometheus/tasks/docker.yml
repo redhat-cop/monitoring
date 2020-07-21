@@ -21,8 +21,10 @@
     image: "{{ prometheus_image }}:{{ prometheus_image_version }}"
     published_ports:
     - "{{ prometheus_port }}:9090"
+    network_mode: host
     volumes:
     - /home/centos/prometheus.yml:/etc/prometheus/prometheus.yml:Z
-    - /home/centos/first_rules.yml:/etc/prometheus/first_rules.yml:Z
+    - /home/centos/first_rules.yml:/etc/prometheus/first_rules.yml:Z            
+    - /home/centos/targets/:/etc/prometheus/targets/:Z
     state: "{{ provision_state }}"
     restart: yes
