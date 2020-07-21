@@ -24,7 +24,7 @@ Repository Content
 * setup-ssl-exporter
 * setup-prometheus-grafana
 * setup-haproxy-exporter
-* add-ocp-cluster
+* add-targets
 
 ## Roles Prometheus
 * setup-alertmanager - deploys alertmanager in docker container
@@ -34,7 +34,7 @@ Repository Content
 * setup-bind-exporter - deploys bind exporter in docker container. This exporter should be running on target host 
 * setup-haproxy-exporter - deploys haproxy exporter in docker container. This exporter should be running on target host
 * setup-node-exporter - deploys node exporter in docker container. This exporter should be running on target host
-
+* add-target - configures prometheus targets 
 
 ## Roles Grafana
 * setup-grafana - deploys containerized Grafana with Prometheus as a datasource
