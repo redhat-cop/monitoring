@@ -1,0 +1,5 @@
+---
+haproxy_exporter_port: '9101'
+bind_exporter_port: '9119'
+ssl_exporter_port: '9219'
+node_exporter_port: '9100'
