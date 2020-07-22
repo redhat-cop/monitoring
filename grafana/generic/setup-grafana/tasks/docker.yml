@@ -4,6 +4,7 @@
   copy:
     src: "{{ dashboard_dir }}"
     dest: /home/centos/dashboards/
+  when: dashboard_dir is defined
 
 - name: Run the datasources.yml template
   template:
