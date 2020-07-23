@@ -3,24 +3,24 @@
 - name: copy dashboards
   copy:
     src: "{{ dashboard_dir }}"
-    dest: /home/centos/dashboards/
+    dest: "/home/{{ ansible_user }}/dashboards/"
   when: dashboard_dir is defined
 
 - name: Run the datasources.yml template
   template:
     src: datasources.yml.j2
-    dest: /home/centos/datasources.yml
+    dest: "/home/{{ ansible_user }}/datasources.yml"
     mode: 0755
-    owner: centos
-    group: centos
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
 
 - name: Run the dashboard.yml template
   copy:
     src: dashboards.yml
-    dest: /home/centos/dashboards/dashboards.yml
+    dest: "/home/{{ ansible_user }}/dashboards/dashboards.yml"
     mode: 0755
-    owner: centos
-    group: centos
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
 
 - name: Run the Grafana Docker container
   docker_container:
@@ -29,8 +29,8 @@
     published_ports:
     - "{{ grafana_port }}:3000"
     volumes:
-    - /home/centos/datasources.yml:/etc/grafana/provisioning/datasources/datasources.yml:Z
-    - /home/centos/dashboards/:/etc/grafana/provisioning/dashboards/:Z
+    - "/home/{{ ansible_user }}/datasources.yml:/etc/grafana/provisioning/datasources/datasources.yml:Z"
+    - "/home/{{ ansible_user }}/dashboards/:/etc/grafana/provisioning/dashboards/:Z"
     env:
       GF_SECURITY_ADMIN_PASSWORD: "{{ grafana_password }}"
     state: "{{ provision_state }}"

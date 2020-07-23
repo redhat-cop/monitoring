@@ -2,10 +2,10 @@
 - name: Run the alertmanager.yml template
   template:
     src: alertmanager.yml.j2
-    dest: /home/centos/alertmanager.yml
+    dest: "/home/{{ ansible_user }}/alertmanager.yml"
     mode: 0755
-    owner: centos
-    group: centos
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
 
 - name: Run Alertmanager Docker container
   docker_container:
@@ -14,6 +14,6 @@
     published_ports:
     - "{{ alertmanager_port }}:9093"
     volumes:
-    - /home/centos/alertmanager.yml:/etc/alertmanager/alertmanager.yml:Z
+    - "/home/{{ ansible_user }}/alertmanager.yml:/etc/alertmanager/alertmanager.yml:Z"
     state: "{{ provision_state }}"
     recreate: yes
