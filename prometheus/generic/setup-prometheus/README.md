@@ -10,7 +10,7 @@ Docker must be available and running on the targeted hosts.
 
 Role Variables
 --------------
-Default values of variables:
+## Default values of variables:
 ```
 prometheus_image: 'prom/prometheus'
 prometheus_image_version: 'latest'
@@ -30,16 +30,9 @@ provision_state: "started"
 
 `provision_state` - Options: [absent, killed, present, reloaded, restarted, **started** (default), stopped]
 
-Example Inventory
------------------
+## Optional Variables
+`custom_rules_file: "/path/to/custom/rule_file.yml"` - path to file with custom alerting rules
 
-Snippet below configures targets for the SSL exporter. It was taken from group_vars/prometheus_scraper.yml. {{ ssl_certs }} has to be defined for hostgroup prometheus_scraper or all, because the values are used in prometheus.yml.j2 template on the scraper nodes.
-
-```
-ssl_certs:
-  - console-openshift-console.apps.openshift-1.example.com:443
-  - api.openshift-1.example.com:6443
-```
 
 Dependencies
 ------------

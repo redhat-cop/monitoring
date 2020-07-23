@@ -7,13 +7,31 @@
     owner: centos
     group: centos
 
+- name: create rules directory
+  file:
+    path: "/home/{{ ansible_user }}/rules"
+    state: directory
+    mode: 0755
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+
+
 - name: copy the first_rules.yml file
   copy:
     src: first_rules.yml
-    dest: /home/centos/first_rules.yml
+    dest: "/home/{{ ansible_user }}/rules/first_rules.yml"
     mode: 0755
-    owner: centos
-    group: centos
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+
+- name: copy custom rules
+  copy: 
+    src: "{{ custom_rules_file }}"
+    dest: "/home/{{ ansible_user }}/rules/custom_rules.yml"
+    mode: 0755
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+  when: custom_rules_file is defined
 
 - name: Run Prometheus Docker container
   docker_container:
@@ -24,7 +42,7 @@
     network_mode: host
     volumes:
     - /home/centos/prometheus.yml:/etc/prometheus/prometheus.yml:Z
-    - /home/centos/first_rules.yml:/etc/prometheus/first_rules.yml:Z            
+    - "/home/{{ ansible_user }}/rules/:/etc/prometheus/:Z"            
     - /home/centos/targets/:/etc/prometheus/targets/:Z
     state: "{{ provision_state }}"
     restart: yes

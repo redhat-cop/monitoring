@@ -32,8 +32,6 @@ Inventory Description
 `docker_install: True` <br />
 `docker_username: centos` <br />
 `ansible_user: centos` <br />  
-`dashboard_dir: /home/user/dashbooards` - directory from which the grafana dashboards are copied <br />
-`notification_recipients: somebody@example.com` - recipient address for alertmanager <br />
 
 ## example group_vars/prometheus-scraper.yml
 `smtp_host: my_smtp_host` - hostname of smtp server <br />
@@ -42,6 +40,12 @@ Inventory Description
 `smtp_username: 'smtp_user'` - username to authenticate on smtp server <br />
 `smtp_password: 'smtp_password'` - password to authenticate on smtp server <br />
 `smtp_tls: 'false'` - switch for enabling/disabling tls verification <br />
+`notification_recipients: somebody@example.com` - recipient address for alertmanager <br />
+`dashboard_dir: /home/user/dashbooards` - directory from which the grafana dashboards are copied (optional) <br />
+`custom_rule_file: /path/to/custom/rules_file.yml` - file with custom alerting rules1 (optional) <br />
+
+
+
 
 ## example hosts.yml
 ```
