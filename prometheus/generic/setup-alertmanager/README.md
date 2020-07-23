@@ -23,18 +23,20 @@ smtp_port: my_smtp_port
 from: my_smtp_from
 smtp_username: 'smtp_user'
 smtp_password: 'smtp_password'
+notification_recipients: recipients@example.com
 
 ```
-`alertmanager_image` - The alertmanager image to deploy.
-`alertmanager_image_version` - The image tag to deploy.
-`alertmanager_port` - The port to expose on the target hosts.
-`provision_state` - Options: [absent, killed, present, reloaded, restarted, **started** (default), stopped]
+`alertmanager_image` - The alertmanager image to deploy. <br />
+`alertmanager_image_version` - The image tag to deploy. <br />
+`alertmanager_port` - The port to expose on the target hosts. <br />
+`provision_state` - Options: [absent, killed, present, reloaded, restarted, **started** (default), stopped] <br />
 
-smtp_host: smtp server to which the notifications are send
-smtp_port: smtp port
-from: sender
-smtp_username: smtp server password
-smtp_password: smtp server password
+`smtp_host:` -  smtp server to which the notifications are send <br />
+`smtp_port:` - smtp port <br />
+`from:` -  sender <br />
+`smtp_username:` -  smtp server password <br />
+`smtp_password:` -  smtp server password <br />
+`notification_recipients:` - email address of the recipients <br />
 
 
 Dependencies
