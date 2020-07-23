@@ -1,11 +1,11 @@
 ---
 - name: create node_targets directory
   file:
-    path: /home/centos/targets/node_targets
+    path: "/home/{{ ansible_user }}/targets/node_targets"
     state: directory
     mode: '0755'
-    owner: centos
-    group: centos
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
     seuser: system_u
     setype: container_file_t
   when: "'prometheus_target' in groups"
@@ -13,10 +13,10 @@
 - name: template the node_targets
   template:
     src: node_target.yml.j2
-    dest: /home/centos/targets/node_targets/node_target_{{ item }}.yml
+    dest: "/home/{{ ansible_user }}/targets/node_targets/node_target_{{ item }}.yml"
     mode: '0755'
-    owner: centos
-    group: centos
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
     seuser: system_u
     setype: container_file_t
   loop: "{{ groups['prometheus_target'] }}"
@@ -25,11 +25,11 @@
 
 - name: create haproxy_targets directory
   file:
-    path: /home/centos/targets/haproxy_targets
+    path: "/home/{{ ansible_user }}/targets/haproxy_targets"
     state: directory
     mode: '0755'
-    owner: centos
-    group: centos
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
     seuser: system_u
     setype: container_file_t
   when: "'prometheus_target_haproxy' in groups"
@@ -37,10 +37,10 @@
 - name: template the haproxy_targets
   template:
     src: haproxy_target.yml.j2
-    dest: /home/centos/targets/haproxy_targets/haproxy_target_{{ item }}.yml
+    dest: "/home/{{ ansible_user }}/targets/haproxy_targets/haproxy_target_{{ item }}.yml"
     mode: '0755'
-    owner: centos
-    group: centos
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
     seuser: system_u
     setype: container_file_t
   loop: "{{ groups['prometheus_target_haproxy'] }}"
@@ -49,11 +49,11 @@
 
 - name: create bind_targets directory
   file:
-    path: /home/centos/targets/bind_targets
+    path: "/home/{{ ansible_user }}/targets/bind_targets"
     state: directory
     mode: '0755'
-    owner: centos
-    group: centos
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
     seuser: system_u
     setype: container_file_t
   when: "'prometheus_target_bind' in groups"
@@ -61,10 +61,10 @@
 - name: template the bind_targets
   template:
     src: bind_target.yml.j2
-    dest: /home/centos/targets/bind_targets/bind_target_{{ item }}.yml
+    dest: "/home/{{ ansible_user }}/targets/bind_targets/bind_target_{{ item }}.yml"
     mode: '0755'
-    owner: centos
-    group: centos
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
     seuser: system_u
     setype: container_file_t
   loop: "{{ groups['prometheus_target_bind'] }}"
@@ -72,11 +72,11 @@
 
 - name: create ssl_targets directory
   file:
-    path: /home/centos/targets/ssl_targets
+    path: "/home/{{ ansible_user }}/targets/ssl_targets"
     state: directory
     mode: '0755'
-    owner: centos
-    group: centos
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
     seuser: system_u
     setype: container_file_t
   when: "'prometheus_target_ssl' in groups"
@@ -84,10 +84,10 @@
 - name: template the ssl_targets
   template:
     src: ssl_target.yml.j2
-    dest: /home/centos/targets/ssl_targets/ssl_target_{{ item }}.yml
+    dest: "/home/{{ ansible_user }}/targets/ssl_targets/ssl_target_{{ item }}.yml"
     mode: '0755'
-    owner: centos
-    group: centos
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
     seuser: system_u
     setype: container_file_t
   loop: "{{ groups['prometheus_target_ssl'] }}"
@@ -95,11 +95,11 @@
 
 - name: create federated_prometheus_targets directory
   file:
-    path: /home/centos/targets/prometheus_targets
+    path: "/home/{{ ansible_user }}/targets/prometheus_targets"
     state: directory
     mode: '0755'
-    owner: centos
-    group: centos
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
     seuser: system_u
     setype: container_file_t
   when: "'prometheus_target_prometheus' in groups"
@@ -107,10 +107,10 @@
 - name: template the federated_targets
   template:
     src: prometheus_target.yml.j2
-    dest: /home/centos/targets/prometheus_targets/federated_prometheus_{{ item }}.yml
+    dest: /home/{{ ansible_user }}/targets/prometheus_targets/federated_prometheus_{{ item }}.yml"
     mode: '0755'
-    owner: centos
-    group: centos
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
     seuser: system_u
     setype: container_file_t
   loop: "{{ groups['prometheus_target_prometheus'] }}"
