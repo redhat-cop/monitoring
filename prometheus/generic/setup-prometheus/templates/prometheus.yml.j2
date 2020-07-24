@@ -63,7 +63,7 @@ scrape_configs:
         - '{job=~"prometheus"}'
     file_sd_configs:
       - files:
-        - /etc/prometheus/targets/prometheus_targets/*.yml
+        - /etc/prometheus/targets/federated_targets/*.yml
 
 
   - job_name: 'haproxy_exporter'
