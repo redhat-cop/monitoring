@@ -17,3 +17,31 @@
   pip:
     name: "docker-py"
     state: present
+
+- name: create editors group for prometheus
+  group:
+    name: monitoring-editors
+    state: present
+
+- name: create editor user
+  user:
+    name: monitoring-edit-user-1
+    group: monitoring-editors
+
+- name: generate ssh key
+  command: ssh-keygen -f /tmp/monitoring-edit-user-1_key -P ""
+  delegate_to: localhost
+  ignore_errors: true
+  
+- name: add the new key to editor users authorized keys
+  authorized_key:
+    key: "{{ lookup('file', '/tmp/monitoring-edit-user-1_key.pub') }}"
+    user: monitoring-edit-user-1
+
+- name: create targets directory
+  file:
+    name: /var/prometheus_targets
+    state: directory
+    mode: 0575
+    owner: "{{ ansible_user }}"
+    group: monitoring-editors
