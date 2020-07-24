@@ -86,7 +86,7 @@ prometheus_target_bind
 localhost
 ```
 
-##example host file from ocp-ocp cluster group
+## example host file from ocp-ocp cluster group
 ```
 datasource_url: "https://prometheus-k8s-openshift-monitoring.apps.openshift-1.example.com"
 bearer_token: "my-secret-bearer-token"
