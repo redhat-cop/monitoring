@@ -14,19 +14,19 @@
   vars:
     provision_state: "started"
   roles:
-    - ../../prometheus/generic/setup-node-exporter
+    - ../../../prometheus/generic/setup-node-exporter
   tags:
     - 'always'
 
 
 - name: Setup prometheus and alertmanager
-  hosts: prometheus_scraper
+  hosts: monitoring-hosts
   become: True
   vars:
     provision_state: "started"
   roles:
-    - ../../prometheus/generic/setup-prometheus
-    - ../../grafana/generic/setup-grafana
-    - ../../prometheus/generic/setup-alertmanager
+    - ../../../prometheus/generic/setup-prometheus
+    - ../../../grafana/generic/setup-grafana
+    - ../../../prometheus/generic/setup-alertmanager
   tags:
     - 'always'
