@@ -18,23 +18,28 @@ The easiest way to deploy your monitoring stack is to run the playbooks in the p
 
 Repository Content
 ==================
-## Playbooks
-* setup-bind-exporter
+## Playbooks (monitoring-hosts)
 * setup-grafana-datasource
 * setup-ssl-exporter
 * setup-prometheus-grafana
-* setup-haproxy-exporter
 * add-targets
+
+## Playbooks (monitoring-targets)
+* setup-bind-exporter
+* setup-haproxy-exporter
+
+
 
 ## Roles Prometheus
 * setup-alertmanager - deploys alertmanager in docker container
 * setup-prometheus - deploys and configures prometheus in a docker container. The scraping targets are configured based on inventory
+* add-target - configures prometheus targets
+
 
 * setup-ssl-exporter - deploys ssl exporter in docker container. This exporter should be running locally on prometheus instance
 * setup-bind-exporter - deploys bind exporter in docker container. This exporter should be running on target host 
 * setup-haproxy-exporter - deploys haproxy exporter in docker container. This exporter should be running on target host
 * setup-node-exporter - deploys node exporter in docker container. This exporter should be running on target host
-* add-target - configures prometheus targets 
 
 ## Roles Grafana
 * setup-grafana - deploys containerized Grafana with Prometheus as a datasource
