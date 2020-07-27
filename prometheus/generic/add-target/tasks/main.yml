@@ -4,112 +4,96 @@
     path: "/var/prometheus_targets/node_targets"
     state: directory
     mode: '0775'
-    owner: "{{ ansible_user }}"
     group: monitoring-editors
     seuser: system_u
     setype: container_file_t
-  when: "'prometheus_target' in groups"
-
-- name: template the node_targets
-  template:
-    src: node_target.yml.j2
-    dest: "/var/prometheus_targets/node_targets/node_target_{{ item }}.yml"
-    mode: '0775'
-    owner: "{{ ansible_user }}"
-    group: monitoring-editors
-    seuser: system_u
-    setype: container_file_t
-  loop: "{{ groups['prometheus_target'] }}"
-  when: "'prometheus_target' in groups"
-
 
 - name: create haproxy_targets directory
   file:
     path: "/var/prometheus_targets/haproxy_targets"
     state: directory
     mode: '0775'
-    owner: "{{ ansible_user }}"
     group: monitoring-editors
     seuser: system_u
     setype: container_file_t
-  when: "'prometheus_target_haproxy' in groups"
-
-- name: template the haproxy_targets
-  template:
-    src: haproxy_target.yml.j2
-    dest: "/var/targets/haproxy_targets/haproxy_target_{{ item }}.yml"
-    mode: '0775'
-    owner: "{{ ansible_user }}"
-    group: monitoring-editors
-    seuser: system_u
-    setype: container_file_t
-  loop: "{{ groups['prometheus_target_haproxy'] }}"
-  when: "'prometheus_target_haproxy' in groups"
-
 
 - name: create bind_targets directory
   file:
     path: "/var/prometheus_targets/bind_targets"
     state: directory
     mode: '0775'
-    owner: "{{ ansible_user }}"
     group: monitoring-editors
     seuser: system_u
     setype: container_file_t
-  when: "'prometheus_target_bind' in groups"
-
-- name: template the bind_targets
-  template:
-    src: bind_target.yml.j2
-    dest: "/var/prometheus_targets/bind_targets/bind_target_{{ item }}.yml"
-    mode: '0775'
-    owner: "{{ ansible_user }}"
-    group: monitoring-editors
-    seuser: system_u
-    setype: container_file_t
-  loop: "{{ groups['prometheus_target_bind'] }}"
-  when: "'prometheus_target_bind' in groups"
 
 - name: create ssl_targets directory
   file:
     path: "/var/prometheus_targets/ssl_targets"
     state: directory
     mode: '0775'
-    owner: "{{ ansible_user }}"
     group: monitoring-editors
     seuser: system_u
     setype: container_file_t
-  when: "'prometheus_target_ssl' in groups"
 
-- name: template the ssl_targets
-  template:
-    src: ssl_target.yml.j2
-    dest: "/var/prometheus_targets/ssl_targets/ssl_target_{{ item }}.yml"
-    mode: '0775'
-    owner: "{{ ansible_user }}"
-    group: monitoring-editors
-    seuser: system_u
-    setype: container_file_t
-  loop: "{{ groups['prometheus_target_ssl'] }}"
-  when: "'prometheus_target_ssl' in groups"
 
 - name: create federated_prometheus_targets directory
   file:
     path: "/var/prometheus_targets/federated_targets"
     state: directory
     mode: '0775'
-    owner: "{{ ansible_user }}"
     group: monitoring-editors
     seuser: system_u
     setype: container_file_t
-  when: "'prometheus_target_prometheus' in groups"
+
+- name: template the node_targets
+  template:
+    src: node_target.yml.j2
+    dest: "/var/prometheus_targets/node_targets/node_target_{{ item }}.yml"
+    mode: '0775'
+    group: monitoring-editors
+    seuser: system_u
+    setype: container_file_t
+  loop: "{{ groups['prometheus_target'] }}"
+  when: "'prometheus_target' in groups"
+
+- name: template the haproxy_targets
+  template:
+    src: haproxy_target.yml.j2
+    dest: "/var/targets/haproxy_targets/haproxy_target_{{ item }}.yml"
+    mode: '0775'
+    group: monitoring-editors
+    seuser: system_u
+    setype: container_file_t
+  loop: "{{ groups['prometheus_target_haproxy'] }}"
+  when: "'prometheus_target_haproxy' in groups"
+
+- name: template the bind_targets
+  template:
+    src: bind_target.yml.j2
+    dest: "/var/prometheus_targets/bind_targets/bind_target_{{ item }}.yml"
+    mode: '0775'
+    group: monitoring-editors
+    seuser: system_u
+    setype: container_file_t
+  loop: "{{ groups['prometheus_target_bind'] }}"
+  when: "'prometheus_target_bind' in groups"
+
+- name: template the ssl_targets
+  template:
+    src: ssl_target.yml.j2
+    dest: "/var/prometheus_targets/ssl_targets/ssl_target_{{ item }}.yml"
+    mode: '0775'
+    group: monitoring-editors
+    seuser: system_u
+    setype: container_file_t
+  loop: "{{ groups['prometheus_target_ssl'] }}"
+  when: "'prometheus_target_ssl' in groups"
 
 - name: template the federated_targets
   template:
     src: prometheus_target.yml.j2
     dest: "/var/prometheus_targets/federated_targets/federated_prometheus_{{ item }}.yml"
     mode: '0775'
-    owner: "{{ ansible_user }}"
     group: monitoring-editors
     seuser: system_u
     setype: container_file_t

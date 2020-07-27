@@ -40,8 +40,9 @@
 
 - name: create targets directory
   file:
-    name: /var/prometheus_targets
+    path: "/var/prometheus_targets"
     state: directory
-    mode: 0575
-    owner: "{{ ansible_user }}"
+    mode: '0775'
     group: monitoring-editors
+    seuser: system_u
+    setype: container_file_t

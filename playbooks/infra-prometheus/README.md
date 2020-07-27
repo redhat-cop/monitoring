@@ -10,18 +10,21 @@ $ ansible-galaxy install -r requirements.yml
 Playbooks
 =========
 
+## monitoring hosts
+
 setup-grafana-datasource.yml - Configures grafana datasource, iterates over "{{ datasources }}".
 
 setup-ssl-exporter.yml - Deploys ssl exporter. This exporter runs locally on prometheus host.  
-
-setup-bind-exporter.yml - Deploys bind exporter. This exporter runs on name server (bind). 
-
-setup-haproxy-exporter.yml - Deploys haproxy exporter. This exporter runs on haproxy node.
 
 setup-prometheus-grafana.yml - Deploys and configures prometheus, alertmanager, grafana and also node-exporters. 
 
 add-targets.yml - This playbook iterates over inventory groups and creates target definitions. 
 
+## monitoring targets
+
+setup-bind-exporter.yml - Deploys bind exporter. This exporter runs on name server (bind).
+
+setup-haproxy-exporter.yml - Deploys haproxy exporter. This exporter runs on haproxy node.
 
 
 Inventory Description
@@ -33,7 +36,7 @@ Inventory Description
 `docker_username: centos` <br />
 `ansible_user: centos` <br />  
 
-## example group_vars/prometheus-scraper.yml
+## example group_vars/monitoring-hosts.yml
 `smtp_host: my_smtp_host` - hostname of smtp server <br />
 `smtp_port: my_smtp_port` - port on which smtp server listens <br />
 `from: my_smtp_from` - smtp sender e-mail address <br />
@@ -70,14 +73,14 @@ ocp-clusters
 ocp-clusters
 
 [osp_instances:children]
-prometheus_scraper
+monitoring-hosts
 prometheus_target
 prometheus_target_haproxy
 prometheus_target_bind
 
 
 [prometheus:children]
-prometheus_scraper
+monitoring-hosts
 prometheus_target
 prometheus_target_haproxy
 prometheus_target_bind
@@ -86,7 +89,7 @@ prometheus_target_bind
 localhost
 ```
 
-## example host file from ocp-ocp cluster group
+## example host file from ocp-cluster group
 ```
 datasource_url: "https://prometheus-k8s-openshift-monitoring.apps.openshift-1.example.com"
 bearer_token: "my-secret-bearer-token"
