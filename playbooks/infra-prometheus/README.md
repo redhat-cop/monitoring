@@ -44,6 +44,10 @@ setup-bind-exporter.yml - Deploys bind exporter. This exporter runs on name serv
 
 setup-haproxy-exporter.yml - Deploys haproxy exporter. This exporter runs on haproxy node.
 
+setup-node-exporter.yml - Deploys node exporter. This exporter runs on target node.
+
+setup-exporters.yml - Sets up all of above mentioned exporters based on group membership
+
 
 Inventory Description
 =====================
@@ -53,6 +57,7 @@ Inventory Description
 `docker_install: True` <br />
 `docker_username: centos` <br />
 `ansible_user: centos` <br />  
+`ansible_become: true` <br />
 
 ## example group_vars/monitoring-hosts.yml
 `smtp_host: my_smtp_host` - hostname of smtp server <br />
