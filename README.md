@@ -27,6 +27,8 @@ Repository Content
 ## Playbooks (monitoring-targets)
 * setup-bind-exporter
 * setup-haproxy-exporter
+* setup-node-exporter
+* setup-exporters
 
 
 
