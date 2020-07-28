@@ -59,7 +59,7 @@
 - name: template the haproxy_targets
   template:
     src: haproxy_target.yml.j2
-    dest: "/var/targets/haproxy_targets/haproxy_target_{{ item }}.yml"
+    dest: "/var/prometheus_targets/haproxy_targets/haproxy_target_{{ item }}.yml"
     mode: '0775'
     group: monitoring-editors
     seuser: system_u

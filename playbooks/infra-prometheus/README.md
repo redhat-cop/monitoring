@@ -7,6 +7,24 @@ The requirements.yaml contains roles required for running these playbooks. The r
 $ ansible-galaxy install -r requirements.yml
 ```
 
+How to deploy prometheus alertmanager and grafana stack
+=======================================================
+
+The monitoring stack is deployed by running the setup-prometheus-grafana playbook. <br /> 
+The playbook targets group monitoring-hosts. <br />
+First run of the playbook should be done with --tags="install", which installs docker on target hosts. Due to a bug in infra-ansible install-docker role it has to be run twice. Any consecutive runs can be done without the "install" tag. <br />
+
+How to configure targets
+========================
+
+1. Add target hosts to respective group in the inventory hosts file. <br />
+prometheus_target - node exporter is installed on this host group <br />
+prometheus_target_haproxy - haproxy exporter is installed on this host group <br />
+prometheus_target_bind - bind exporter is installed on this host group <br />
+2. Run the monitoring-targets/setup-exporters.yml playbook. This playbook deploys exporters based on group membership described above. To install docker use --tags="install" (this has to be run twice). <br />
+3. Add targets to the prometheus. Run the monitoring-hosts/add-targets.yml using the same inventory. This playbook templates target definitions on monitoring-hosts hostgroup. <br />
+
+
 Playbooks
 =========
 
@@ -52,7 +70,7 @@ Inventory Description
 
 ## example hosts.yml
 ```
-[prometheus_scraper]
+[monitoring-hosts]
 
 [prometheus_target]
 
@@ -73,13 +91,6 @@ ocp-clusters
 ocp-clusters
 
 [osp_instances:children]
-monitoring-hosts
-prometheus_target
-prometheus_target_haproxy
-prometheus_target_bind
-
-
-[prometheus:children]
 monitoring-hosts
 prometheus_target
 prometheus_target_haproxy

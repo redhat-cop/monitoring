@@ -24,12 +24,5 @@ prometheus_target
 prometheus_target_haproxy
 prometheus_target_bind
 
-
-[prometheus:children]
-monitoring-hosts
-prometheus_target
-prometheus_target_haproxy
-prometheus_target_bind
-
 [osp-provisioner]
 localhost

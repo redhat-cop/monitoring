@@ -1,6 +1,6 @@
 ---
 - name: Install Docker
-  hosts: prometheus_target_bind
+  hosts: prometheus_target
   become: True
   roles:
     - infra-ansible/roles/config-docker
@@ -9,11 +9,11 @@
     - 'install'
 
 - name: Setup bind exporters
-  hosts: prometheus_target_bind
+  hosts: prometheus_target
   become: True
   vars:
     provision_state: "started"
   roles:
-    - ../../../prometheus/generic/setup-bind-exporter
+    - ../../../prometheus/generic/setup-node-exporter
   tags:
     - 'always'

@@ -1,6 +1,6 @@
 ---
 - name: Install Docker
-  hosts: prometheus
+  hosts: prometheus_target_haproxy
   become: True
   roles:
     - infra-ansible/roles/config-docker
