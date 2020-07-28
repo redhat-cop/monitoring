@@ -8,7 +8,7 @@
     - 'never'
     - 'install'
 
-- name: Setup bind exporters
+- name: Setup node exporters
   hosts: prometheus_target
   become: True
   vars:
