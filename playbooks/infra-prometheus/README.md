@@ -12,7 +12,7 @@ How to deploy prometheus alertmanager and grafana stack
 
 The monitoring stack is deployed by running the setup-prometheus-grafana playbook. <br /> 
 The playbook targets group monitoring-hosts. <br />
-First run of the playbook should be done with --tags="install", which installs docker on target hosts. Due to a bug in infra-ansible install-docker role it has to be run twice. Any consecutive runs can be done without the "install" tag. <br />
+First run of the playbook should be done with --tags="install", which installs docker on target hosts. Due to a bug in infra-ansible install-docker role it has to be run twice (this should be fixed in https://github.com/redhat-cop/infra-ansible/pull/420/). Any consecutive runs can be done without the "install" tag. <br />
 
 How to configure targets
 ========================
