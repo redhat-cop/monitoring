@@ -1,0 +1,21 @@
+---
+- name: Install Docker
+  hosts: monitoring-hosts
+  become: True
+  roles:
+    - infra-ansible/roles/config-docker
+  tags:
+    - 'never'
+    - 'install'
+
+- name: Setup prometheus and alertmanager
+  hosts: monitoring-hosts
+  become: True
+  vars:
+    provision_state: "started"
+  roles:
+    - ../../../prometheus/generic/setup-prometheus
+    - ../../../grafana/generic/setup-grafana
+    - ../../../prometheus/generic/setup-alertmanager
+  tags:
+    - 'always'
