@@ -6,18 +6,18 @@
     - infra-ansible/roles/config-docker
 
 - name: Setup node exporters
-  hosts: prometheus_node
+  hosts: prometheus_target
   become: True
   vars:
     provision_state: "absent"
   roles:
-    - ../../prometheus/generic/setup-node-exporter
+    - ../../../prometheus/generic/setup-node-exporter
 
 - name: Setup prometheus
-  hosts: prometheus_master
+  hosts: monitoring-hosts
   become: True
   vars:
     provision_state: "absent"
   roles:
-    - ../../prometheus/generic/setup-prometheus
-    - ../../grafana/generic/setup-grafana
+    - ../../../prometheus/generic/setup-prometheus
+    - ../../../grafana/generic/setup-grafana

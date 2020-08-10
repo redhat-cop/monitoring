@@ -7,21 +7,55 @@ The requirements.yaml contains roles required for running these playbooks. The r
 $ ansible-galaxy install -r requirements.yml
 ```
 
+How to deploy prometheus alertmanager and grafana stack
+=======================================================
+
+The monitoring stack is deployed by running the setup-prometheus-grafana playbook. <br /> 
+The playbook targets group monitoring-hosts. <br />
+First run of the playbook should be done with --tags="install", which installs docker on target hosts. Due to a bug in infra-ansible install-docker role it has to be run twice (this should be fixed in https://github.com/redhat-cop/infra-ansible/pull/420/). Any consecutive runs can be done without the "install" tag. <br />
+
+How to configure targets
+========================
+
+1. Add target hosts to respective group in the inventory hosts file. <br />
+prometheus_target - node exporter is installed on this host group <br />
+prometheus_target_haproxy - haproxy exporter is installed on this host group <br />
+prometheus_target_bind - bind exporter is installed on this host group <br />
+2. Run the monitoring-targets/setup-exporters.yml playbook. This playbook deploys exporters based on group membership described above. To install docker use --tags="install" (this has to be run twice). <br />
+3. Add targets to the prometheus. Run the monitoring-hosts/add-targets.yml using the same inventory. This playbook templates target definitions on monitoring-hosts hostgroup. <br />
+
+
+How to add Openshift to the monitoring
+======================================
+
+1. Add target host to ocp-cluster hostgroup in the inventory hosts file, there are multiple required variables. Example host_vars definition is available below or in inventory/host_vars/openshift-1.yml <br />
+2. Run the monitoring-hosts/add-targets.yml playbook, which configures OCP operated prometheus as a target. Optionally you can also configure ssl exporter targets with this playbook (when ssl_certs: are defined) <br />
+3. Run the monitoring-hosts/setup-grafana-datasource.yml playbook. This adds the OCP operated prometheus as a datasource to grafana <br />
+
+
+
 Playbooks
 =========
+
+## monitoring hosts
 
 setup-grafana-datasource.yml - Configures grafana datasource, iterates over "{{ datasources }}".
 
 setup-ssl-exporter.yml - Deploys ssl exporter. This exporter runs locally on prometheus host.  
 
-setup-bind-exporter.yml - Deploys bind exporter. This exporter runs on name server (bind). 
-
-setup-haproxy-exporter.yml - Deploys haproxy exporter. This exporter runs on haproxy node.
-
 setup-prometheus-grafana.yml - Deploys and configures prometheus, alertmanager, grafana and also node-exporters. 
 
 add-targets.yml - This playbook iterates over inventory groups and creates target definitions. 
 
+## monitoring targets
+
+setup-bind-exporter.yml - Deploys bind exporter. This exporter runs on name server (bind).
+
+setup-haproxy-exporter.yml - Deploys haproxy exporter. This exporter runs on haproxy node.
+
+setup-node-exporter.yml - Deploys node exporter. This exporter runs on target node.
+
+setup-exporters.yml - Sets up all of above mentioned exporters based on group membership
 
 
 Inventory Description
@@ -32,8 +66,9 @@ Inventory Description
 `docker_install: True` <br />
 `docker_username: centos` <br />
 `ansible_user: centos` <br />  
+`ansible_become: true` <br />
 
-## example group_vars/prometheus-scraper.yml
+## example group_vars/monitoring-hosts.yml
 `smtp_host: my_smtp_host` - hostname of smtp server <br />
 `smtp_port: my_smtp_port` - port on which smtp server listens <br />
 `from: my_smtp_from` - smtp sender e-mail address <br />
@@ -49,7 +84,7 @@ Inventory Description
 
 ## example hosts.yml
 ```
-[prometheus_scraper]
+[monitoring-hosts]
 
 [prometheus_target]
 
@@ -70,14 +105,7 @@ ocp-clusters
 ocp-clusters
 
 [osp_instances:children]
-prometheus_scraper
-prometheus_target
-prometheus_target_haproxy
-prometheus_target_bind
-
-
-[prometheus:children]
-prometheus_scraper
+monitoring-hosts
 prometheus_target
 prometheus_target_haproxy
 prometheus_target_bind
@@ -86,7 +114,7 @@ prometheus_target_bind
 localhost
 ```
 
-##example host file from ocp-ocp cluster group
+## example host file from ocp-cluster group
 ```
 datasource_url: "https://prometheus-k8s-openshift-monitoring.apps.openshift-1.example.com"
 bearer_token: "my-secret-bearer-token"

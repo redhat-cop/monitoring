@@ -37,7 +37,7 @@ scrape_configs:
    
 
 
-{% if (groups['prometheus_scraper'] |length ) > 1 %}
+{% if (groups['monitoring-hosts'] |length ) > 1 %}
   - job_name: 'federate-sanity-check'
     scrape_interval: 15s
 
@@ -48,7 +48,7 @@ scrape_configs:
         - '{job=~"prometheus"}'
 
     static_configs:
-{% for host in groups['prometheus_scraper'] %}
+{% for host in groups['monitoring-hosts'] %}
 {% if hostvars[host].ansible_host != ansible_host %}
       - targets: ['{{hostvars[host].ansible_host}}:9090']
 {% endif %}
@@ -63,7 +63,7 @@ scrape_configs:
         - '{job=~"prometheus"}'
     file_sd_configs:
       - files:
-        - /etc/prometheus/targets/prometheus_targets/*.yml
+        - /etc/prometheus/targets/federated_targets/*.yml
 
 
   - job_name: 'haproxy_exporter'

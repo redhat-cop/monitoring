@@ -1,0 +1,6 @@
+---
+- name: setup targets
+  gather_facts: no
+  hosts: monitoring-hosts
+  roles:
+    - ../../../prometheus/generic/add-target

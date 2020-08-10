@@ -1,6 +1,6 @@
 ---
 - name: Install Docker
-  hosts: prometheus
+  hosts: prometheus_target_bind
   become: True
   roles:
     - infra-ansible/roles/config-docker
@@ -8,12 +8,12 @@
     - 'never'
     - 'install'
 
-- name: Setup haproxy exporters
-  hosts: prometheus_target_haproxy
+- name: Setup bind exporters
+  hosts: prometheus_target_bind
   become: True
   vars:
     provision_state: "started"
   roles:
-    - ../../prometheus/generic/setup-haproxy-exporter
+    - ../../../prometheus/generic/setup-bind-exporter
   tags:
     - 'always'

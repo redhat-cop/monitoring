@@ -1,8 +1,8 @@
 ---
 - name: Setup node exporters
-  hosts: prometheus_scraper
+  hosts: monitoring-hosts
   become: True
   vars:
     provision_state: "started"
   roles:
-    - ../../prometheus/generic/setup-ssl-exporter
+    - ../../../prometheus/generic/setup-ssl-exporter

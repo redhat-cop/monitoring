@@ -1,8 +1,8 @@
 ---
 - name: setup datasource
-  hosts: prometheus_scraper
+  hosts: monitoring-hosts
   become: True
   vars:
     grafana_port: '3000'
   roles:
-    - ../../grafana/generic/configure-grafana-datasource
+    - ../../../grafana/generic/configure-grafana-datasource
