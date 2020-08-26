@@ -9,7 +9,10 @@
 [ocp-clusters]
 openshift-1
 
-[grafana_datasources:children]
+[grafana_cloudwatch_datasources]
+us-west-1
+
+[grafana_prometheus_datasources:children]
 ocp-clusters
 
 [prometheus_target_ssl:children]
