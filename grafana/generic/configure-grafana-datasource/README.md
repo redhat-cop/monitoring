@@ -1,7 +1,7 @@
 setup-grafana-datasource
 ========================
 
-This role will configure Openshift operated prometheus datasources. It iterates over "{{ datasources }}" list described in Example Inventory section.
+This role will configure Openshift operated prometheus datasources. It iterates over hostgroups grafana_prometheus_datasoources and grafana_cloudwatch_datasources
 
 Requirements
 ------------
@@ -24,18 +24,19 @@ grafana_user: 'admin'
 
 Example Inventory
 -----------------
+
+cloudwatch datasource host
 ```
 ---
-datasources:
-- name: "test_datasource"
-  datasource_url: "https://prometheus-k8s-openshift-monitoring.apps.openshift.test.com"
-  bearer_token:
-
+access_key: "my-cloudwatch-key"
+secret_access_key: "my-cloudwatch-secret"
 ```
-datasources:
-- name: - name of new datasource
-  datasource_url: - url on which the prometheus is listening
-  bearer_token: - authentication token for the Prometheus Oauth proxy
+
+prometheus datasource host
+```
+datasource_url: "https://prometheus-k8s-openshift-monitoring.apps.openshift-1.example.com"
+bearer_token: "my-secret-bearer-token"
+```
 
 
 Dependencies
