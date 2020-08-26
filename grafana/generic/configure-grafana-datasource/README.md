@@ -1,7 +1,7 @@
 setup-grafana-datasource
 ========================
 
-This role will configure Openshift operated prometheus datasources. It iterates over hostgroups grafana_prometheus_datasoources and grafana_cloudwatch_datasources
+This role will configure grafana datasources. It iterates over hostgroups grafana_prometheus_datasoources and grafana_cloudwatch_datasources
 
 Requirements
 ------------
