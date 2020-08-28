@@ -47,4 +47,8 @@ Repository Content
 * setup-grafana - deploys containerized Grafana with Prometheus as a datasource
 * configure-grafana-datasource - configures grafana datasource based on "{{ datasources }}"
 
+## Files
+* alertmanager_rules - contains example rule file
+* dashboards - contains collection of grafana dashboards
+
 More to come! 
