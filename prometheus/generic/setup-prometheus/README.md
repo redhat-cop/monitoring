@@ -1,4 +1,4 @@
-setup-node-exporter
+setup-prometheus
 =========
 
 This role will instantiate a prometheus container on targeted hosts.
