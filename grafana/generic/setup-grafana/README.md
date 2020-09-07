@@ -1,4 +1,4 @@
-setup-node-exporter
+setup-grafana
 =========
 
 This role will instantiate a grafana container on targeted hosts. It also seeds the host with dashboards
