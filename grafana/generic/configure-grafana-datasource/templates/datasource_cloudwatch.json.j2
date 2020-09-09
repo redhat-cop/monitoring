@@ -1,11 +1,11 @@
 {
   "name":"{{ item }}",
   "type":"cloudwatch",
-  "url":"http://monitoring.us-west-1.amazonaws.com",
+  "url":"http://monitoring.{{ hostvars[item].region }}.amazonaws.com",
   "access":"proxy",
   "jsonData": {
     "authType": "keys",
-    "defaultRegion": "us-west-1"
+    "defaultRegion": "{{ hostvars[item].region }}"
   },
   "securejsonData": {
     "accessKey": "{{ hostvars[item].access_key }}",
