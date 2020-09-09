@@ -28,6 +28,7 @@ Example Inventory
 cloudwatch datasource host
 ```
 ---
+region: "my-aws-region"
 access_key: "my-cloudwatch-key"
 secret_access_key: "my-cloudwatch-secret"
 ```
