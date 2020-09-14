@@ -17,3 +17,11 @@
   pip:
     name: "docker-py"
     state: present
+
+- name: enable exporter port on firewall
+  firewalld:
+    port: "{{ node_exporter_port }}/tcp"
+    permanent: yes
+    immediate: yes
+    state: enabled
+

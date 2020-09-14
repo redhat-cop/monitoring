@@ -47,4 +47,9 @@ Repository Content
 * setup-grafana - deploys containerized Grafana with Prometheus as a datasource
 * configure-grafana-datasource - configures grafana datasource based on "{{ datasources }}"
 
+## Files
+* alertmanager_rules - contains example rule file
+* dashboards - contains collection of grafana dashboards
+* ocp_alertmanager_templates - contains example alertmanager template to be applied on alertmanager-main secret in OCP
+
 More to come! 
