@@ -50,5 +50,6 @@ Repository Content
 ## Files
 * alertmanager_rules - contains example rule file
 * dashboards - contains collection of grafana dashboards
+* ocp_alertmanager_templates - contains example alertmanager template to be applied on alertmanager-main secret in OCP
 
 More to come! 
