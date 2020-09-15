@@ -8,14 +8,11 @@
     url_username: "{{ grafana_user }}"
     url_password: "{{ grafana_password }}"
     force_basic_auth: true
+    status_code: [200,409]
     headers:
       Accept: "application/json"
       Content-type: "application/json"
   loop: "{{ groups['grafana_prometheus_datasources'] }}"
-  register: result
-  failed_when:
-    - '"already exists" not in result.json.message'
-    - result.status != 200
 
 - name: create datasource cloudwatch
   uri:
@@ -26,11 +23,8 @@
     url_username: "{{ grafana_user }}"
     url_password: "{{ grafana_password }}"
     force_basic_auth: true
+    status_code: [200,409]
     headers:
       Accept: "application/json"
       Content-type: "application/json"
   loop: "{{ groups['grafana_cloudwatch_datasources'] }}"
-  register: result
-  failed_when:
-    - '"already exists" not in result.json.message'
-    - result.status != 200
