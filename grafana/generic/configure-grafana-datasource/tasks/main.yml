@@ -8,7 +8,7 @@
     url_username: "{{ grafana_user }}"
     url_password: "{{ grafana_password }}"
     force_basic_auth: true
-    status_code: [200,409]
+    status_code: 200, 409
     headers:
       Accept: "application/json"
       Content-type: "application/json"
@@ -23,7 +23,7 @@
     url_username: "{{ grafana_user }}"
     url_password: "{{ grafana_password }}"
     force_basic_auth: true
-    status_code: [200,409]
+    status_code: 200, 409
     headers:
       Accept: "application/json"
       Content-type: "application/json"
