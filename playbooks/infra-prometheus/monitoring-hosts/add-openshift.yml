@@ -1,0 +1,23 @@
+---
+- name: setup targets
+  gather_facts: no
+  hosts: monitoring-hosts
+  roles:
+    - ../../../prometheus/generic/add-target
+
+- name: setup datasource
+  hosts: monitoring-hosts
+  become: True
+  vars:
+    grafana_port: '3000'
+  roles:
+    - ../../../grafana/generic/configure-grafana-datasource
+
+- name: create alertmanager.yml
+  hosts: monitoring-hosts
+  tasks:
+  - template:
+      src: ../../../files/ocp_alertmanager_templates/alertmanager.yaml.j2
+      dest: ../../../files/ocp_alertmanager_templates/alertmanager.yaml
+    delegate_to: localhost
+
