@@ -1,18 +1,30 @@
 ---
-- name: create datasource
+- name: create datasource prometheus
   uri:
     url: "http://{{ ansible_host }}:{{ grafana_port }}/api/datasources"
     method: POST
-    body: "{{ lookup ('template', 'datasource.json.j2') | to_json }}"
+    body: "{{ lookup ('template', 'datasource_prometheus.json.j2') | to_json }}"
     body_format: json
     url_username: "{{ grafana_user }}"
     url_password: "{{ grafana_password }}"
     force_basic_auth: true
+    status_code: 200, 409
     headers:
       Accept: "application/json"
       Content-type: "application/json"
-  loop: "{{ groups['grafana_datasources'] }}"
-  register: result
-  failed_when:
-    - '"already exists" not in result.json.message'
-    - result.status != 200
+  loop: "{{ groups['grafana_prometheus_datasources'] }}"
+
+- name: create datasource cloudwatch
+  uri:
+    url: "http://{{ ansible_host }}:{{ grafana_port }}/api/datasources"
+    method: POST
+    body: "{{ lookup ('template', 'datasource_cloudwatch.json.j2') | to_json }}"
+    body_format: json
+    url_username: "{{ grafana_user }}"
+    url_password: "{{ grafana_password }}"
+    force_basic_auth: true
+    status_code: 200, 409
+    headers:
+      Accept: "application/json"
+      Content-type: "application/json"
+  loop: "{{ groups['grafana_cloudwatch_datasources'] }}"

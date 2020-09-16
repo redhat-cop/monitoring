@@ -1,0 +1,4 @@
+---
+region: "us-west-1"
+access_key: "my-cloudwatch-key"
+secret_access_key: "my-cloudwatch-secret"
