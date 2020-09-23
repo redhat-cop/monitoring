@@ -47,6 +47,8 @@ setup-prometheus-grafana.yml - Deploys and configures prometheus, alertmanager, 
 
 add-targets.yml - This playbook iterates over inventory groups and creates target definitions. 
 
+add-openshift.yml - This playbook combines the add-targets and configure-grafana-datasources to add Openshift environment to monitoring. The alertmanager.yaml is templated and created in files/ directory. The has to be applied on alertmanager-main secret in Openshift in order to configure the notification receivers.
+
 ## monitoring targets
 
 setup-bind-exporter.yml - Deploys bind exporter. This exporter runs on name server (bind).
