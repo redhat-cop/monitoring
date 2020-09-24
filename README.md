@@ -23,6 +23,7 @@ Repository Content
 * setup-ssl-exporter
 * setup-prometheus-grafana
 * add-targets
+* add-openshift
 
 ## Playbooks (monitoring-targets)
 * setup-bind-exporter
