@@ -29,8 +29,7 @@ How to add Openshift to the monitoring
 ======================================
 
 1. Add target host to ocp-cluster hostgroup in the inventory hosts file, there are multiple required variables. Example host_vars definition is available below or in inventory/host_vars/openshift-1.yml <br />
-2. Run the monitoring-hosts/add-targets.yml playbook, which configures OCP operated prometheus as a target. Optionally you can also configure ssl exporter targets with this playbook (when ssl_certs: are defined) <br />
-3. Run the monitoring-hosts/setup-grafana-datasource.yml playbook. This adds the OCP operated prometheus as a datasource to grafana <br />
+2. Run the monitoring-hosts/add-openshift.yml playbook, which configures OCP operated prometheus as a target. Optionally you can also configure ssl exporter targets with this playbook (when ssl_certs: are defined) <br />
 
 
 
