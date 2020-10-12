@@ -1,0 +1,4 @@
+- targets:
+  - localhost:{{ hostvars[item].openstack_exporter_port }}/metrics
+  labels:
+    host: {{ item }}

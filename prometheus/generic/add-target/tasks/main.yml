@@ -45,6 +45,15 @@
     seuser: system_u
     setype: container_file_t
 
+- name: create openstack_targets directory
+  file:
+    path: "/var/prometheus_targets/openstack_targets"
+    state: directory
+    mode: '0775'
+    group: monitoring-editors
+    seuser: system_u
+    setype: container_file_t
+
 - name: template the node_targets
   template:
     src: node_target.yml.j2
@@ -99,3 +108,15 @@
     setype: container_file_t
   loop: "{{ groups['prometheus_target_prometheus'] }}"
   when: "'prometheus_target_prometheus' in groups"
+
+- name: template the federated_targets
+  template:
+    src: openstack_target.yml.j2
+    dest: "/var/prometheus_targets/openstack_targets/openstack_{{ item }}.yml"
+    mode: '0775'
+    group: monitoring-editors
+    seuser: system_u
+    setype: container_file_t
+  loop: "{{ groups['openstack_env'] }}"
+  when: "'openstack_env' in groups"
+

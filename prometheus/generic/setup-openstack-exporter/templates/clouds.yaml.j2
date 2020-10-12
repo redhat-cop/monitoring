@@ -1,0 +1,13 @@
+clouds:
+  openstack:
+    auth:
+      auth_url: "{{ hostvars[item].osp_auth_url }}"
+      username: "{{ hostvars[item].osp_auth_username }}"
+      password: "{{ hostvars[item].osp_auth_password }}"
+      project_id: "{{ hostvars[item].osp_project_id }}"
+      project_name: "{{ hostvars[item].osp_project_name }}"
+      user_domain_name: "{{ hostvars[item].osp_user_domain }}"
+    verify: False
+    region_name: "regionOne"
+    interface: "public"
+    identity_api_version: 3
