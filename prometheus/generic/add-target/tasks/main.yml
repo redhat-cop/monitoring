@@ -109,7 +109,7 @@
   loop: "{{ groups['prometheus_target_prometheus'] }}"
   when: "'prometheus_target_prometheus' in groups"
 
-- name: template the federated_targets
+- name: template the openstack_targets
   template:
     src: openstack_target.yml.j2
     dest: "/var/prometheus_targets/openstack_targets/openstack_{{ item }}.yml"
