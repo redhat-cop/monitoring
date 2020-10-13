@@ -43,6 +43,8 @@ setup-grafana-datasource.yml - Configures grafana datasource, iterates over "{{ 
 
 setup-ssl-exporter.yml - Deploys ssl exporter. This exporter runs locally on prometheus host.  
 
+setup-openstack-exporter.yml - Deploys openstack exporter. This exporter runs locally on prometheus host.
+
 setup-prometheus-grafana.yml - Deploys and configures prometheus, alertmanager, grafana and also node-exporters. 
 
 add-targets.yml - This playbook iterates over inventory groups and creates target definitions. 
@@ -92,6 +94,9 @@ Inventory Description
 
 [prometheus_target_bind]
 
+[openstack_env]
+openstack-1
+
 [ocp-clusters]
 openshift-1
 
@@ -122,4 +127,15 @@ bearer_token: "my-secret-bearer-token"
 ssl_certs:
   - console-openshift-console.apps.openshift-1.example.com:443
   - api.openshift-1.example.com:6443
+```
+
+## example host_vars file from openstack_env group
+```
+osp_auth_url: https://openstack-1.example.com:13000/v3
+osp_auth_username: myuser
+osp_auth_password: mypassword
+osp_project_id: my_project_id
+osp_project_name: my_project_name
+osp_user_domain: my_user_domain
+openstack_exporter_port: 9180
 ```

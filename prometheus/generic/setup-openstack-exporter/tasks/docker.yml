@@ -17,5 +17,5 @@
     volumes:
     - "/home/{{ ansible_user }}/clouds-{{ item }}.yaml:/etc/openstack/clouds.yaml:Z"
     restart: yes
-    exposed_ports: 9181:9181
+    exposed_ports: "9181:{{ hostvars[item].openstack_exporter_port }}"
   loop: "{{ groups['openstack_env'] }}"
