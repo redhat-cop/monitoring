@@ -36,6 +36,7 @@ osp_auth_password: mypassword
 osp_project_id: my_project_id
 osp_project_name: my_project_name
 osp_user_domain: my_user_domain
+osp_cloud_name: my_cloud_name
 openstack_exporter_port: 9180
 
 

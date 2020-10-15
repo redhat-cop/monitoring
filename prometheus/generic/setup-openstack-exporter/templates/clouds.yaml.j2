@@ -1,5 +1,5 @@
 clouds:
-  openstack:
+  "{{ hostvars[item].osp_cloud_name }}":
     auth:
       auth_url: "{{ hostvars[item].osp_auth_url }}"
       username: "{{ hostvars[item].osp_auth_username }}"
