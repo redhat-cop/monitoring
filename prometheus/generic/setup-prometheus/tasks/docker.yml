@@ -16,9 +16,9 @@
     group: "{{ ansible_user }}"
 
 
-- name: copy the first_rules.yml file
-  copy:
-    src: first_rules.yml
+- name: template the first_rules.yml file
+  template:
+    src: first_rules.yml.j2
     dest: "/home/{{ ansible_user }}/rules/first_rules.yml"
     mode: 0765
     owner: "{{ ansible_user }}"
@@ -41,7 +41,7 @@
     - "{{ prometheus_port }}:9090"
     network_mode: host
     volumes:
-    - "/home/{{ ansible_user }}/rules/:/etc/prometheus/:Z"            
+    - "/home/{{ ansible_user }}/rules/:/etc/prometheus/rules/:Z"            
     - "/home/{{ ansible_user }}/prometheus.yml:/etc/prometheus/prometheus.yml:Z"
     - "/var/prometheus_targets/:/etc/prometheus/targets/:Z"
     state: "{{ provision_state }}"

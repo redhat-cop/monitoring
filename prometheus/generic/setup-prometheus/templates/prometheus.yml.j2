@@ -16,10 +16,7 @@ alerting:
        - "{{ ansible_host }}:9093"
 
 rule_files:
-  - "first_rules.yml"
-{% if custom_rules_file is defined  %}
-  - "custom_rules.yml"
-{% endif %}
+  - /etc/prometheus/rules/*_rules.yml
 
 scrape_configs:
   # The job name is added as a label `job=<job_name>` to any timeseries scraped from this config.
