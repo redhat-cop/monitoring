@@ -15,23 +15,13 @@
     owner: "{{ ansible_user }}"
     group: "{{ ansible_user }}"
 
-
-- name: template the first_rules.yml file
-  template:
-    src: first_rules.yml.j2
+- name: copy first rules
+  copy: 
+    src: "first_rules.yml"
     dest: "/home/{{ ansible_user }}/rules/first_rules.yml"
     mode: 0765
     owner: "{{ ansible_user }}"
     group: "{{ ansible_user }}"
-
-- name: copy custom rules
-  copy: 
-    src: "{{ custom_rules_file }}"
-    dest: "/home/{{ ansible_user }}/rules/custom_rules.yml"
-    mode: 0765
-    owner: "{{ ansible_user }}"
-    group: "{{ ansible_user }}"
-  when: custom_rules_file is defined
 
 - name: Run Prometheus Docker container
   docker_container:

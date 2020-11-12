@@ -17,5 +17,6 @@
     - ../../../prometheus/generic/setup-prometheus
     - ../../../grafana/generic/setup-grafana
     - ../../../prometheus/generic/setup-alertmanager
+    - ../../../prometheus/generic/update-thresholds
   tags:
     - 'always'
