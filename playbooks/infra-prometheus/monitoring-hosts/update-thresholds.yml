@@ -1,0 +1,6 @@
+---
+- name: update alertmanager thresholds
+  hosts: monitoring-hosts
+  become: True
+  roles:
+    - ../../../prometheus/generic/update-thresholds

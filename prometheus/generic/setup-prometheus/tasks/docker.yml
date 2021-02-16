@@ -15,23 +15,13 @@
     owner: "{{ ansible_user }}"
     group: "{{ ansible_user }}"
 
-
-- name: copy the first_rules.yml file
-  copy:
-    src: first_rules.yml
+- name: copy first rules
+  copy: 
+    src: "first_rules.yml"
     dest: "/home/{{ ansible_user }}/rules/first_rules.yml"
     mode: 0765
     owner: "{{ ansible_user }}"
     group: "{{ ansible_user }}"
-
-- name: copy custom rules
-  copy: 
-    src: "{{ custom_rules_file }}"
-    dest: "/home/{{ ansible_user }}/rules/custom_rules.yml"
-    mode: 0765
-    owner: "{{ ansible_user }}"
-    group: "{{ ansible_user }}"
-  when: custom_rules_file is defined
 
 - name: Run Prometheus Docker container
   docker_container:
@@ -41,8 +31,14 @@
     - "{{ prometheus_port }}:9090"
     network_mode: host
     volumes:
-    - "/home/{{ ansible_user }}/rules/:/etc/prometheus/:Z"            
+    - "/home/{{ ansible_user }}/rules/:/etc/prometheus/rules/:Z"            
     - "/home/{{ ansible_user }}/prometheus.yml:/etc/prometheus/prometheus.yml:Z"
     - "/var/prometheus_targets/:/etc/prometheus/targets/:Z"
     state: "{{ provision_state }}"
+    command: |
+      --web.enable-lifecycle 
+      --config.file=/etc/prometheus/prometheus.yml
+      --storage.tsdb.path=/prometheus
+      --web.console.libraries=/usr/share/prometheus/console_libraries 
+      --web.console.templates=/usr/share/prometheus/consoles
     restart: yes

@@ -38,6 +38,7 @@ Repository Content
 * setup-alertmanager - deploys alertmanager in docker container
 * setup-prometheus - deploys and configures prometheus in a docker container. The scraping targets are configured based on inventory
 * add-target - configures prometheus targets
+* update-thresholds - updates the alertmanager thresholds
 
 
 * setup-ssl-exporter - deploys ssl exporter in docker container. This exporter should be running locally on prometheus instance

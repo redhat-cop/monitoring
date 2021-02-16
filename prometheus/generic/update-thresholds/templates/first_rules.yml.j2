@@ -1,0 +1,76 @@
+groups:
+- name: example
+  rules:
+  - alert: InstanceDown
+    expr: up == 0
+    for: 1m
+    labels:
+      severity: Warning
+    annotations:
+      summary: "Instance {{ '{{$labels.instance}}' }} down"
+      description: "{{ '{{$labels.instance}}' }} of job {{ '{{$labels.job}}' }} has been down for more than 5 minutes."
+
+
+  - alert: SSLCertExpiringWarning
+    expr: "ssl_cert_not_after - time() < 86400 * {{ ssl_expiration_warning_threshold }}"
+    for: 1m
+    labels:
+      severity: Warning
+    annotations:
+      summary: "Certificate {{ '{{$labels.instance}}' }} is about to expire"
+      description: "Certificate {{ '{{$labels.instance}}' }} will expire in less than {{ ssl_expiration_warning_threshold }} days"
+
+  - alert: SSLCertExpiringCritical
+    expr: "ssl_cert_not_after - time() < 86400 * {{ ssl_expiration_critical_threshold }}"
+    for: 1m
+    labels:
+      severity: Critical
+    annotations:
+      summary: "Certificate {{ '{{$labels.instance}}' }} is about to expire"
+      description: "Certificate {{ '{{$labels.instance}}' }} will expire in less than {{ ssl_expiration_critical_threshold }} days"
+
+  - alert: NodeMemoryUsageWarning
+    expr: "(((node_memory_MemTotal - node_memory_MemFree - node_memory_Cached) / (node_memory_MemTotal) * 100)) > {{ memory_usage_warning_threshold }}"
+    for: 2m
+    labels:
+      severity: Warning
+    annotations:
+      DESCRIPTION: "{{ '{{$labels.instance}}' }}: Memory usage is above {{ memory_usage_warning_threshold }}% (current value is: {{ '{{ $value }}' }})"
+      SUMMARY: "{{ '{{$labels.instance}}' }}: High memory usage detected"
+
+  - alert: NodeMemoryUsageCritical
+    expr: "(((node_memory_MemTotal - node_memory_MemFree - node_memory_Cached) / (node_memory_MemTotal) * 100)) > {{ memory_usage_critical_threshold }}"
+    for: 2m
+    labels:
+      severity: Critical 
+    annotations:
+      DESCRIPTION: "{{ '{{$labels.instance}}' }}: Memory usage is above {{ memory_usage_critical_threshold }}% (current value is: {{ '{{ $value }}' }})"
+      SUMMARY: "{{ '{{$labels.instance}}' }}: High memory usage detected"
+
+  - alert: NodeLoadAverage
+    expr: (node_load5 / count(node_cpu{mode="system"}) WITHOUT (cpu, mode)) > 1
+    for: 2m
+    labels:
+      severity: Warning
+    annotations:
+      DESCRIPTION: "{{ '{{$labels.instance}}: LA is high' }}"
+      SUMMARY: "{{ '{{$labels.instance}}: High Node Load average(5m) detected' }}"
+
+  - alert: NodeLowDiskWarning
+    expr: "((node_filesystem_size_bytes - node_filesystem_free_bytes)/ node_filesystem_size_bytes * 100) > {{ disk_usage_warning_threshold }}"
+    for: 2m
+    labels:
+      severity: Warning
+    annotations:
+      DESCRIPTION: "{{ '{{$labels.instance}}' }}: Root disk usage is above {{ disk_usage_warning_threshold }}% (current value is: {{ '{{ $value }}' }})"
+      SUMMARY: "{{ '{{$labels.instance}}: Low root disk space' }}"
+
+
+  - alert: NodeLowDiskCritical
+    expr: "((node_filesystem_size_bytes - node_filesystem_free_bytes)/ node_filesystem_size_bytes * 100) > {{ disk_usage_critical_threshold }}"
+    for: 2m
+    labels:
+      severity: Critical
+    annotations:
+      DESCRIPTION: "{{ '{{$labels.instance}}' }}: Root disk usage is above {{ disk_usage_critical_threshold }}% (current value is: {{ '{{ $value }}' }})"
+      SUMMARY: "{{ '{{$labels.instance}}: Low root disk space' }}"

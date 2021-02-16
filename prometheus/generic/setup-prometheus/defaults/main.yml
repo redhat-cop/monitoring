@@ -8,3 +8,12 @@ ssl_exporter_port: '9219'
 openstack_exporter_port: '9180'
 
 provision_state: "started"
+
+ssl_expiration_warning_threshold: '7'
+ssl_expiration_critical_threshold: '3'
+
+memory_usage_warning_threshold: '70'
+memory_usage_critical_threshold: '90'
+
+disk_usage_warning_threshold: '70'
+disk_usage_critical_threshold: '90'
