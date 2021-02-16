@@ -1,0 +1,8 @@
+---
+- name: Setup openstack exporter
+  hosts: monitoring-hosts
+  become: True
+  vars:
+    provision_state: "started"
+  roles:
+    - ../../../prometheus/generic/setup-openstack-exporter

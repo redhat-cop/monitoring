@@ -23,6 +23,7 @@ Repository Content
 * setup-ssl-exporter
 * setup-prometheus-grafana
 * add-targets
+* setup-openstack-exporter
 * add-openshift
 
 ## Playbooks (monitoring-targets)
@@ -40,6 +41,7 @@ Repository Content
 
 
 * setup-ssl-exporter - deploys ssl exporter in docker container. This exporter should be running locally on prometheus instance
+* setup-openstack-exporter - deploys openstack exporter in docker container. This exporter should be running locally on prometheus instance
 * setup-bind-exporter - deploys bind exporter in docker container. This exporter should be running on target host 
 * setup-haproxy-exporter - deploys haproxy exporter in docker container. This exporter should be running on target host
 * setup-node-exporter - deploys node exporter in docker container. This exporter should be running on target host

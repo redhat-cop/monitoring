@@ -1,0 +1,7 @@
+---
+openstack_exporter_image: 'quay.io/niedbalski/openstack-exporter-linux-amd64'
+openstack_exporter_image_version: 'master'
+openstack_exporter_port: '9180'
+openstack_cloud_name: 'openstack'
+
+provision_state: "started"

@@ -92,3 +92,21 @@ scrape_configs:
       - target_label: __address__
         replacement: 127.0.0.1:{{ ssl_exporter_port }}
 
+{% if (groups['openstack_env']|length) > 0 %}
+{% for host in groups['openstack_env'] %}
+  - job_name: 'openstack'
+    metrics_path: /metrics
+    scrape_timeout: 20s
+    scrape_interval: 60s
+    file_sd_configs:
+      - files:
+        - /etc/prometheus/targets/openstack_targets/*.yml
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: '127.0.0.1:{{ hostvars[host].openstack_exporter_port }}'
+{% endfor %}
+{% endif %}

@@ -6,6 +6,9 @@
 
 [prometheus_target_bind]
 
+[openstack_env]
+openstack-1
+
 [ocp-clusters]
 openshift-1
 
