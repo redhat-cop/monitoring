@@ -1,0 +1,6 @@
+---
+docker_install: True
+docker_username: centos
+hosting_infrastructure: openstack
+ansible_user: centos
+ansible_become: true
