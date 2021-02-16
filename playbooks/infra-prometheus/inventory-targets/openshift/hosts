@@ -1,0 +1,13 @@
+
+[ocp-clusters]
+openshift-1
+
+[grafana_prometheus_datasources:children]
+ocp-clusters
+
+[prometheus_target_ssl:children]
+ocp-clusters
+
+[prometheus_target_prometheus:children]
+ocp-clusters
+

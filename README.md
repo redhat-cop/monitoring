@@ -24,6 +24,7 @@ Repository Content
 * setup-prometheus-grafana
 * add-targets
 * setup-openstack-exporter
+* add-openshift
 
 ## Playbooks (monitoring-targets)
 * setup-bind-exporter
