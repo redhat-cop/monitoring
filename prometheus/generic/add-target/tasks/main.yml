@@ -56,7 +56,7 @@
 - name: create federated_prometheus_targets directory
   file:
     path: "/var/prometheus_targets/federated_targets"
-    state: directoryO exporter, underpinnings of SNMP exporter, docker restart policy
+    state: directory
     mode: '0775'
     group: monitoring-editors
     seuser: system_u
