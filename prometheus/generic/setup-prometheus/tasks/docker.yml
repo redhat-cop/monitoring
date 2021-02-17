@@ -27,6 +27,7 @@
   docker_container:
     name: prometheus
     image: "{{ prometheus_image }}:{{ prometheus_image_version }}"
+    restart_policy: unless-stopped
     published_ports:
     - "{{ prometheus_port }}:9090"
     network_mode: host

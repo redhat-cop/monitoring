@@ -3,6 +3,7 @@
   docker_container:
     name: haproxy_exporter
     image: "{{ haproxy_exporter_image }}:{{ haproxy_exporter_image_version }}"
+    restart_policy: unless-stopped
     network_mode: "host"
     state: "{{ provision_state }}"
     command: "--haproxy.scrape-uri=\"http://{{ stats_user }}:{{ stats_password }}@127.0.0.1:{{ stats_port }}/stats;csv\""

@@ -13,7 +13,7 @@ alerting:
    - static_configs:
      - targets:
        # Alertmanager's default port is 9093
-       - "{{ ansible_host }}:9093"
+       - "localhost:9093"
 
 rule_files:
   - /etc/prometheus/rules/*_rules.yml
@@ -88,6 +88,19 @@ scrape_configs:
         target_label: instance
       - target_label: __address__
         replacement: 127.0.0.1:{{ ssl_exporter_port }}
+  
+  - job_name: 'ilo_exporter'
+    scrape_interval: 30s
+    file_sd_configs:
+      - files:
+        - /etc/prometheus/targets/ilo_targets/*.yml
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_ilo_host
+      - source_labels: [__param_ilo_host]
+        target_label: instance
+      - target_label: __address__
+        replacement: 127.0.0.1:9416
 
 {% if (groups['openstack_env']|length) > 0 %}
 {% for host in groups['openstack_env'] %}

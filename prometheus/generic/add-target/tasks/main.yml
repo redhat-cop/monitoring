@@ -35,10 +35,9 @@
     seuser: system_u
     setype: container_file_t
 
-
-- name: create federated_prometheus_targets directory
+- name: create ilo_targets directory
   file:
-    path: "/var/prometheus_targets/federated_targets"
+    path: "/var/prometheus_targets/ilo_targets"
     state: directory
     mode: '0775'
     group: monitoring-editors
@@ -54,16 +53,25 @@
     seuser: system_u
     setype: container_file_t
 
-- name: template the node_targets
-  template:
-    src: node_target.yml.j2
-    dest: "/var/prometheus_targets/node_targets/node_target_{{ item }}.yml"
+- name: create federated_prometheus_targets directory
+  file:
+    path: "/var/prometheus_targets/federated_targets"
+    state: directoryO exporter, underpinnings of SNMP exporter, docker restart policy
     mode: '0775'
     group: monitoring-editors
     seuser: system_u
     setype: container_file_t
-  loop: "{{ groups['prometheus_target'] }}"
-  when: "'prometheus_target' in groups"
+
+# - name: template the node_targets
+#   template:
+#     src: node_target.yml.j2
+#     dest: "/var/prometheus_targets/node_targets/node_target_{{ item }}.yml"
+#     mode: '0775'
+#     group: monitoring-editors
+#     seuser: system_u
+#     setype: container_file_t
+#   loop: "{{ groups['prometheus_target'] }}"
+#   when: "'prometheus_target' in groups"
 
 - name: template the haproxy_targets
   template:
@@ -97,6 +105,17 @@
     setype: container_file_t
   loop: "{{ groups['prometheus_target_ssl'] }}"
   when: "'prometheus_target_ssl' in groups"
+
+- name: template the ilo_targets
+  template:
+    src: ilo_target.yml.j2
+    dest: "/var/prometheus_targets/ilo_targets/ilo_target_{{ item }}.yml"
+    mode: '0775'
+    group: monitoring-editors
+    seuser: system_u
+    setype: container_file_t
+  loop: "{{ groups['prometheus_target_ilo'] }}"
+  when: "'prometheus_target_ilo' in groups"
 
 - name: template the federated_targets
   template:

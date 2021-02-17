@@ -3,6 +3,7 @@
   docker_container:
     name: node_exporter
     image: "{{ node_exporter_image }}:{{ node_exporter_image_version }}"
+    restart_policy: unless-stopped
     pid_mode: "host"
     network_mode: "host"
     state: "{{ provision_state }}"

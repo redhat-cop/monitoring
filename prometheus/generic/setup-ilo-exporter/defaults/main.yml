@@ -1,0 +1,7 @@
+---
+# ilo_exporter_image: 'idnt/hpilo-exporter'
+ilo_exporter_image: 'quay.io/jacobsee/hpilo-exporter'
+ilo_exporter_image_version: 'latest'
+ilo_exporter_port: '9416'
+
+provision_state: "started"
