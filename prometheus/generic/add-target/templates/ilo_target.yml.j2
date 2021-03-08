@@ -1,8 +1,12 @@
 - targets:
+{% if hostvars[item].ilo_hosts is defined %}
 {% for host in hostvars[item].ilo_hosts %}
   - {{ host }}
 {% endfor %}
+{% else %}
+  - {{ hostvars[item].ansible_host }}
+{% endif %}
   labels:
-    "__param_ilo_port": "{{ hostvars[item].ilo_port }}"
+    "__param_ilo_port": "{{ hostvars[item].ilo_port | default(443) }}"
     "__param_ilo_user": "{{ hostvars[item].ilo_user }}"
     "__param_ilo_password": "{{ hostvars[item].ilo_password }}"

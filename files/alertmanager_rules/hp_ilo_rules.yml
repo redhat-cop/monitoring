@@ -1,0 +1,68 @@
+groups:
+- name: iLO
+  rules:
+  - alert: HpiloBattery
+    expr: hpilo_battery > 0
+    for: 5m
+    labels:
+      severity: page
+    annotations:
+      description: 'iLO {{ $labels.instance }} is reporting a degrated or dead battery.'
+      summary: 'iLO {{ $labels.instance }} battery problem'
+  - alert: HpiloFans
+    expr: hpilo_fans > 0
+    for: 5m
+    labels:
+      severity: page
+    annotations:
+      description: 'iLO {{ $labels.instance }} is reporting a degrated or dead fan.'
+      summary: 'iLO {{ $labels.instance }} fan problem'
+  - alert: HpiloMemory
+    expr: hpilo_memory > 0
+    for: 5m
+    labels:
+      severity: page
+    annotations:
+      description: 'iLO {{ $labels.instance }} is reporting degrated or dead memory.'
+      summary: 'iLO {{ $labels.instance }} memory problem'
+  - alert: HpiloNetwork
+    expr: hpilo_network > 0
+    for: 5m
+    labels:
+      severity: page
+    annotations:
+      description: 'iLO {{ $labels.instance }} is reporting a degrated or dead network.'
+      summary: 'iLO {{ $labels.instance }} network problem'
+  - alert: HpiloPowerSupply
+    expr: hpilo_power_supplies > 0
+    for: 5m
+    labels:
+      severity: page
+    annotations:
+      description: 'iLO {{ $labels.instance }} is reporting a degrated or dead power supply.'
+      summary: 'iLO {{ $labels.instance }} power supply problem'
+  - alert: HpiloProcessor
+    expr: hpilo_processors > 0
+    for: 5m
+    labels:
+      severity: page
+    annotations:
+      description: 'iLO {{ $labels.instance }} is reporting a degrated or dead processor.'
+      summary: 'iLO {{ $labels.instance }} processor problem'
+  - alert: HpiloStorage
+    expr: hpilo_storage > 0
+    for: 5m
+    labels:
+      severity: page
+    annotations:
+      description: 'iLO {{ $labels.instance }} is reporting degrated or dead storage.'
+      summary: 'iLO {{ $labels.instance }} storage problem'
+  - alert: HpiloTemperature
+    expr: hpilo_temperature > 0
+    for: 5m
+    labels:
+      severity: page
+    annotations:
+      description: 'iLO {{ $labels.instance }} is reporting a temperature problem.'
+      summary: 'iLO {{ $labels.instance }} temperature problem'
+  
