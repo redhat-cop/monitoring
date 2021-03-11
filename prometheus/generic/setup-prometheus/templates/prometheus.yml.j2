@@ -90,7 +90,8 @@ scrape_configs:
         replacement: 127.0.0.1:{{ ssl_exporter_port }}
   
   - job_name: 'ilo_exporter'
-    scrape_interval: 30s
+    scrape_interval: 90s
+    scrape_timeout: 60s
     file_sd_configs:
       - files:
         - /etc/prometheus/targets/ilo_targets/*.yml

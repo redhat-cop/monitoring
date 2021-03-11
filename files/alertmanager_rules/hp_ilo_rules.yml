@@ -7,7 +7,7 @@ groups:
     labels:
       severity: page
     annotations:
-      description: 'iLO {{ $labels.instance }} is reporting a degrated or dead battery.'
+      description: 'iLO {{ $labels.instance }} is reporting a degraded or dead battery.'
       summary: 'iLO {{ $labels.instance }} battery problem'
   - alert: HpiloFans
     expr: hpilo_fans > 0
@@ -15,7 +15,7 @@ groups:
     labels:
       severity: page
     annotations:
-      description: 'iLO {{ $labels.instance }} is reporting a degrated or dead fan.'
+      description: 'iLO {{ $labels.instance }} is reporting a degraded or dead fan.'
       summary: 'iLO {{ $labels.instance }} fan problem'
   - alert: HpiloMemory
     expr: hpilo_memory > 0
@@ -23,7 +23,7 @@ groups:
     labels:
       severity: page
     annotations:
-      description: 'iLO {{ $labels.instance }} is reporting degrated or dead memory.'
+      description: 'iLO {{ $labels.instance }} is reporting degraded or dead memory.'
       summary: 'iLO {{ $labels.instance }} memory problem'
   - alert: HpiloNetwork
     expr: hpilo_network > 0
@@ -31,7 +31,7 @@ groups:
     labels:
       severity: page
     annotations:
-      description: 'iLO {{ $labels.instance }} is reporting a degrated or dead network.'
+      description: 'iLO {{ $labels.instance }} is reporting a degraded or dead network.'
       summary: 'iLO {{ $labels.instance }} network problem'
   - alert: HpiloPowerSupply
     expr: hpilo_power_supplies > 0
@@ -39,7 +39,7 @@ groups:
     labels:
       severity: page
     annotations:
-      description: 'iLO {{ $labels.instance }} is reporting a degrated or dead power supply.'
+      description: 'iLO {{ $labels.instance }} is reporting a degraded or dead power supply.'
       summary: 'iLO {{ $labels.instance }} power supply problem'
   - alert: HpiloProcessor
     expr: hpilo_processors > 0
@@ -47,7 +47,7 @@ groups:
     labels:
       severity: page
     annotations:
-      description: 'iLO {{ $labels.instance }} is reporting a degrated or dead processor.'
+      description: 'iLO {{ $labels.instance }} is reporting a degraded or dead processor.'
       summary: 'iLO {{ $labels.instance }} processor problem'
   - alert: HpiloStorage
     expr: hpilo_storage > 0
@@ -55,8 +55,16 @@ groups:
     labels:
       severity: page
     annotations:
-      description: 'iLO {{ $labels.instance }} is reporting degrated or dead storage.'
+      description: 'iLO {{ $labels.instance }} is reporting degraded or dead storage.'
       summary: 'iLO {{ $labels.instance }} storage problem'
+  - alert: HpiloDrive
+    expr: hpilo_drive > 0
+    for: 5m
+    labels:
+      severity: page
+    annotations:
+      description: 'iLO {{ $labels.instance }} is reporting degraded or dead drives.'
+      summary: 'iLO {{ $labels.instance }} drive problem'
   - alert: HpiloTemperature
     expr: hpilo_temperature > 0
     for: 5m
