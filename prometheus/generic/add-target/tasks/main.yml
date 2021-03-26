@@ -44,6 +44,33 @@
     seuser: system_u
     setype: container_file_t
 
+- name: create lenovo_flex_cmm_targets directory
+  file:
+    path: "/var/prometheus_targets/lenovo_flex_cmm_targets"
+    state: directory
+    mode: '0775'
+    group: monitoring-editors
+    seuser: system_u
+    setype: container_file_t
+
+- name: create lenovo_flex_imm_targets directory
+  file:
+    path: "/var/prometheus_targets/lenovo_flex_imm_targets"
+    state: directory
+    mode: '0775'
+    group: monitoring-editors
+    seuser: system_u
+    setype: container_file_t
+
+- name: create netapp_targets directory
+  file:
+    path: "/var/prometheus_targets/netapp_targets"
+    state: directory
+    mode: '0775'
+    group: monitoring-editors
+    seuser: system_u
+    setype: container_file_t
+
 - name: create openstack_targets directory
   file:
     path: "/var/prometheus_targets/openstack_targets"
@@ -116,6 +143,39 @@
     setype: container_file_t
   loop: "{{ groups['prometheus_target_ilo'] }}"
   when: "'prometheus_target_ilo' in groups"
+
+- name: template the lenovo_flex_cmm_targets
+  template:
+    src: lenovo_flex_target.yml.j2
+    dest: "/var/prometheus_targets/lenovo_flex_cmm_targets/lenovo_flex_cmm_target_{{ item }}.yml"
+    mode: '0775'
+    group: monitoring-editors
+    seuser: system_u
+    setype: container_file_t
+  loop: "{{ groups['prometheus_target_lenovo_flex_cmm'] }}"
+  when: "'prometheus_target_lenovo_flex_cmm' in groups"
+
+- name: template the lenovo_flex_imm_targets
+  template:
+    src: lenovo_flex_target.yml.j2
+    dest: "/var/prometheus_targets/lenovo_flex_imm_targets/lenovo_flex_imm_target_{{ item }}.yml"
+    mode: '0775'
+    group: monitoring-editors
+    seuser: system_u
+    setype: container_file_t
+  loop: "{{ groups['prometheus_target_lenovo_flex_imm'] }}"
+  when: "'prometheus_target_lenovo_flex_imm' in groups"
+
+- name: template the netapp_targets
+  template:
+    src: netapp_target.yml.j2
+    dest: "/var/prometheus_targets/netapp_targets/netapp_target_{{ item }}.yml"
+    mode: '0775'
+    group: monitoring-editors
+    seuser: system_u
+    setype: container_file_t
+  loop: "{{ groups['prometheus_target_netapp'] }}"
+  when: "'prometheus_target_netapp' in groups"
 
 - name: template the federated_targets
   template:

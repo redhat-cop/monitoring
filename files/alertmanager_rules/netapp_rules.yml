@@ -1,0 +1,123 @@
+groups:
+- name: NetApp
+  rules:
+  - alert: NetAppCIFSNDO
+    expr: netapp_cifs_ndo > 0
+    for: 5m
+    labels:
+      severity: page
+    annotations:
+      description: 'NetApp {{ $labels.instance }} is reporting a CIFS-NDO problem.'
+      summary: 'NetApp {{ $labels.instance }} CIFS-NDO problem'
+  - alert: NetAppDiskHealth
+    expr: netapp_disk_health > 0
+    for: 5m
+    labels:
+      severity: page
+    annotations:
+      description: 'NetApp {{ $labels.instance }} is reporting a disk problem.'
+      summary: 'NetApp {{ $labels.instance }} disk problem'
+  - alert: NetAppEnvironment
+    expr: netapp_environment > 0
+    for: 5m
+    labels:
+      severity: page
+    annotations:
+      description: 'NetApp {{ $labels.instance }} is reporting an environment problem.'
+      summary: 'NetApp {{ $labels.instance }} environment problem'
+  - alert: NetAppFHMBridge
+    expr: netapp_fhm_bridge > 0
+    for: 5m
+    labels:
+      severity: page
+    annotations:
+      description: 'NetApp {{ $labels.instance }} is reporting an FHM bridge problem.'
+      summary: 'NetApp {{ $labels.instance }} FHM bridge problem'
+  - alert: NetAppFHMSwitch
+    expr: netapp_fhm_switch > 0
+    for: 5m
+    labels:
+      severity: page
+    annotations:
+      description: 'NetApp {{ $labels.instance }} is reporting an FHM switch problem.'
+      summary: 'NetApp {{ $labels.instance }} FHM switch problem'
+  - alert: NetAppAlert
+    expr: netapp_has_alert > 0
+    for: 5m
+    labels:
+      severity: page
+    annotations:
+      description: 'NetApp {{ $labels.instance }} is reporting at least one alert.'
+      summary: 'NetApp {{ $labels.instance }} alert'
+  - alert: NetAppIO
+    expr: netapp_io > 0
+    for: 5m
+    labels:
+      severity: page
+    annotations:
+      description: 'NetApp {{ $labels.instance }} is reporting an IO problem.'
+      summary: 'NetApp {{ $labels.instance }} IO problem'
+  - alert: NetAppMemory
+    expr: netapp_memory > 0
+    for: 5m
+    labels:
+      severity: page
+    annotations:
+      description: 'NetApp {{ $labels.instance }} is reporting a memory problem.'
+      summary: 'NetApp {{ $labels.instance }} memory problem'
+  - alert: NetAppMetrocluster
+    expr: netapp_metrocluster > 0
+    for: 5m
+    labels:
+      severity: page
+    annotations:
+      description: 'NetApp {{ $labels.instance }} is reporting a metrocluster problem.'
+      summary: 'NetApp {{ $labels.instance }} metrocluster problem'
+  - alert: NetAppMetroclusterNode
+    expr: netapp_metrocluster_node > 0
+    for: 5m
+    labels:
+      severity: page
+    annotations:
+      description: 'NetApp {{ $labels.instance }} is reporting a metrocluster node problem.'
+      summary: 'NetApp {{ $labels.instance }} metrocluster node problem'
+  - alert: NetAppMotherboard
+    expr: netapp_motherboard > 0
+    for: 5m
+    labels:
+      severity: page
+    annotations:
+      description: 'NetApp {{ $labels.instance }} is reporting a motherboard problem.'
+      summary: 'NetApp {{ $labels.instance }} motherboard problem'
+  - alert: NetAppSASConnect
+    expr: netapp_sas_connect > 0
+    for: 5m
+    labels:
+      severity: page
+    annotations:
+      description: 'NetApp {{ $labels.instance }} is reporting an SAS connect problem.'
+      summary: 'NetApp {{ $labels.instance }} SAS connect problem'
+  - alert: NetAppServiceProcessor
+    expr: netapp_service_processor > 0
+    for: 5m
+    labels:
+      severity: page
+    annotations:
+      description: 'NetApp {{ $labels.instance }} is reporting a service processor problem.'
+      summary: 'NetApp {{ $labels.instance }} service processor problem'
+  - alert: NetAppShelfHealth
+    expr: netapp_shelf_health > 0
+    for: 5m
+    labels:
+      severity: page
+    annotations:
+      description: 'NetApp {{ $labels.instance }} is reporting a shelf health problem.'
+      summary: 'NetApp {{ $labels.instance }} shelf health problem'
+  - alert: NetAppSwitchHealth
+    expr: netapp_switch_health > 0
+    for: 5m
+    labels:
+      severity: page
+    annotations:
+      description: 'NetApp {{ $labels.instance }} is reporting a switch health problem.'
+      summary: 'NetApp {{ $labels.instance }} switch health problem'

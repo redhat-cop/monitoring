@@ -36,6 +36,8 @@
   roles:
     - "{{ playbook_dir }}/../../prometheus/generic/setup-ssl-exporter"
     - "{{ playbook_dir }}/../../prometheus/generic/setup-ilo-exporter"
+    - "{{ playbook_dir }}/../../prometheus/generic/setup-lenovo-flex-exporter"
+    - "{{ playbook_dir }}/../../prometheus/generic/setup-netapp-exporter"
   tags:
     - exporters
 

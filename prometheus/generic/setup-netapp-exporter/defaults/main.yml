@@ -1,0 +1,6 @@
+---
+netapp_exporter_image: 'quay.io/jacobsee/netapp-health-exporter'
+netapp_exporter_image_version: 'latest'
+netapp_exporter_port: '9418'
+
+provision_state: "started"

@@ -103,6 +103,51 @@ scrape_configs:
       - target_label: __address__
         replacement: 127.0.0.1:9416
 
+  - job_name: 'lenovo_flex_cmm_exporter'
+    metrics_path: /cmmhealth
+    scrape_interval: 90s
+    scrape_timeout: 60s
+    file_sd_configs:
+      - files:
+        - /etc/prometheus/targets/lenovo_flex_cmm_targets/*.yml
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_host
+      - source_labels: [__param_host]
+        target_label: instance
+      - target_label: __address__
+        replacement: 127.0.0.1:9417
+
+  - job_name: 'lenovo_flex_imm_exporter'
+    metrics_path: /immhealth
+    scrape_interval: 90s
+    scrape_timeout: 60s
+    file_sd_configs:
+      - files:
+        - /etc/prometheus/targets/lenovo_flex_imm_targets/*.yml
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_host
+      - source_labels: [__param_host]
+        target_label: instance
+      - target_label: __address__
+        replacement: 127.0.0.1:9417
+
+  - job_name: 'netapp_exporter'
+    metrics_path: /health
+    scrape_interval: 90s
+    scrape_timeout: 60s
+    file_sd_configs:
+      - files:
+        - /etc/prometheus/targets/netapp_targets/*.yml
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_host
+      - source_labels: [__param_host]
+        target_label: instance
+      - target_label: __address__
+        replacement: 127.0.0.1:9418
+
 {% if (groups['openstack_env']|length) > 0 %}
 {% for host in groups['openstack_env'] %}
   - job_name: 'openstack'
