@@ -1,0 +1,27 @@
+# HELP imm_restarts Blade power status as collected from the Flex System (0 if on)
+# TYPE imm_restarts counter
+imm_restarts{} {{ health.restarts }}
+
+# HELP imm_health_power Blade power status as collected from the Flex System (0 if on)
+# TYPE imm_health_power gauge
+imm_health_power{} {{ health.power }}
+
+# HELP imm_health_state Blade state as collected from the Flex System (0 if booted to OS)
+# TYPE imm_health_state gauge
+imm_health_state{} {{ health.state }}
+
+# HELP imm_health_storage Storage health as collected from the Flex System
+# TYPE imm_health_storage gauge
+imm_health_storage{} {{ health.storage }}
+
+# HELP imm_health_processors Processor health as collected from the Flex System
+# TYPE imm_health_processors gauge
+imm_health_processors{} {{ health.processors }}
+
+# HELP imm_health_memory Memory health as collected from the Flex System
+# TYPE imm_health_memory gauge
+imm_health_memory{} {{ health.memory }}
+
+# HELP imm_health_system Blade system health as collected from the Flex System
+# TYPE imm_health_system gauge
+imm_health_system{} {{ health.system }}
