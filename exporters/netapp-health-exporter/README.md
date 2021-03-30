@@ -1,6 +1,7 @@
 # NetApp Health Exporter
 
 Exporter to expose health of NetApp systems to Prometheus.
+
 ## Gauges
 
 Gauge status codes:
