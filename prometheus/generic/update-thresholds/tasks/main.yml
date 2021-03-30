@@ -12,14 +12,15 @@
 
 - name: copy custom rules
   copy: 
-    src: "{{ custom_rules_file }}"
-    dest: "/home/{{ ansible_user }}/rules/custom_rules.yml"
+    src: "{{ item }}"
+    dest: "/home/{{ ansible_user }}/rules/"
     mode: 0775
     owner: "{{ ansible_user }}"
     group: "{{ ansible_user }}"
     seuser: system_u
     setype: container_file_t
-  when: custom_rules_file is defined
+  when: rules_files is defined
+  loop: "{{ rules_files }}"
 
 - name: reload prometheus config
   uri:

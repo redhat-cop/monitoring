@@ -11,6 +11,7 @@
   docker_container:
     name: alertmanager
     image: "{{ alertmanager_image }}:{{ alertmanager_image_version }}"
+    restart_policy: unless-stopped
     published_ports:
     - "{{ alertmanager_port }}:9093"
     volumes:

@@ -1,0 +1,10 @@
+---
+- name: Run the snmp_exporter
+  docker_container:
+    name: snmp_exporter
+    image: "{{ snmp_exporter_image }}:{{ snmp_exporter_image_version }}"
+    restart_policy: unless-stopped
+    network_mode: "host"
+    state: "{{ provision_state }}"
+    published_ports:
+    - "{{ snmp_exporter_port }}:9116"

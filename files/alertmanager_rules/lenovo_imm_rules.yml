@@ -1,0 +1,51 @@
+groups:
+- name: LenovoIMM
+  rules:
+  - alert: IMMHealthMemory
+    expr: imm_health_memory > 0
+    for: 5m
+    labels:
+      severity: page
+    annotations:
+      description: 'IMM {{ $labels.instance }} is reporting a memory problem.'
+      summary: 'IMM {{ $labels.instance }} memory problem'
+  - alert: IMMHealthPower
+    expr: imm_health_power > 0
+    for: 5m
+    labels:
+      severity: page
+    annotations:
+      description: 'IMM {{ $labels.instance }} is reporting a power supply problem.'
+      summary: 'IMM {{ $labels.instance }} power problem'
+  - alert: IMMHealthProcessors
+    expr: imm_health_processors > 0
+    for: 5m
+    labels:
+      severity: page
+    annotations:
+      description: 'IMM {{ $labels.instance }} is reporting a processor problem.'
+      summary: 'IMM {{ $labels.instance }} processor problem'
+  - alert: IMMHealthStorage
+    expr: imm_health_storage > 0
+    for: 5m
+    labels:
+      severity: page
+    annotations:
+      description: 'IMM {{ $labels.instance }} is reporting a storage problem.'
+      summary: 'IMM {{ $labels.instance }} storage problem'
+  - alert: IMMHealthSystem
+    expr: imm_health_system > 0
+    for: 5m
+    labels:
+      severity: page
+    annotations:
+      description: 'IMM {{ $labels.instance }} is reporting a system health problem.'
+      summary: 'IMM {{ $labels.instance }} system health problem'
+  - alert: IMMHealthState
+    expr: imm_health_state > 0
+    for: 5m
+    labels:
+      severity: page
+    annotations:
+      description: 'IMM {{ $labels.instance }} is reporting that it is not powered on.'
+      summary: 'IMM {{ $labels.instance }} not powered on'
