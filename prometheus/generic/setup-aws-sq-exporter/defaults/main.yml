@@ -1,0 +1,13 @@
+---
+aws_sq_exporter_image: 'prom/aws-sq-exporter'
+aws_sq_exporter_image_version: 'latest'
+aws_sq_exporter_port: '8080'
+
+provision_state: "started"
+
+ansible_sq_exporter:
+   - awsAccount: "Dummy-Account"
+     port: 9420
+     apikey: 22222
+     secretkey: 3333
+     regions: "us-east-1"

@@ -1,0 +1,31 @@
+---
+
+- name: Enable firewalld
+  service:
+    name: firewalld
+    enabled: yes
+    state: started
+
+- name: Open Firewall for Prometheus
+  firewalld:
+    port: "{{ item.port }}/tcp"
+    permanent: yes
+    state: enabled
+    immediate: yes
+  loop: "{{ ansible_sq_exporter }}"
+
+- name: Run AWS SQ Exporter Docker container
+  docker_container:
+    name: "aws-sq-exporter_{{ item.awsAccount }}"
+    image: "{{ aws_sq_exporter_image }}:{{ aws_sq_exporter_image_version }}"
+    restart_policy: unless-stopped
+    network_mode: host
+    state: "{{ provision_state }}"
+    command: |
+      /opt/app-root/src/sq_exporter.py 
+      --apikey "{{ item.apikey}}"
+      --secretkey "{{ item.secretkey }}"
+      --regions "{{ item.regions}}"
+      --port "{{ item.port }}"
+    restart: yes
+  loop: "{{ ansible_sq_exporter }}"

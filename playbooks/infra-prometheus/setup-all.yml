@@ -41,6 +41,7 @@
     - "{{ playbook_dir }}/../../prometheus/generic/setup-openstack-exporter"
     - "{{ playbook_dir }}/../../prometheus/generic/setup-junos-exporter"
     - "{{ playbook_dir }}/../../prometheus/generic/setup-openstack-exporter"
+    - "{{ playbook_dir }}/../../prometheus/generic/setup-aws-sq-exporter" 
   tags:
     - exporters
     - onboard-exporters
