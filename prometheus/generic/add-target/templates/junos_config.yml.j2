@@ -1,0 +1,19 @@
+devices:
+{% for item in groups["prometheus_target_junos"] %}
+  - host: {{ hostvars[item].ansible_host }}
+    username: {{ hostvars[item].monitoring_username }}
+    password: {{ hostvars[item].monitoring_password }}
+{% endfor %}
+
+features:
+  bgp: false
+  ospf: false
+  isis: false
+  nat: false
+  ldp: false
+  l2circuit: false
+  environment: true
+  routes: false
+  routing_engine: false
+  interface_diagnostic: true
+  fpc: false
