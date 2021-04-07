@@ -80,6 +80,15 @@
     seuser: system_u
     setype: container_file_t
 
+- name: create junos_targets directory
+  file:
+    path: "/var/prometheus_targets/junos_targets"
+    state: directory
+    mode: '0775'
+    group: monitoring-editors
+    seuser: system_u
+    setype: container_file_t
+
 - name: create federated_prometheus_targets directory
   file:
     path: "/var/prometheus_targets/federated_targets"
@@ -176,6 +185,43 @@
     setype: container_file_t
   loop: "{{ groups['prometheus_target_netapp'] }}"
   when: "'prometheus_target_netapp' in groups"
+
+- name: template the junos_targets
+  template:
+    src: junos_target.yml.j2
+    dest: "/var/prometheus_targets/junos_targets/junos_target_{{ item }}.yml"
+    mode: '0775'
+    group: monitoring-editors
+    seuser: system_u
+    setype: container_file_t
+  loop: "{{ groups['prometheus_target_junos'] }}"
+  when: "'prometheus_target_junos' in groups"
+
+- name: write the junos exporter config file (temporary)
+  template:
+    src: junos_config.yml.j2
+    dest: "/home/{{ ansible_user }}/junos_config.yml.tmp"
+    mode: '0775'
+    group: monitoring-editors
+    seuser: system_u
+    setype: container_file_t
+  when: "'prometheus_target_junos' in groups"
+
+- name: move the junos config file to the correct path (so that inodes update in the mounted image)
+  command: "cp /home/{{ ansible_user }}/junos_config.yml.tmp /home/{{ ansible_user }}/junos_config.yml"
+  when: "'prometheus_target_junos' in groups"
+
+- name: remove temporary junos config file
+  file:
+    path: "/home/{{ ansible_user }}/junos_config.yml.tmp"
+    state: absent
+  when: "'prometheus_target_junos' in groups"
+
+- name: reload the junos exporter
+  uri:
+    url: http://127.0.0.1:9326/-/reload
+    method: POST
+  when: "'prometheus_target_junos' in groups"
 
 - name: template the federated_targets
   template:
