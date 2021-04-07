@@ -1,0 +1,12 @@
+---
+- name: Run the junos_exporter
+  docker_container:
+    name: junos_exporter
+    image: "{{ junos_exporter_image }}:{{ junos_exporter_image_version }}"
+    network_mode: "host"
+    state: "{{ provision_state }}"
+    published_ports:
+    - "{{ junos_exporter_port }}:9326"
+    restart: yes
+    volumes:
+    - "/home/{{ ansible_user }}/junos_config.yml:/config.yml:z"

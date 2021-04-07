@@ -1,0 +1,35 @@
+---
+- name: Ensure epel-release is installed
+  yum:
+    name: "{{ item }}"
+    state: present
+  with_items:
+  - epel-release
+
+- name: Ensure python-pip is installed
+  yum:
+    name: "{{ item }}"
+    state: present
+  with_items:
+  - python-pip
+
+
+- name: Install required python libraries
+  pip:
+    name: "docker-py"
+    state: present
+
+- name: Touch the config file (will be edited by add-targets later)
+  file:
+    path: "/home/{{ ansible_user }}/junos_config.yml"
+    state: touch
+    mode: 0765
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+
+# - name: enable exporter port on firewall
+#   firewalld:
+#     port: "{{ junos_exporter_port }}/tcp"
+#     permanent: yes
+#     immediate: yes
+#     state: enabled 
