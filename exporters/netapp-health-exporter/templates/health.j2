@@ -1,0 +1,48 @@
+# TYPE netapp_sas_connect gauge
+netapp_sas_connect{} {{ health.SubsystemHandlers.sas_connect }}
+
+# TYPE netapp_environment gauge
+netapp_environment{} {{ health.SubsystemHandlers.environment }}
+
+# TYPE netapp_memory gauge
+netapp_memory{} {{ health.SubsystemHandlers.memory }}
+
+# TYPE netapp_service_processor gauge
+netapp_service_processor{} {{ health.SubsystemHandlers.service_processor }}
+
+# TYPE netapp_switch_health gauge
+netapp_switch_health{} {{ health.SubsystemHandlers.switch_health }}
+
+# TYPE netapp_cifs_ndo gauge
+netapp_cifs_ndo{} {{ health.SubsystemHandlers.cifs_ndo }}
+
+# TYPE netapp_motherboard gauge
+netapp_motherboard{} {{ health.SubsystemHandlers.motherboard }}
+
+# TYPE netapp_io gauge
+netapp_io{} {{ health.SubsystemHandlers.io }}
+
+# TYPE netapp_metrocluster gauge
+netapp_metrocluster{} {{ health.SubsystemHandlers.metrocluster }}
+
+# TYPE netapp_metrocluster_node gauge
+netapp_metrocluster_node{} {{ health.SubsystemHandlers.metrocluster_node }}
+
+# TYPE netapp_fhm_switch gauge
+netapp_fhm_switch{} {{ health.SubsystemHandlers.fhm_switch }}
+
+# TYPE netapp_fhm_bridge gauge
+netapp_fhm_bridge{} {{ health.SubsystemHandlers.fhm_bridge }}
+
+# TYPE netapp_has_alert gauge
+netapp_has_alert{} {{ health.AlertHealth.has_alert }}
+
+# TYPE netapp_shelf_health gauge
+{% for item in health.SystemConnectivityShelvesHealth.shelves -%}
+netapp_shelf_health{shelf="{{ item[1] }}", mac="{{ item[0] }}"} {{ item[2] }}
+{% endfor %}
+
+# TYPE netapp_disk_health gauge
+{% for item in health.NodeConnectivityDisksHealth.disks -%}
+netapp_disk_health{node="{{ item[0] }}", disk="{{ item[1] }}", bay="{{ item[2] }}", path="{{ item[3] }}"} {{ item[4] }}
+{% endfor %}
