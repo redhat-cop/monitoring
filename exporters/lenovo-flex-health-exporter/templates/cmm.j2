@@ -1,0 +1,35 @@
+# HELP cmm_health_blade Blade health as collected from the Flex System
+# TYPE cmm_health_blade gauge
+{% for item in health.blade -%}
+cmm_health_blade{blade="{{ item[0] }}"} {{ item[1] }}
+{% endfor %}
+# HELP cmm_health_blower Blower (fan) health as collected from the Flex System
+# TYPE cmm_health_blower gauge
+{% for item in health.blower -%}
+cmm_health_blower{blower="{{ item[0] }}"} {{ item[1] }}
+{% endfor %}
+# HELP cmm_health_power PSU health as collected from the Flex System
+# TYPE cmm_health_power gauge
+{% for item in health.power -%}
+cmm_health_power{power="{{ item[0] }}"} {{ item[1] }}
+{% endfor %}
+# HELP cmm_health_mm MM health as collected from the Flex System
+# TYPE cmm_health_mm gauge
+{% for item in health.mm -%}
+cmm_health_mm{mm="{{ item[0] }}"} {{ item[1] }}
+{% endfor %}
+# HELP cmm_health_switch Switch health as collected from the Flex System
+# TYPE cmm_health_switch gauge
+{% for item in health.switch -%}
+cmm_health_switch{switch="{{ item[0] }}"} {{ item[1] }}
+{% endfor %}
+# HELP cmm_health_mt MT health as collected from the Flex System
+# TYPE cmm_health_mt gauge
+{% for item in health.mt -%}
+cmm_health_mt{mt="{{ item[0] }}"} {{ item[1] }}
+{% endfor %}
+# HELP cmm_health_fanmux Fan health as collected from the Flex System
+# TYPE cmm_health_fanmux gauge
+{% for item in health.fanmux -%}
+cmm_health_fanmux{fanmux="{{ item[0] }}"} {{ item[1] }}
+{% endfor %}
