@@ -25,30 +25,28 @@ def get_subsystem_handlers_health(ssh):
 
     health = SubsystemHandlersHealth()
 
+    # Split and capture the subsystem and health from the output shown below
     pattern = re.compile(r'^([\S\-_]+)\s+(\S+)$', re.M)
     for (system, status) in re.findall(pattern, ssh_output):
-        # print(f"found {system} with status {status}")
         if hasattr(health, system.lower().replace("-", "_")):
             setattr(health, system.lower().replace("-", "_"), 0 if status == "ok" else 1)
     
     return health
 
-'''
-Output looks like:
+# Output looks like:
 
-Subsystem         Health
------------------ ------------------
-SAS-connect       ok
-Environment       ok
-Memory            ok
-Service-Processor ok
-Switch-Health     ok
-CIFS-NDO          ok
-Motherboard       ok
-IO                ok
-MetroCluster      ok
-MetroCluster_Node ok
-FHM-Switch        ok
-FHM-Bridge        ok
-12 entries were displayed.
-'''
+# Subsystem         Health
+# ----------------- ------------------
+# SAS-connect       ok
+# Environment       ok
+# Memory            ok
+# Service-Processor ok
+# Switch-Health     ok
+# CIFS-NDO          ok
+# Motherboard       ok
+# IO                ok
+# MetroCluster      ok
+# MetroCluster_Node ok
+# FHM-Switch        ok
+# FHM-Bridge        ok
+# 12 entries were displayed.

@@ -49,6 +49,7 @@ def get_health(request):
 
     health = IMMHealth()
 
+    # see below for what's going on here [0]
     pattern = re.compile(r"([a-zA-Z]+\s?[a-zA-Z]+)\s+([a-zA-Z0-9]+\s?[a-zA-Z0-9]+)\s*$", re.M)
     for (system, status) in re.findall(pattern, stdout_str):
         if system == "Restarts":
@@ -72,3 +73,16 @@ def get_health(request):
     template = env.get_template('imm.j2')
 
     return template.render(health=health)
+
+# [0]
+# We capture following output of `syshealth summary`.
+#
+# Power     On
+# State     OS booted
+# Restarts  460
+# Component Type     Status
+# ==================================
+# Local Storage      Normal
+# Processors         Normal
+# Memory             Normal
+# System             Normal

@@ -31,6 +31,7 @@ def get_health(request):
     ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
     ssh.connect(host, username=username, password=password)
     health = Health()
+    # Fetch health in the four ways that we know how:
     health.SubsystemHandlers = subsystem_handlers.get_subsystem_handlers_health(ssh)
     health.AlertHealth = alerts.get_alerts_health(ssh)
     health.NodeConnectivityDisksHealth = node_connectivity_disks.get_disks_health(ssh)
