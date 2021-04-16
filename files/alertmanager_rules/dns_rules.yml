@@ -1,0 +1,11 @@
+groups:
+- name: DNS
+  rules:
+  - alert: DNSOffline
+    expr: node_systemd_unit_state{name="named.service", state="active"} < 1
+    for: 5m
+    labels:
+      severity: page
+    annotations:
+      description: 'Host {{ $labels.instance }} is reporting that the expected DNS service is not running.'
+      summary: 'Host {{ $labels.instance }} DNS offline'

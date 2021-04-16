@@ -89,16 +89,16 @@
     seuser: system_u
     setype: container_file_t
 
-# - name: template the node_targets
-#   template:
-#     src: node_target.yml.j2
-#     dest: "/var/prometheus_targets/node_targets/node_target_{{ item }}.yml"
-#     mode: '0775'
-#     group: monitoring-editors
-#     seuser: system_u
-#     setype: container_file_t
-#   loop: "{{ groups['prometheus_target'] }}"
-#   when: "'prometheus_target' in groups"
+- name: template the node_targets
+  template:
+    src: node_target.yml.j2
+    dest: "/var/prometheus_targets/node_targets/node_target_{{ item }}.yml"
+    mode: '0775'
+    group: monitoring-editors
+    seuser: system_u
+    setype: container_file_t
+  loop: "{{ groups['prometheus_target_node'] }}"
+  when: "'prometheus_target_node' in groups"
 
 - name: template the haproxy_targets
   template:
