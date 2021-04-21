@@ -38,6 +38,7 @@
     - "{{ playbook_dir }}/../../prometheus/generic/setup-ilo-exporter"
     - "{{ playbook_dir }}/../../prometheus/generic/setup-lenovo-flex-exporter"
     - "{{ playbook_dir }}/../../prometheus/generic/setup-netapp-exporter"
+    - "{{ playbook_dir }}/../../prometheus/generic/setup-openstack-exporter"
   tags:
     - exporters
     - onboard-exporters
