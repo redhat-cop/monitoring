@@ -13,6 +13,21 @@
     owner: "{{ ansible_user }}"
     group: "{{ ansible_user }}"
 
+- name: Enable firewalld
+  service:
+    name: firewalld
+    enabled: yes
+    state: started
+
+- name: Open Firewall for DNS
+  firewalld:
+    port: "{{item}}"
+    permanent: yes
+    state: enabled
+    immediate: yes
+  with_items:
+    - 9093/tcp
+
 - name: Run Alertmanager Docker container
   docker_container:
     name: alertmanager
