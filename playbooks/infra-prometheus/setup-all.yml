@@ -1,0 +1,63 @@
+---
+
+### Only needs to be run once to initialize the monitoring host: `-t install`
+
+- name: Install Docker
+  hosts: monitoring-hosts
+  become: True
+  roles:
+    - infra-ansible/roles/config-docker
+  tags:
+    - never
+    - install
+
+### Configure Prometheus
+
+- name: Setup prometheus and alertmanager
+  hosts: monitoring-hosts
+  become: True
+  vars:
+    provision_state: "started"
+  roles:
+    - "{{ playbook_dir }}/../../prometheus/generic/setup-prometheus"
+    - "{{ playbook_dir }}/../../prometheus/generic/setup-alertmanager"
+    - "{{ playbook_dir }}/../../prometheus/generic/update-thresholds"
+  tags:
+    - prometheus
+    - alertmanager
+
+### Configure exporters
+
+- name: Setup onboard exporters
+  hosts: monitoring-hosts
+  become: True
+  vars:
+    provision_state: "started"
+  roles:
+    - "{{ playbook_dir }}/../../prometheus/generic/setup-ssl-exporter"
+    - "{{ playbook_dir }}/../../prometheus/generic/setup-ilo-exporter"
+    - "{{ playbook_dir }}/../../prometheus/generic/setup-lenovo-flex-exporter"
+    - "{{ playbook_dir }}/../../prometheus/generic/setup-netapp-exporter"
+    - "{{ playbook_dir }}/../../prometheus/generic/setup-openstack-exporter"
+  tags:
+    - exporters
+    - onboard-exporters
+
+- name: Setup node exporters
+  hosts: prometheus_target_node
+  become: True
+  roles:
+    - cloudalchemy.node_exporter
+  tags:
+    - exporters
+    - node-exporters
+
+### Add configured exporters to Prometheus
+
+- name: setup targets
+  gather_facts: no
+  hosts: monitoring-hosts
+  roles:
+    - "{{ playbook_dir }}/../../prometheus/generic/add-target"
+  tags:
+    - targets
