@@ -1,0 +1,59 @@
+groups:
+- name: LenovoCMM
+  rules:
+  - alert: CMMHealthBlade
+    expr: cmm_health_blade > 0
+    for: 5m
+    labels:
+      severity: page
+    annotations:
+      description: 'CMM {{ $labels.instance }} is reporting a blade problem.'
+      summary: 'CMM {{ $labels.instance }} blade problem'
+  - alert: CMMHealthBlower
+    expr: cmm_health_blower > 0
+    for: 5m
+    labels:
+      severity: page
+    annotations:
+      description: 'CMM {{ $labels.instance }} is reporting a blower problem.'
+      summary: 'CMM {{ $labels.instance }} blower problem'
+  - alert: CMMHealthFanmux
+    expr: cmm_health_fanmux > 0
+    for: 5m
+    labels:
+      severity: page
+    annotations:
+      description: 'CMM {{ $labels.instance }} is reporting a fan mux problem.'
+      summary: 'CMM {{ $labels.instance }} fan mux problem'
+  - alert: CMMHealthMM
+    expr: cmm_health_mm > 0
+    for: 5m
+    labels:
+      severity: page
+    annotations:
+      description: 'CMM {{ $labels.instance }} is reporting a management module problem.'
+      summary: 'CMM {{ $labels.instance }} management module problem'
+  - alert: CMMHealthMT
+    expr: cmm_health_mt > 0
+    for: 5m
+    labels:
+      severity: page
+    annotations:
+      description: 'CMM {{ $labels.instance }} is reporting an MT problem.'
+      summary: 'CMM {{ $labels.instance }} MT problem'
+  - alert: CMMHealthPower
+    expr: cmm_health_power > 0
+    for: 5m
+    labels:
+      severity: page
+    annotations:
+      description: 'CMM {{ $labels.instance }} is reporting a power supply problem.'
+      summary: 'CMM {{ $labels.instance }} power supply problem'
+  - alert: CMMHealthSwitch
+    expr: cmm_health_switch > 0
+    for: 5m
+    labels:
+      severity: page
+    annotations:
+      description: 'CMM {{ $labels.instance }} is reporting a switch problem.'
+      summary: 'CMM {{ $labels.instance }} switch problem'
