@@ -1,0 +1,6 @@
+---
+snmp_exporter_image: 'prom/snmp-exporter'
+snmp_exporter_image_version: 'latest'
+snmp_exporter_port: '9116'
+
+provision_state: "started"
