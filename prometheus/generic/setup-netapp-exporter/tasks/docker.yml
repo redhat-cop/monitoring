@@ -1,0 +1,10 @@
+---
+- name: Run the netapp_exporter
+  docker_container:
+    name: netapp_exporter
+    image: "{{ netapp_exporter_image }}:{{ netapp_exporter_image_version }}"
+    restart_policy: unless-stopped
+    network_mode: "host"
+    state: "{{ provision_state }}"
+    published_ports:
+    - "{{ netapp_exporter_port }}:9416"
