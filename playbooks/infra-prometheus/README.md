@@ -7,6 +7,8 @@ The requirements.yaml contains roles required for running these playbooks. The r
 $ ansible-galaxy install -r requirements.yml
 ```
 
+This includes [Cloud Alchemy's Node Exporter](https://github.com/cloudalchemy/ansible-node-exporter) config role, pulled from [Ansible Galaxy](https://galaxy.ansible.com/cloudalchemy/node_exporter). Please see the linked repository for additional documentation & contribution guidelines.
+
 How to deploy prometheus alertmanager and grafana stack
 =======================================================
 
