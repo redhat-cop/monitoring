@@ -6,6 +6,8 @@ This role will instantiate a NetApp health exporter container on targeted hosts.
 
 Docker must be available and running on the targeted hosts.
 
+The EPEL repository must be available on the targeted hosts.
+
 ## Role Variables
 
 Default values of variables:
@@ -28,7 +30,7 @@ provision_state: "started"
 
 ## Example Inventory
 
-Snippet below configures targets for the NetApp exporter.
+Snippet below configures targets for the NetApp exporter. Note that `monitoring_username` and `monitoring_password` must be valid SSH credentials for the NetApp hosts.
 
 ```
 monitoring_username: "Administrator"
