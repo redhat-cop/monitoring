@@ -1,0 +1,51 @@
+groups:
+- name: OpenStack
+  rules:
+  - alert: OpenStackCinderHealth
+    expr: openstack_cinder_up < 1
+    for: 5m
+    labels:
+      severity: page
+    annotations:
+      description: 'OpenStack host {{ $labels.host }} is reporting a problem with Cinder.'
+      summary: 'OpenStack host {{ $labels.host }} Cinder problem'
+  - alert: OpenStackGlanceHealth
+    expr: openstack_glance_up < 1
+    for: 5m
+    labels:
+      severity: page
+    annotations:
+      description: 'OpenStack host {{ $labels.host }} is reporting a problem with Glance.'
+      summary: 'OpenStack host {{ $labels.host }} Glance problem'
+  - alert: OpenStackIdentityHealth
+    expr: openstack_identity_up < 1
+    for: 5m
+    labels:
+      severity: page
+    annotations:
+      description: 'OpenStack host {{ $labels.host }} is reporting a problem with the Identity service.'
+      summary: 'OpenStack host {{ $labels.host }} Identity service problem'
+  - alert: OpenStackNeutronHealth
+    expr: openstack_neutron_up < 1
+    for: 5m
+    labels:
+      severity: page
+    annotations:
+      description: 'OpenStack host {{ $labels.host }} is reporting a problem with Neutron.'
+      summary: 'OpenStack host {{ $labels.host }} Neutron problem'
+  - alert: OpenStackNovaHealth
+    expr: openstack_nova_up < 1
+    for: 5m
+    labels:
+      severity: page
+    annotations:
+      description: 'OpenStack host {{ $labels.host }} is reporting a problem with Nova.'
+      summary: 'OpenStack host {{ $labels.host }} Nova problem'
+  - alert: OpenStackObjectStoreHealth
+    expr: openstack_object_store_up < 1
+    for: 5m
+    labels:
+      severity: page
+    annotations:
+      description: 'OpenStack host {{ $labels.host }} is reporting a problem with the Object Store.'
+      summary: 'OpenStack host {{ $labels.host }} Object Store problem'
