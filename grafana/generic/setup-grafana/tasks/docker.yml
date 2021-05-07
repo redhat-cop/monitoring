@@ -2,19 +2,19 @@
 
 - name: Ensure that the monitoring config directory exists
   file:
-    path: /opt/monitoring
+    path: "{{ config_dir }}"
     state: directory
 
 - name: copy dashboards
   copy:
     src: "{{ dashboard_dir }}"
-    dest: "/opt/monitoring/dashboards/"
+    dest: "{{ config_dir }}/dashboards/"
   when: dashboard_dir is defined
 
 - name: Run the datasources.yml template
   template:
     src: datasources.yml.j2
-    dest: "/opt/monitoring/datasources.yml"
+    dest: "{{ config_dir }}/datasources.yml"
     mode: 0755
     owner: "{{ ansible_user }}"
     group: "{{ ansible_user }}"
@@ -22,7 +22,7 @@
 - name: Run the dashboard.yml template
   copy:
     src: dashboards.yml
-    dest: "/opt/monitoring/dashboards/dashboards.yml"
+    dest: "{{ config_dir }}/dashboards/dashboards.yml"
     mode: 0755
     owner: "{{ ansible_user }}"
     group: "{{ ansible_user }}"
@@ -34,8 +34,8 @@
     published_ports:
     - "{{ grafana_port }}:3000"
     volumes:
-    - "/opt/monitoring/datasources.yml:/etc/grafana/provisioning/datasources/datasources.yml:Z"
-    - "/opt/monitoring/dashboards/:/etc/grafana/provisioning/dashboards/:Z"
+    - "{{ config_dir }}/datasources.yml:/etc/grafana/provisioning/datasources/datasources.yml:Z"
+    - "{{ config_dir }}/dashboards/:/etc/grafana/provisioning/dashboards/:Z"
     env:
       GF_SECURITY_ADMIN_PASSWORD: "{{ grafana_password }}"
     state: "{{ provision_state }}"

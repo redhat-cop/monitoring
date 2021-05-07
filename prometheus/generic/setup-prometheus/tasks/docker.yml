@@ -2,20 +2,20 @@
 
 - name: Ensure that the monitoring config directory exists
   file:
-    path: /opt/monitoring
+    path: "{{ config_dir }}"
     state: directory
 
 - name: Run the prometheus.yml template
   template:
     src: prometheus.yml.j2
-    dest: "/opt/monitoring/prometheus.yml"
+    dest: "{{ config_dir }}/prometheus.yml"
     mode: 0765
     owner: "{{ ansible_user }}"
     group: "{{ ansible_user }}"
 
 - name: create rules directory
   file:
-    path: "/opt/monitoring/rules"
+    path: "{{ config_dir }}/rules"
     state: directory
     mode: 0765
     owner: "{{ ansible_user }}"
@@ -24,7 +24,7 @@
 - name: copy first rules
   copy: 
     src: "first_rules.yml"
-    dest: "/opt/monitoring/rules/first_rules.yml"
+    dest: "{{ config_dir }}/rules/first_rules.yml"
     mode: 0765
     owner: "{{ ansible_user }}"
     group: "{{ ansible_user }}"
@@ -53,8 +53,8 @@
     - "{{ prometheus_port }}:9090"
     network_mode: host
     volumes:
-    - "/opt/monitoring/rules/:/etc/prometheus/rules/:Z"            
-    - "/opt/monitoring/prometheus.yml:/etc/prometheus/prometheus.yml:Z"
+    - "{{ config_dir }}/rules/:/etc/prometheus/rules/:Z"            
+    - "{{ config_dir }}/prometheus.yml:/etc/prometheus/prometheus.yml:Z"
     - "/var/prometheus_targets/:/etc/prometheus/targets/:Z"
     state: "{{ provision_state }}"
     command: |

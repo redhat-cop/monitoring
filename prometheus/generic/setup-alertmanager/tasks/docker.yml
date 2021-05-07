@@ -2,13 +2,13 @@
 
 - name: Ensure that the monitoring config directory exists
   file:
-    path: /opt/monitoring
+    path: "{{ config_dir }}"
     state: directory
 
 - name: Run the alertmanager.yml template
   template:
     src: alertmanager.yml.j2
-    dest: "/opt/monitoring/alertmanager.yml"
+    dest: "{{ config_dir }}/alertmanager.yml"
     mode: 0755
     owner: "{{ ansible_user }}"
     group: "{{ ansible_user }}"
@@ -36,6 +36,6 @@
     published_ports:
     - "{{ alertmanager_port }}:9093"
     volumes:
-    - "/opt/monitoring/alertmanager.yml:/etc/alertmanager/alertmanager.yml:Z"
+    - "{{ config_dir }}/alertmanager.yml:/etc/alertmanager/alertmanager.yml:Z"
     state: "{{ provision_state }}"
     recreate: yes
