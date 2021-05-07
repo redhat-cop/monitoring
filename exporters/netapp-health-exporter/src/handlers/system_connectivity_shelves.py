@@ -14,24 +14,23 @@ def get_shelves_health(ssh):
 
     health = SystemConnectivityShelvesHealth()
 
+    # Capture the shelf UUID, UD, and Status from the output shown below
     pattern = re.compile(r'^([a-zA-Z0-9:]+)\s+(\d+)\s+\S+\s+\d+\s+([a-zA-Z]+)$', re.M)
     for (mac, id, status) in re.findall(pattern, ssh_output):
-        # print(f"found {mac} {id} {status}")
         health.shelves.append((mac, id, 0 if status == "ok" else 1))
     
     return health
 
-'''
-Output looks like:
 
-                                   Shelf     Connected       Num   Status      
-Shelf UUID                         ID        Nodes           Paths
----------------------------------- ------    --------------- ----- ------------
-BD:74:86:0F:76:41:74:86                 2    cluster1-02,   4   ok
-                                             cluster1-01
-BD:74:86:0F:76:41:74:87                 0    cluster1-02,   4   ok
-                                             cluster1-01
-BD:74:86:0F:76:41:74:88                 1    cluster1-02,   4   ok
-                                             cluster1-01
-3 entries were displayed.
-'''
+# Output looks like:
+
+#                                    Shelf     Connected       Num   Status      
+# Shelf UUID                         ID        Nodes           Paths
+# ---------------------------------- ------    --------------- ----- ------------
+# BD:74:86:0F:76:41:74:86                 2    cluster1-02,   4   ok
+#                                              cluster1-01
+# BD:74:86:0F:76:41:74:87                 0    cluster1-02,   4   ok
+#                                              cluster1-01
+# BD:74:86:0F:76:41:74:88                 1    cluster1-02,   4   ok
+#                                              cluster1-01
+# 3 entries were displayed.

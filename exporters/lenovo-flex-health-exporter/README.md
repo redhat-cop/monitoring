@@ -1,6 +1,6 @@
 # Lenovo Flex System Health Exporter
 
-Exporter to expose health of Lenovo/IBM CMM & IMM systems to Prometheus.
+Exporter to expose health of Lenovo/IBM Flex CMM & IMM systems to Prometheus.
 ## Gauges
 
 Gauge status codes:

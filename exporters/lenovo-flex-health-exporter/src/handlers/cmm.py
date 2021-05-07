@@ -31,12 +31,16 @@ def get_health(request):
 
     ssh_output = None
 
+    # Loop though the hosts that were passed in here.
+    # We do this because a Flex server has multiple CMMs.
+    # Only one is "active" at a time - and the others won't respond at all.
+    # As long as one of the hosts responds - we consider it a pass.
     for host in hosts:
         ssh = paramiko.SSHClient()
         ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
         try:
             ssh.connect(host, username=username, password=password)
-            ssh_stdin, ssh_stdout, ssh_stderr = ssh.exec_command("health -l 2")
+            ssh_stdin, ssh_stdout, ssh_stderr = ssh.exec_command("health -l 2") # two levels of health detail gives a nice summary
             exit_status = ssh_stdout.channel.recv_exit_status()
             ssh.close()
             if ssh_stderr.read().decode('ascii') == "":
@@ -57,6 +61,7 @@ def get_health(request):
 
     health = CMMHealth()
 
+    # see below for what's going on here [0]
     pattern = re.compile(r'([a-z]+)\[(\d+)\]\s*:\s*(\S+)')
     for (system, instance, status) in re.findall(pattern, ssh_output):
         getattr(health, system).append((instance, 0 if status == "OK" else 1))
@@ -67,3 +72,22 @@ def get_health(request):
     template = env.get_template('cmm.j2')
 
     return template.render(health=health)
+
+
+# [0]
+# We capture the system name, the instance number, and the health
+# status from the output of `health -l 2`.
+# The command's output looks something like this:
+#
+#          power[1]  :          OK
+#          power[2]  :          OK
+#          power[3]  :          OK
+#          power[4]  :          OK
+#          power[5]  :          OK
+#          power[6]  :          OK
+#          mm[1]     :          OK
+#          mm[2]     :          OK
+#          switch[1] :          OK
+#          switch[2] :          OK
+#          switch[3] :          OK
+#          switch[4] :          OK
