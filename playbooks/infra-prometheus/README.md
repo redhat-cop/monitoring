@@ -80,7 +80,7 @@ Inventory Description
 `smtp_tls: 'false'` - switch for enabling/disabling tls verification <br />
 `notification_recipients: somebody@example.com` - recipient address for alertmanager <br />
 `dashboard_dir: /home/user/dashbooards` - directory from which the grafana dashboards are copied (optional) <br />
-`custom_rule_file: /path/to/custom/rules_file.yml` - file with custom alerting rules1 (optional) <br />
+`rules_files: [/path/to/custom/rules_file.yml]` - list of files with custom alerting rules (optional) <br />
 `ssl_expiration_warning_threshold: 7` - ssl cert warning threshold (days)
 `ssl_expiration_critical_threshold: 3` - ssl cert critical threshold (days)
 `memory_usage_warning_threshold: 60` - memory warning threshold (%)

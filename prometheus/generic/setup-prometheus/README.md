@@ -31,7 +31,7 @@ provision_state: "started"
 `provision_state` - Options: [absent, killed, present, reloaded, restarted, **started** (default), stopped]
 
 ## Optional Variables
-`custom_rules_file: "/path/to/custom/rule_file.yml"` - path to file with custom alerting rules
+`rules_files: ["/path/to/custom/rule_file.yml"]` - list of files with custom alerting rules
 
 
 Dependencies
