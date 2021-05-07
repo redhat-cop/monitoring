@@ -1,0 +1,11 @@
+- targets:
+{% if hostvars[item].lenovo_flex_hosts is defined %}
+{% for host in hostvars[item].lenovo_flex_hosts %}
+  - {{ host }}
+{% endfor %}
+{% else %}
+  - {{ hostvars[item].ansible_host }}
+{% endif %}
+  labels:
+    "__param_username": "{{ hostvars[item].monitoring_username }}"
+    "__param_password": "{{ hostvars[item].monitoring_password }}"
