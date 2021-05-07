@@ -6,6 +6,8 @@ This role will instantiate a Lenovo Flex exporter container on targeted hosts.
 
 Docker must be available and running on the targeted hosts.
 
+The EPEL repository but be available on the targeted hosts.
+
 ## Role Variables
 
 Default values of variables:
