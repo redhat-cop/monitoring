@@ -30,7 +30,7 @@ provision_state: "started"
 
 ## Example Inventory
 
-Snippet below configures targets for the Lenovo Flex exporter.
+Snippet below configures targets for the Lenovo Flex exporter. Note that `monitoring_username` and `monitoring_password` must be valid SSH credentials for the Lenovo Flex hosts.
 
 ```
 monitoring_username: "Administrator"
