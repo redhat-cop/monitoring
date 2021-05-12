@@ -1,0 +1,10 @@
+---
+- name: Run the lenovo_flex_exporter
+  docker_container:
+    name: lenovo_flex_exporter
+    image: "{{ lenovo_flex_exporter_image }}:{{ lenovo_flex_exporter_image_version }}"
+    restart_policy: unless-stopped
+    network_mode: "host"
+    state: "{{ provision_state }}"
+    published_ports:
+    - "{{ lenovo_flex_exporter_port }}:9416"

@@ -1,0 +1,6 @@
+---
+lenovo_flex_exporter_image: 'quay.io/redhat-cop/monitoring-lenovo-flex-exporter'
+lenovo_flex_exporter_image_version: 'latest'
+lenovo_flex_exporter_port: '9416'
+
+provision_state: "started"
