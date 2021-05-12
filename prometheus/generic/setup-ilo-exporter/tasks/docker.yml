@@ -1,0 +1,10 @@
+---
+- name: Run the ilo_exporter
+  docker_container:
+    name: ilo_exporter
+    image: "{{ ilo_exporter_image }}:{{ ilo_exporter_image_version }}"
+    restart_policy: unless-stopped
+    network_mode: "host"
+    state: "{{ provision_state }}"
+    published_ports:
+    - "{{ ilo_exporter_port }}:9416"
