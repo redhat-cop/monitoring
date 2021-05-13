@@ -31,6 +31,7 @@
 - name: generate ssh key
   command: ssh-keygen -f /tmp/monitoring-edit-user-1_key -P ""
   delegate_to: localhost
+  become: no
   ignore_errors: true
   
 - name: add the new key to editor users authorized keys
