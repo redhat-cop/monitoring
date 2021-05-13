@@ -1,0 +1,27 @@
+groups:
+- name: Junos
+  rules:
+  - alert: JunosAlarmsRedCount
+    expr: junos_alarms_red_count > 0
+    for: 5m
+    labels:
+      severity: page
+    annotations:
+      description: 'Junos {{ $labels.instance }} is reporting a red alarm.'
+      summary: 'Junos {{ $labels.instance }} red alarm'
+  - alert: JunosAlarmsYellowCount
+    expr: junos_alarms_yellow_count > 0
+    for: 5m
+    labels:
+      severity: page
+    annotations:
+      description: 'Junos {{ $labels.instance }} is reporting a yellow alarm.'
+      summary: 'Junos {{ $labels.instance }} yellow alarm'
+  - alert: JunosEnvironmentPowerUp
+    expr: junos_environment_power_up != 1
+    for: 5m
+    labels:
+      severity: page
+    annotations:
+      description: 'Junos {{ $labels.instance }} is reporting a power supply failure'
+      summary: 'Junos {{ $labels.instance }} power supply failure'

@@ -1,6 +1,8 @@
 # HP iLO Metrics Exporter
 
-Blackbox likes exporter used to exports HP Server Integrated Lights Out (iLO) states to Prometheus.
+Exporter used to exports HP Server Integrated Lights Out (iLO) states to Prometheus.
+
+This project was forked from [Infinity Works](https://github.com/infinityworks/hpilo-exporter).
 
 ### Gauges
 
