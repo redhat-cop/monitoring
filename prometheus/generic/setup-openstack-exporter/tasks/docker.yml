@@ -2,13 +2,13 @@
 
 - name: Ensure that the monitoring config directory exists
   file:
-    path: "{{ config_dir }}"
+    path: "{{ monitoring_config_dir }}"
     state: directory
 
 - name: template clouds.yaml
   template:
     src: clouds.yaml.j2
-    dest: "{{ config_dir }}/clouds-{{ item }}.yaml"
+    dest: "{{ monitoring_config_dir }}/clouds-{{ item }}.yaml"
   loop: "{{ groups['openstack_env'] }}"
 
 
@@ -21,7 +21,7 @@
     state: "{{ provision_state }}"
     command: "--web.listen-address=:{{ hostvars[item].openstack_exporter_port }} {{ openstack_cloud_name }}"
     volumes:
-    - "{{ config_dir }}/clouds-{{ item }}.yaml:/etc/openstack/clouds.yaml:Z"
+    - "{{ monitoring_config_dir }}/clouds-{{ item }}.yaml:/etc/openstack/clouds.yaml:Z"
     restart: yes
     exposed_ports: "9181:{{ hostvars[item].openstack_exporter_port }}"
   loop: "{{ groups['openstack_env'] }}"

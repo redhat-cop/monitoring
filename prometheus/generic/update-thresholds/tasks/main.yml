@@ -2,14 +2,14 @@
 
 - name: Ensure that the monitoring config directory exists
   file:
-    path: "{{ config_dir }}"
+    path: "{{ monitoring_config_dir }}"
     state: directory
 
 
 - name: template the first_rules.yml file
   template:
     src: first_rules.yml.j2
-    dest: "{{ config_dir }}/rules/first_rules.yml"
+    dest: "{{ monitoring_config_dir }}/rules/first_rules.yml"
     mode: 0775
     owner: "{{ ansible_user }}"
     group: "{{ ansible_user }}"
@@ -20,7 +20,7 @@
 - name: copy custom rules
   copy: 
     src: "{{ item }}"
-    dest: "{{ config_dir }}/rules/"
+    dest: "{{ monitoring_config_dir }}/rules/"
     mode: 0775
     owner: "{{ ansible_user }}"
     group: "{{ ansible_user }}"

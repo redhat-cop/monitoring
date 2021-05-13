@@ -2,20 +2,20 @@
 
 - name: Ensure that the monitoring config directory exists
   file:
-    path: "{{ config_dir }}"
+    path: "{{ monitoring_config_dir }}"
     state: directory
 
 - name: Run the prometheus.yml template
   template:
     src: prometheus.yml.j2
-    dest: "{{ config_dir }}/prometheus.yml"
+    dest: "{{ monitoring_config_dir }}/prometheus.yml"
     mode: 0765
     owner: "{{ ansible_user }}"
     group: "{{ ansible_user }}"
 
 - name: create rules directory
   file:
-    path: "{{ config_dir }}/rules"
+    path: "{{ monitoring_config_dir }}/rules"
     state: directory
     mode: 0765
     owner: "{{ ansible_user }}"
@@ -24,7 +24,7 @@
 - name: copy first rules
   copy: 
     src: "first_rules.yml"
-    dest: "{{ config_dir }}/rules/first_rules.yml"
+    dest: "{{ monitoring_config_dir }}/rules/first_rules.yml"
     mode: 0765
     owner: "{{ ansible_user }}"
     group: "{{ ansible_user }}"
@@ -35,7 +35,7 @@
     enabled: yes
     state: started
 
-- name: Open Firewall for DNS
+- name: Open Firewall for Prometheus
   firewalld:
     port: "{{item}}"
     permanent: yes
@@ -53,8 +53,8 @@
     - "{{ prometheus_port }}:9090"
     network_mode: host
     volumes:
-    - "{{ config_dir }}/rules/:/etc/prometheus/rules/:Z"            
-    - "{{ config_dir }}/prometheus.yml:/etc/prometheus/prometheus.yml:Z"
+    - "{{ monitoring_config_dir }}/rules/:/etc/prometheus/rules/:Z"            
+    - "{{ monitoring_config_dir }}/prometheus.yml:/etc/prometheus/prometheus.yml:Z"
     - "/var/prometheus_targets/:/etc/prometheus/targets/:Z"
     state: "{{ provision_state }}"
     command: |

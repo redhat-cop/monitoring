@@ -8,4 +8,4 @@ memory_usage_critical_threshold: '90'
 disk_usage_warning_threshold: '70'
 disk_usage_critical_threshold: '90'
 
-config_dir: "/opt/monitoring"
+monitoring_config_dir: "/opt/monitoring"

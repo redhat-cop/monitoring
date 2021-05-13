@@ -8,4 +8,4 @@ prometheus_port: '9090'
 
 provision_state: "started"
 
-config_dir: "/opt/monitoring"
+monitoring_config_dir: "/opt/monitoring"

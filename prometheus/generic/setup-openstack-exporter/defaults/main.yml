@@ -6,4 +6,4 @@ openstack_cloud_name: 'openstack'
 
 provision_state: "started"
 
-config_dir: "/opt/monitoring"
+monitoring_config_dir: "/opt/monitoring"

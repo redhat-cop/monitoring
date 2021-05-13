@@ -12,4 +12,4 @@ smtp_username: 'smtp_user'
 smtp_password: 'smtp_password'
 smtp_tls: 'false'
 
-config_dir: "/opt/monitoring"
+monitoring_config_dir: "/opt/monitoring"

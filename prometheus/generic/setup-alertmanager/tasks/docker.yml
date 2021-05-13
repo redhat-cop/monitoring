@@ -2,13 +2,13 @@
 
 - name: Ensure that the monitoring config directory exists
   file:
-    path: "{{ config_dir }}"
+    path: "{{ monitoring_config_dir }}"
     state: directory
 
 - name: Run the alertmanager.yml template
   template:
     src: alertmanager.yml.j2
-    dest: "{{ config_dir }}/alertmanager.yml"
+    dest: "{{ monitoring_config_dir }}/alertmanager.yml"
     mode: 0755
     owner: "{{ ansible_user }}"
     group: "{{ ansible_user }}"
@@ -19,7 +19,7 @@
     enabled: yes
     state: started
 
-- name: Open Firewall for DNS
+- name: Open Firewall for Alertmanager
   firewalld:
     port: "{{item}}"
     permanent: yes
@@ -36,6 +36,6 @@
     published_ports:
     - "{{ alertmanager_port }}:9093"
     volumes:
-    - "{{ config_dir }}/alertmanager.yml:/etc/alertmanager/alertmanager.yml:Z"
+    - "{{ monitoring_config_dir }}/alertmanager.yml:/etc/alertmanager/alertmanager.yml:Z"
     state: "{{ provision_state }}"
     recreate: yes
