@@ -50,7 +50,7 @@
     image: "{{ prometheus_image }}:{{ prometheus_image_version }}"
     restart_policy: unless-stopped
     published_ports:
-    - "{{ prometheus_port }}:9090"
+    - "{{ external_prometheus_port }}:{{ prometheus_port }}"
     network_mode: host
     volumes:
     - "{{ monitoring_config_dir }}/rules/:/etc/prometheus/rules/:Z"            

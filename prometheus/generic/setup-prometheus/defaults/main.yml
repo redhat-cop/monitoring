@@ -2,6 +2,7 @@
 prometheus_image: 'prom/prometheus'
 prometheus_image_version: 'latest'
 prometheus_port: '9090'
+external_prometheus_port: '9095'
 haproxy_exporter_port: '9101'
 bind_exporter_port: '9119'
 ssl_exporter_port: '9219'
