@@ -27,9 +27,9 @@
     owner: "{{ ansible_user }}"
     group: "{{ ansible_user }}"
 
-# - name: enable exporter port on firewall
-#   firewalld:
-#     port: "{{ junos_exporter_port }}/tcp"
-#     permanent: yes
-#     immediate: yes
-#     state: enabled 
+- name: enable exporter port on firewall
+  firewalld:
+    port: "{{ junos_exporter_port }}/tcp"
+    permanent: yes
+    immediate: yes
+    state: enabled 
