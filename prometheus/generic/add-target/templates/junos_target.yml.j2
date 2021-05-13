@@ -1,0 +1,8 @@
+- targets:
+{% if hostvars[item].junos_hosts is defined %}
+{% for host in hostvars[item].junos_hosts %}
+  - {{ host }}
+{% endfor %}
+{% else %}
+  - {{ hostvars[item].ansible_host }}
+{% endif %}

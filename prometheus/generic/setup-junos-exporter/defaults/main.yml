@@ -1,0 +1,6 @@
+---
+junos_exporter_image: 'czerwonk/junos_exporter'
+junos_exporter_image_version: 'latest'
+junos_exporter_port: '9326'
+
+provision_state: "started"
