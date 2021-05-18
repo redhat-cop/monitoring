@@ -31,6 +31,7 @@
   docker_container:
     name: grafana
     image: "{{ grafana_image }}:{{ grafana_image_version }}"
+    network_mode: host
     published_ports:
     - "{{ grafana_port }}:3000"
     volumes:
