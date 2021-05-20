@@ -17,3 +17,10 @@
   pip:
     name: "docker-py"
     state: present
+
+- name: 'Open Firewall for AM access'
+  firewalld:
+    port: "{{ alertmanager_port }}/tcp"
+    permanent: yes
+    state: enabled
+    immediate: yes

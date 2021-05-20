@@ -20,3 +20,6 @@ disk_usage_warning_threshold: '70'
 disk_usage_critical_threshold: '90'
 
 monitoring_config_dir: "/opt/monitoring"
+monitoring_host_epel_download_url: https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+monitoring_host_epel_gpg_download_url: https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-7
+monitoring_host_epel_disable_gpg_check: 'no'
