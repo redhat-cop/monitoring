@@ -31,7 +31,6 @@ scrape_configs:
       - files:
         - /etc/prometheus/targets/node_targets/*.yml
 
-
 {% if (groups['monitoring-hosts'] |length ) > 1 %}
   - job_name: 'federate-sanity-check'
     scrape_interval: 15s
@@ -162,12 +161,58 @@ scrape_configs:
       - target_label: __address__
         replacement: {{ exporters_host }}:{{ junos_exporter_port }}
 
+  - job_name: 'netapp'
+    metrics_path: /health
+    scrape_interval: 240s
+    scrape_timeout: 60s
+    file_sd_configs:
+      - files:
+        - /etc/prometheus/targets/netapp_targets/*.yml
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_host
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: {{ exporters_host }}:{{ netapp_exporter_port }}
+
+  - job_name: 'Lenovo CMM'
+    metrics_path: /cmmhealth
+    scrape_interval: 240s
+    scrape_timeout: 60s
+    file_sd_configs:
+      - files:
+        - /etc/prometheus/targets/lenovo_flex_cmm_targets/*.yml
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_host
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: {{ exporters_host }}:{{ lenovo_flex_exporter_port }}
+
+  - job_name: 'Lenovo IMM'
+    metrics_path: /immhealth
+    scrape_interval: 240s
+    scrape_timeout: 60s
+    file_sd_configs:
+      - files:
+        - /etc/prometheus/targets/lenovo_flex_imm_targets/*.yml
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_host
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: {{ exporters_host }}:{{ lenovo_flex_exporter_port }}
+
+
 {% if (groups['openstack_env']|length) > 0 %}
 {% for host in groups['openstack_env'] %}
   - job_name: 'openstack'
     metrics_path: /metrics
-    scrape_timeout: 240s
-    scrape_interval: 60s
+    scrape_interval: 240s
+    scrape_timeout: 60s
     file_sd_configs:
       - files:
         - /etc/prometheus/targets/openstack_targets/*.yml

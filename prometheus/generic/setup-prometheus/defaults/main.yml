@@ -8,6 +8,8 @@ bind_exporter_port: '9119'
 ssl_exporter_port: '9219'
 openstack_exporter_port: '9180'
 junos_exporter_port: '9326'
+netapp_exporter_port: '9418'
+lenovo_flex_exporter_port: '9417'
 
 provision_state: "started"
 
