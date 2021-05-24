@@ -13,7 +13,8 @@ notification_recipients: somebody@example.com
 dashboard_dir: /home/user/dashbooards
 
 #custom rules file
-custom_rules_file: /path/to/custom/rules_file.yml
+rules_files: 
+  - /path/to/custom/rules_file.yml
 
 #thresholds definition
 ssl_expiration_warning_threshold: 7

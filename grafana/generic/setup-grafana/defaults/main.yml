@@ -7,3 +7,5 @@ grafana_password: 'super_secure_password'
 prometheus_port: '9090'
 
 provision_state: "started"
+
+monitoring_config_dir: "/opt/monitoring"

@@ -28,7 +28,7 @@
 
 ### Configure exporters
 
-- name: Setup exporters
+- name: Setup onboard exporters
   hosts: monitoring-hosts
   become: True
   vars:
@@ -38,9 +38,20 @@
     - "{{ playbook_dir }}/../../prometheus/generic/setup-ilo-exporter"
     - "{{ playbook_dir }}/../../prometheus/generic/setup-lenovo-flex-exporter"
     - "{{ playbook_dir }}/../../prometheus/generic/setup-netapp-exporter"
+    - "{{ playbook_dir }}/../../prometheus/generic/setup-openstack-exporter"
     - "{{ playbook_dir }}/../../prometheus/generic/setup-junos-exporter"
   tags:
     - exporters
+    - onboard-exporters
+
+- name: Setup node exporters
+  hosts: prometheus_target_node
+  become: True
+  roles:
+    - cloudalchemy.node_exporter
+  tags:
+    - exporters
+    - node-exporters
 
 ### Add configured exporters to Prometheus
 

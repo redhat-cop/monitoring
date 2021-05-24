@@ -5,3 +5,5 @@ openstack_exporter_port: '9180'
 openstack_cloud_name: 'openstack'
 
 provision_state: "started"
+
+monitoring_config_dir: "/opt/monitoring"

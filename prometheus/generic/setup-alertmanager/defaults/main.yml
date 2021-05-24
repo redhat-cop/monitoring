@@ -11,3 +11,5 @@ from: my_smtp_from
 smtp_username: 'smtp_user'
 smtp_password: 'smtp_password'
 smtp_tls: 'false'
+
+monitoring_config_dir: "/opt/monitoring"
