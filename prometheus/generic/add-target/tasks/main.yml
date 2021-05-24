@@ -219,7 +219,7 @@
 
 - name: reload the junos exporter
   uri:
-    url: http://127.0.0.1:9326/-/reload
+    url: http://{{ exporters_host }}:9326/-/reload
     method: POST
   when: "'prometheus_target_junos' in groups"
 
