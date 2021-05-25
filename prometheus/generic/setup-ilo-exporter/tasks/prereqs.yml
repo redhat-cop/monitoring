@@ -17,3 +17,10 @@
   pip:
     name: "docker-py"
     state: present
+
+- name: 'Open Firewall for scraping'
+  firewalld:
+    port: "{{ ilo_exporter_port }}/tcp"
+    permanent: yes
+    state: enabled
+    immediate: yes

@@ -7,4 +7,4 @@
     network_mode: "host"
     state: "{{ provision_state }}"
     published_ports:
-    - "{{ lenovo_flex_exporter_port }}:9416"
+    - "{{ lenovo_flex_exporter_port }}:9417"

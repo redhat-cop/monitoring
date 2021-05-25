@@ -31,9 +31,6 @@ scrape_configs:
       - files:
         - /etc/prometheus/targets/node_targets/*.yml
 
-   
-
-
 {% if (groups['monitoring-hosts'] |length ) > 1 %}
   - job_name: 'federate-sanity-check'
     scrape_interval: 15s
@@ -61,7 +58,7 @@ scrape_configs:
     file_sd_configs:
       - files:
         - /etc/prometheus/targets/federated_targets/*.yml
-
+  
 
   - job_name: 'haproxy_exporter'
     scrape_interval: 5s
@@ -87,10 +84,11 @@ scrape_configs:
       - source_labels: [__param_target]
         target_label: instance
       - target_label: __address__
-        replacement: 127.0.0.1:{{ ssl_exporter_port }}
-  
-  - job_name: 'ilo_exporter'
-    scrape_interval: 90s
+        replacement: {{ exporters_host }}:{{ ssl_exporter_port }}
+
+  - job_name: 'ilo'
+    metrics_path: /metrics
+    scrape_interval: 240s
     scrape_timeout: 60s
     file_sd_configs:
       - files:
@@ -101,7 +99,7 @@ scrape_configs:
       - source_labels: [__param_ilo_host]
         target_label: instance
       - target_label: __address__
-        replacement: 127.0.0.1:9416
+        replacement: {{ exporters_host }}:{{ ilo_exporter_port }}
 
   - job_name: 'lenovo_flex_cmm_exporter'
     metrics_path: /cmmhealth
@@ -150,8 +148,8 @@ scrape_configs:
 
   - job_name: 'junos'
     metrics_path: /metrics
-    scrape_interval: 60s
-    scrape_timeout: 45s
+    scrape_interval: 240s
+    scrape_timeout: 60s
     file_sd_configs:
       - files:
         - /etc/prometheus/targets/junos_targets/*.yml
@@ -161,14 +159,60 @@ scrape_configs:
       - source_labels: [__param_target]
         target_label: instance
       - target_label: __address__
-        replacement: 127.0.0.1:9326
+        replacement: {{ exporters_host }}:{{ junos_exporter_port }}
+
+  - job_name: 'netapp'
+    metrics_path: /health
+    scrape_interval: 240s
+    scrape_timeout: 60s
+    file_sd_configs:
+      - files:
+        - /etc/prometheus/targets/netapp_targets/*.yml
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_host
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: {{ exporters_host }}:{{ netapp_exporter_port }}
+
+  - job_name: 'Lenovo CMM'
+    metrics_path: /cmmhealth
+    scrape_interval: 240s
+    scrape_timeout: 60s
+    file_sd_configs:
+      - files:
+        - /etc/prometheus/targets/lenovo_flex_cmm_targets/*.yml
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_host
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: {{ exporters_host }}:{{ lenovo_flex_exporter_port }}
+
+  - job_name: 'Lenovo IMM'
+    metrics_path: /immhealth
+    scrape_interval: 240s
+    scrape_timeout: 60s
+    file_sd_configs:
+      - files:
+        - /etc/prometheus/targets/lenovo_flex_imm_targets/*.yml
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_host
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: {{ exporters_host }}:{{ lenovo_flex_exporter_port }}
+
 
 {% if (groups['openstack_env']|length) > 0 %}
 {% for host in groups['openstack_env'] %}
   - job_name: 'openstack'
     metrics_path: /metrics
-    scrape_timeout: 20s
-    scrape_interval: 60s
+    scrape_interval: 240s
+    scrape_timeout: 60s
     file_sd_configs:
       - files:
         - /etc/prometheus/targets/openstack_targets/*.yml
@@ -178,6 +222,6 @@ scrape_configs:
       - source_labels: [__param_target]
         target_label: instance
       - target_label: __address__
-        replacement: '127.0.0.1:{{ hostvars[host].openstack_exporter_port }}'
+        replacement: '{{ exporters_host }}:{{ hostvars[host].openstack_exporter_port }}'
 {% endfor %}
 {% endif %}

@@ -1,5 +1,6 @@
 ---
 - name: Run the node_exporter
+  become: yes
   docker_container:
     name: node_exporter
     image: "{{ node_exporter_image }}:{{ node_exporter_image_version }}"

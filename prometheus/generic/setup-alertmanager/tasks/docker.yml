@@ -33,6 +33,7 @@
     name: alertmanager
     image: "{{ alertmanager_image }}:{{ alertmanager_image_version }}"
     restart_policy: unless-stopped
+    network_mode: host
     published_ports:
     - "{{ alertmanager_port }}:9093"
     volumes:
