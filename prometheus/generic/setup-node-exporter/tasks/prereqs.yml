@@ -1,4 +1,11 @@
 ---
+- name: Ensure epel-release is installed
+  yum:
+    name: "{{ item }}"
+    state: present
+  with_items:
+  - epel-release
+
 - name: Ensure pip is installed
   yum:
     name: "{{ item }}"
