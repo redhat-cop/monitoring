@@ -18,7 +18,7 @@
     name: "docker-py"
     state: present
 
-- name: 'Open Firewall for AM access'
+- name: 'Open Firewall for AlertManager access'
   firewalld:
     port: "{{ alertmanager_port }}/tcp"
     permanent: yes
