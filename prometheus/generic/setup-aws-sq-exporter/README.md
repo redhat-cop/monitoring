@@ -13,7 +13,6 @@ Role Variables
 ## Default values of variables:
 ```
 ---
-ansible_connection: "local"
 aws_sq_exporter_image: 'prom/aws-sq-exporter'
 aws_sq_exporter_image_version: 'latest'
 aws_sq_exporter_port: '8080'
