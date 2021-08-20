@@ -25,7 +25,8 @@ def getAwsStacks(cSessions,awsStackAvailableSt):
     return nrStacksPerState
 
 def getAccountID():
-    awsSession = boto3.client("sts", aws_access_key_id=args.apikey, aws_secret_access_key=args.secretkey)
+    awsSession = boto3.client("sts", aws_access_key_id=args.apikey,
+                              aws_secret_access_key=args.secretkey)
     awsReturns = awsSession.get_caller_identity()
     return awsReturns["Account"]
 
@@ -63,20 +64,18 @@ if __name__ == "__main__":
     )
     args = parser.parse_args()
 
-    promMetrics = {}
+    apiCFMetricName = "aws_cloudformation_stacks_total"
+    apiCFMetricDesc = "Gauge set on number of CloudFormation Stacks (state,region and accountid in labels)"
+    #promMetrics[state]
+    CloudFormationPromMetric = Gauge(apiCFMetricName, apiCFMetricDesc, ["region", "accountid", "state"])
+
     awsStackAvailableStates= []
     with open('./aws-stack-states.cnf') as confFile:
         for line in confFile:
           if line != None and "#" not in line:
               state = line.strip()
               awsStackAvailableStates.append(state)
-              promMetrics[state] = {}
-              print("Creating metric for " + state + " CF stack state")
-              apiCFMetricName = "aws_cloudformation_stack_in_" + state
-              apiCFMetricDesc = "Gauge set on number of CloudFormation Stacks in "+ state +" state"
-              promMetrics[state] = Gauge(
-                   apiCFMetricName, apiCFMetricDesc, ["region", "accountid"]
-              )
+              
 
     ## Strip regions string from leading and trailing spaces
     aRegions = str(args.regions).strip()
@@ -153,48 +152,34 @@ if __name__ == "__main__":
     requestDelay = 0.5
     requestCounterHardStop = 8196
 
-    #if args.debug == True:
-    #    print("Total of CloudFormation Stacks Metric/Label set to be calculated: "
-    #         +str(len(awsRegionsList) * len(promMetrics["PrometheusMetrics"])))
-
     ## Main loop, going through the regions and setting current metrics values for both value and usage
     while True:
       for region in awsRegionsList:
-         metricsValue = getAwsStacks(awsRegions[region]["clientSession"],awsStackAvailableStates)
-               # Looping through metrics definitions:
-         for state in awsStackAvailableStates:
-                try:
-                    apiCallSuccess.inc()
-                    apiCFMetricName = "aws_cloudformation_stack_in_" + state
-                    for state in awsStackAvailableStates:
-                        promMetrics[state].labels(region=region, accountid=awsAccountID).set(metricsValue[state])
-                except botocore.exceptions.EndpointConnectionError as error:
+         try:
+            metricsValue = getAwsStacks(awsRegions[region]["clientSession"],awsStackAvailableStates)
+            apiCallSuccess.inc()
+            for state in awsStackAvailableStates:
+                CloudFormationPromMetric.labels(state=state,region=region, accountid=awsAccountID).set(metricsValue[state])
+         except botocore.exceptions.EndpointConnectionError as error:
                     apiCallFails.inc()
                     print(str(error))
-                except botocore.exceptions.ClientError as error:
+         except botocore.exceptions.ClientError as error:
                     apiCallFails.inc()
                     print(str(error))
 
-                ## Initial Requests are executed quicker to ensure we got all values in metrics
-                #initialRequestsCounter = initialRequestsCounter + 1
-                # Check if we completed initial run
-                # If so throttle down to delay value specified in command line
+         if (
+             initialRequestsCounter >= (len(awsRegionsList) * len(awsStackAvailableStates))
+             and initialRequestsCounter != requestCounterHardStop):
 
-                if (
-                    initialRequestsCounter >= (len(awsRegionsList) * len(promMetrics.keys()))
-                    and initialRequestsCounter != requestCounterHardStop):
+             requestDelay = args.time
+             warmUpPeriod = 0
+             initialRequestsCounter = requestCounterHardStop
 
-                    if args.debug == True:
-                        print("Warmup completed after " + str(initialRequestsCounter) + ", throttling down")
-                    requestDelay = args.time
-                    warmUpPeriod = 0
-                    initialRequestsCounter = requestCounterHardStop
-
-                if warmUpPeriod == 1:
-                    initialRequestsCounter = initialRequestsCounter + 1
+         if warmUpPeriod == 1:
+                initialRequestsCounter = initialRequestsCounter + 1
 
 
                 ## Hardcoded sleep to ensure we don't choke on AWS API
-                time.sleep(0.5)
-         time.sleep(requestDelay)
+         time.sleep(0.5)
+    time.sleep(requestDelay)
 exit()
