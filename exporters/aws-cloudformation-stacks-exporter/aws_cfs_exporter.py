@@ -143,7 +143,7 @@ if __name__ == "__main__":
     apiCallSuccess.inc(0)
 
     ## Initializing HTTP /metrics endpoint for Prometheus metrics
-    start_http_server(args.port)
+    start_http_server(int(args.port))
     print("Started AWS CloudFormation Stack State Exporter listening on port: " + str(args.port))
 
     # Variables controlling the flow on main loop
