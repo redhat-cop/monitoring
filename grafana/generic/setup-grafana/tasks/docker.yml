@@ -32,12 +32,12 @@
     name: grafana
     image: "{{ grafana_image }}:{{ grafana_image_version }}"
     network_mode: host
-    published_ports:
-    - "{{ grafana_port }}:3000"
+    #published_ports:
+    #- "{{ grafana_port }}:3000"
     volumes:
     - "{{ monitoring_config_dir }}/datasources.yml:/etc/grafana/provisioning/datasources/datasources.yml:Z"
     - "{{ monitoring_config_dir }}/dashboards/:/etc/grafana/provisioning/dashboards/:Z"
     env:
-      GF_SECURITY_ADMIN_PASSWORD: "{{ grafana_password }}"
+      GF_SECURITY_ADMIN_PASSWORD: "alamakota"
     state: "{{ provision_state }}"
     restart: yes
