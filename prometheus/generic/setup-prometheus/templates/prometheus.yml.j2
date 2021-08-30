@@ -31,6 +31,18 @@ scrape_configs:
       - files:
         - /etc/prometheus/targets/node_targets/*.yml
 
+  - job_name: 'aws_sq_exporter'
+    scrape_interval: 60s
+    file_sd_configs:
+      - files:
+        - /etc/prometheus/targets/aws_sq_exporter_targets/*.yml
+
+  - job_name: 'aws_cloudformation_stacks_exporter'
+    scrape_interval: 60s
+    file_sd_configs:
+      - files:
+        - /etc/prometheus/targets/aws_cfs_exporter_targets/*.yml
+
 {% if (groups['monitoring-hosts'] |length ) > 1 %}
   - job_name: 'federate-sanity-check'
     scrape_interval: 15s
@@ -59,7 +71,6 @@ scrape_configs:
       - files:
         - /etc/prometheus/targets/federated_targets/*.yml
   
-
   - job_name: 'haproxy_exporter'
     scrape_interval: 5s
     file_sd_configs:

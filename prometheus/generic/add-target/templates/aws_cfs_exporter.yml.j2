@@ -1,0 +1,4 @@
+- targets:
+  - {{ ansible_ssh_host }}:{{ item.port }}
+  labels:
+    name: 'AWS CFS Exporter {{ item.awsAccount }}'

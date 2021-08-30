@@ -38,5 +38,6 @@
     - "{{ alertmanager_port }}:9093"
     volumes:
     - "{{ monitoring_config_dir }}/alertmanager.yml:/etc/alertmanager/alertmanager.yml:Z"
+    - "/var/alertmanager:/alertmanager:Z""
     state: "{{ provision_state }}"
     recreate: yes

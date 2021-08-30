@@ -89,6 +89,24 @@
     seuser: system_u
     setype: container_file_t
 
+- name: create aws-sq-exporter_targets directory
+  file:
+    path: "/var/prometheus_targets/aws_sq_exporter_targets"
+    state: directory
+    mode: '0775'
+    group: monitoring-editors
+    seuser: system_u
+    setype: container_file_t
+
+- name: create aws_cfs_exporter_targets directory
+  file:
+    path: "/var/prometheus_targets/aws_cfs_exporter_targets"
+    state: directory
+    mode: '0775'
+    group: monitoring-editors
+    seuser: system_u
+    setype: container_file_t
+
 - name: create federated_prometheus_targets directory
   file:
     path: "/var/prometheus_targets/federated_targets"
@@ -119,6 +137,28 @@
     setype: container_file_t
   loop: "{{ groups['prometheus_target_haproxy'] }}"
   when: "'prometheus_target_haproxy' in groups"
+
+- name: template the aws-sq-exporter_targets
+  template:
+    src: aws_sq_exporter.yml.j2
+    dest: "/var/prometheus_targets/aws_sq_exporter_targets/aws-sq-exporter_target_{{ item.awsAccount }}.yml"
+    mode: '0775'
+    group: monitoring-editors
+    seuser: system_u
+    setype: container_file_t
+  loop: "{{ ansible_sq_exporter }}"
+  when: "'monitoring-aws-sq-exporter' in groups"
+
+- name: template the aws-cfs-exporter_targets
+  template:
+    src: aws_cfs_exporter.yml.j2
+    dest: "/var/prometheus_targets/aws_cfs_exporter_targets/aws-cfs-exporter_target_{{ item.awsAccount }}.yml"
+    mode: '0775'
+    group: monitoring-editors
+    seuser: system_u
+    setype: container_file_t
+  loop: "{{ ansible_cfs_exporter }}"
+  when: "'monitoring-aws-cfs-exporter' in groups"
 
 - name: template the bind_targets
   template:

@@ -11,7 +11,3 @@ RUN chown -R 1001:0 ./
 RUN chmod 700 ./aws_cfs_exporter.py
 USER 1001
 EXPOSE 8000
-
-
-# Run the application
-# CMD ./aws_cfs_exporter.py
