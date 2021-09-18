@@ -22,6 +22,8 @@
     - "{{ playbook_dir }}/../../prometheus/generic/setup-prometheus"
     - "{{ playbook_dir }}/../../prometheus/generic/setup-alertmanager"
     - "{{ playbook_dir }}/../../prometheus/generic/update-thresholds"
+    - "{{ playbook_dir }}/../../grafana/generic/setup-grafana"
+    #- "{{ playbook_dir }}/../../grafana/generic/configure-grafana-datasource"
   tags:
     - prometheus
     - alertmanager
@@ -31,8 +33,6 @@
 - name: Setup onboard exporters
   hosts: monitoring-hosts
   become: True
-  vars:
-    provision_state: "started"
   roles:
     - "{{ playbook_dir }}/../../prometheus/generic/setup-ssl-exporter"
     - "{{ playbook_dir }}/../../prometheus/generic/setup-ilo-exporter"
@@ -41,6 +41,8 @@
     - "{{ playbook_dir }}/../../prometheus/generic/setup-openstack-exporter"
     - "{{ playbook_dir }}/../../prometheus/generic/setup-junos-exporter"
     - "{{ playbook_dir }}/../../prometheus/generic/setup-openstack-exporter"
+    - "{{ playbook_dir }}/../../prometheus/generic/setup-aws-sq-exporter"
+    - "{{ playbook_dir }}/../../prometheus/generic/setup-aws-cloudwatch-stacks-exporter"
   tags:
     - exporters
     - onboard-exporters
