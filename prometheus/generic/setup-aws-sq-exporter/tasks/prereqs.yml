@@ -1,0 +1,35 @@
+---
+- name: "install EPEL GPG key - if specified"
+  rpm_key:
+    key: "{{ monitoring_host_epel_gpg_download_url }}"
+    state: present
+  when:
+    - monitoring_host_epel_gpg_download_url is defined
+    - monitoring_host_epel_gpg_download_url|trim != ''
+    - monitoring_host_epel_disable_gpg_check|lower == 'no'
+
+- name: "install epel-release"
+  yum:
+    name: "{{ monitoring_host_epel_download_url }}"
+    state: present
+    disable_gpg_check: "{{ monitoring_host_epel_disable_gpg_check | default('no') }}"
+
+- name: Ensure epel-release is installed
+  yum:
+    name: "{{ item }}"
+    state: present
+  with_items:
+  - epel-release
+
+- name: Ensure pip is installed
+  yum:
+    name: "{{ item }}"
+    state: present
+  with_items:
+  - python-pip
+
+- name: Install required python libraries
+  pip:
+    name: "docker-py"
+    state: present
+

@@ -1,0 +1,4 @@
+- targets:
+  - {{ ansible_ssh_host }}:{{ item.port }}
+  labels:
+    name: 'AWS SQ Exporter {{ item.awsAccount }}'
