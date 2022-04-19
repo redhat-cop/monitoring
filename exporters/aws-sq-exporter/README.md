@@ -1,38 +1,38 @@
-## AWS Service Quotas Exporter ##
-*** ***
-This is a simple Prometheus Exporter that querries AWS API for quota values of specific configuration items and calculates actual usage of those quotas.
+# AWS Service Quotas Exporter
 
-### AWS SQs ###
-*** ***
-Currently there's support for only two SQs:
-* L-0263D0A3 - number of Elastic IPs defined for the region
-* L-F678F1CE - number of VCPs defined for the region
+Exporter used for querying specified AWS account for quotas and quatas usage, and transforming that data into Prometheus metrics.
 
-## Building the exporter Docker image ##
-Docker image should be based on provided Dockerfile, to build the image run that command from repository root directory:
 
-   `export VERSION="0.1.1"; docker build -t aws-sq-exporter:${VERSION} exporters/aws-sq-exporter/`
+### Parameters
 
-## Running the exporter and AWS credentials ##
-Exporter uses AWS API directly, simplest way of injecting API keys is by mounting prepopulated .aws into the container:
+```
+-a, --apikey :  AWS Access Key ID
+-s, --secretkey :  AWS Sercet Access Key
+-r, --regions : List of AWS Regions to be used for queries (if no provided all regions will be queried)
+-t, --time : Sleep time between fetching the AWS API input (default is 900s) 
+-d, --debug : Set the exporter debug mode on
+-p, --port : TCP port to be used to expose metrics HTTP endpoint (default is 8000)
+-m, --metricsfile : a path to metrics definition file, should the default set would not be enough 
+```
 
-    `docker run  -p 8000:8000 -v /${HOME}/.aws:/home/exporter/.aws aws-sq-exporter:0.1.1`
 
-Other options are:
+### Metrics definition file
+By default, we're exporting metrics for number of ElasticIP and VPCs per region, but if user want to introduce other items, there's a support for custom definition file
 
-* -a APIKEY, --apikey APIKEY          : AWS Access Key ID
-* -s SECRETKEY, --secretkey SECRETKEY : AWS Sercet Access Key
-* -r REGION(S), --regions REGION      : AWS Region or list of comma separated regions to be used for queries
-* -t TIME, --time TIME                : Sleep time between fetching the AWS API input
-* -d, --debug                         : Should we be more verbose?
-* -p PORT, --port PORT                : TCP port to be used to expose metrics HTTP endpoint
-
-## Metric file  format ##
-Metric definitions should follow the example format:
-
-```yaml
+Default file: 
+```
 ---
-- metricNameUsage: "aws_vpc_per_region_quota_usage"
+-  metricNameUsage: "aws_eip_quota_usage"
+   usageDesc: "Administrative Quota set on EIP"
+   metricNameQuota: "aws_eip_quota_value"
+   quotaDesc: "Number of Elastic IPs in use"
+   serviceCode: "ec2"
+   quotaCode: "L-0263D0A3"
+   usageRetrieval: "describe_addresses"
+   usageFilter: "Addresses"
+   paginate: False
+
+-  metricNameUsage: "aws_vpc_per_region_quota_usage"
    usageDesc: "Number of VPCs  in use"
    metricNameQuota: "aws_vpc_per_region_quota_value"
    quotaDesc: "Administrative Quota set on VPCs per Region"
@@ -42,12 +42,46 @@ Metric definitions should follow the example format:
    usageFilter: "Vpcs"
    paginate: True
 ```
-* metricNameUsage    - a name for Prometheus metric showing actual usage
-* usageDesc          - description that will be added to Prometheus usage metric  
-* metricNameQuota    - a name for Prometheus metric showing the quota value
-* quotaDesc          - description that will be added to Prometheus quota value metrics
-* serviceCode        - serviceCode that's assigned to the metric (see AWS CLI manual)
-* quotaCode          - unique quotaCode (see AWS CLI manual)
-* usageRetrieval     - name of method which presents the information used to count the actual usage values
-* usageFiter         - name of dictionary that AWS API returns for usageRetrieval query
-* paginate           - reserved for future development
+
+Parameters explained:
+```
+metricNameUsage  : name for the usage  metric
+usageDesc        : Description for the usage metric that will be presented on export
+metricNameQuota  : name for quota metric
+quotaDesc        : Description for the quota metric that will be presented on export
+serviceCode      : Service code that will be used on AWS API call
+quotaCode        : Quota Code that will be used to fetch quota value
+usageRetrieval   : A part of AWS API call that checks for specific item you want to fetch
+usageFilter      : a filter that's used to actually count specific items for usage
+paginate         : Should AWS API call support pagination
+```
+
+
+### Running the exporter
+
+You can run the exporter directly in your console by running the script with parameters specified in the section above
+
+
+### Docker
+
+To build the image: 
+```
+docker build --rm -t aws-sq-exporter .
+```
+
+To run the container
+```
+docker run -p 8000:8000 aws-sq-exporter:latest
+```
+
+You can then call the web server on the defined endpoint, `/metrics` by default.
+```
+curl 'http://127.0.0.1:8000/metrics'
+```
+
+Passing argument to the docker run command
+```
+docker run -p 8000:8000 aws-sq-exporter:latest --port 8000 --apikey ABC --secretkey XYZ
+```
+
+
